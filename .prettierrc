@@ -1,0 +1,10 @@
+{
+  "endOfLine": "auto",
+  "singleQuote": true,
+  "tabWidth": 2,
+  "printWidth": 100,
+  "semi": true,
+  "importOrder": ["^react(.*)", "^@pages/(.*)$", "^[./]"],
+  "importOrderSeparation": true,
+  "importOrderSortSpecifiers": true
+}
