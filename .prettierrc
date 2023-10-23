@@ -4,7 +4,14 @@
   "tabWidth": 2,
   "printWidth": 100,
   "semi": true,
-  "importOrder": ["^react(.*)", "^@pages/(.*)$", "^[./]"],
+  "importOrder": [
+    "^react(.*)",
+    "^@tanstack/(.*)$",
+    "^recoil(.*)",
+    "^axios(.*)",
+    "^@pages/(.*)$",
+    "^[./]"
+  ],
   "importOrderSeparation": true,
   "importOrderSortSpecifiers": true
 }
