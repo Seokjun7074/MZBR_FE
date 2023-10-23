@@ -1,5 +1,12 @@
+import { Outlet } from 'react-router-dom';
+import Layout from '@/components/Layout/Layout';
+
 const App = () => {
-  return <div>Hello React!</div>;
+  return (
+    <Layout>
+      <Outlet />
+    </Layout>
+  );
 };
 
 export default App;
