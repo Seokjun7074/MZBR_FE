@@ -1,6 +1,7 @@
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 
 import IntroPage from '@/pages/IntroPage/IntroPage';
+import SignupPage from '@/pages/SignupPage/SignupPage';
 
 import { PATH } from '@/constants/path';
 
@@ -16,7 +17,12 @@ const AppRouter = () => {
       path: PATH.ROOT,
       element: <App />,
       errorElement: <></>,
-      children: [],
+      children: [
+        {
+          path: PATH.SIGNUP,
+          element: <SignupPage />,
+        },
+      ],
     },
   ]);
   return <RouterProvider router={router} />;
