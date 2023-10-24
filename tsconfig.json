@@ -20,7 +20,8 @@
       "@hooks/*": ["./src/hooks/*"],
       "@apis/*": ["./src/apis/*"],
       "@stores/*": ["./src/stores/*"],
-      "@utils/*": ["./src/utils/*"]
+      "@utils/*": ["./src/utils/*"],
+      "@assets/*": ["./src/assets/*"]
     },
     "allowSyntheticDefaultImports": true
   },
