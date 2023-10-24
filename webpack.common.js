@@ -19,8 +19,8 @@ module.exports = {
       },
       {
         test: /\.svg$/i,
-        issuer: /\.(style.js|style.ts)$/,
-        use: ['url-loader'],
+        issuer: /\.[jt]sx?$/,
+        use: ['@svgr/webpack'],
       },
       {
         test: /\.(png|jpg)$/i,

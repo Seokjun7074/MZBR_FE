@@ -10,14 +10,13 @@ const AppRouter = () => {
   const router = createBrowserRouter([
     {
       path: PATH.ROOT,
+      element: <Intro />,
+    },
+    {
+      path: PATH.ROOT,
       element: <App />,
       errorElement: <></>,
-      children: [
-        {
-          path: '',
-          element: <Intro />,
-        },
-      ],
+      children: [],
     },
   ]);
   return <RouterProvider router={router} />;

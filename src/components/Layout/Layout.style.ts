@@ -1,7 +1,9 @@
 import styled from 'styled-components';
+
 import { Flex } from '@/components/common/Flex/Flex';
 
 export const LayoutWrapper = styled(Flex)`
+  flex-direction: column;
   min-height: 100vh;
   background-color: ${({ theme }) => theme.color.white};
   min-width: 370px;
