@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 import { Flex } from '@/components/common/Flex/Flex';
 
-export const IntroWrapper = styled(Flex)`
+export const IntroPageWrapper = styled(Flex)`
   flex-direction: column;
   min-height: 100vh;
   min-width: 370px;
