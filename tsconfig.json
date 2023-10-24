@@ -13,7 +13,14 @@
     "allowJs": true,
     "baseUrl": ".", // 절대경로 설정
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@pages/*": ["./src/pages/*"],
+      "@components/*": ["./src/components/*"],
+      "@constants/*": ["./src/constants/*"],
+      "@hooks/*": ["./src/hooks/*"],
+      "@apis/*": ["./src/apis/*"],
+      "@stores/*": ["./src/stores/*"],
+      "@utils/*": ["./src/utils/*"]
     },
     "allowSyntheticDefaultImports": true
   },
