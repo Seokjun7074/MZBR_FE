@@ -1,6 +1,6 @@
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 
-
+import IntroPage from '@/pages/IntroPage/IntroPage';
 import MyPage from '@/pages/MyPage/MyMain';
 import FavoriteRestaurants from '@/pages/MyPage/Restaurant/FavoriteRestaurants';
 import BlockedUsers from '@/pages/MyPage/Social/BlockedUsers';
@@ -8,9 +8,8 @@ import SubcribedUsers from '@/pages/MyPage/Social/SubscribedUsers';
 import LikeVideo from '@/pages/MyPage/Video/LikeVideo';
 import MyVideo from '@/pages/MyPage/Video/MyVideo';
 import WatchingList from '@/pages/MyPage/Video/WatchingList';
-import IntroPage from '@/pages/IntroPage/IntroPage';
+import KakaoRedirectPage from '@/pages/RedirectPage/KakaoRedirectPage';
 import SignupPage from '@/pages/SignupPage/SignupPage';
-
 
 import { PATH } from '@/constants/path';
 
@@ -58,6 +57,10 @@ const AppRouter = () => {
         {
           path: '/mypage/watchinglist',
           element: <WatchingList />,
+        },
+        {
+          path: PATH.KAKAO_REDIRECT,
+          element: <KakaoRedirectPage />,
         },
       ],
     },
