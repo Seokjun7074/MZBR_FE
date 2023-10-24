@@ -1,9 +1,6 @@
 import { useState } from 'react';
 
-export const useInput = (
-  initValue: string | number,
-  validator?: (input: string | number) => boolean,
-) => {
+export const useInput = (initValue: string, validator?: (input: string) => boolean) => {
   const [value, setValue] = useState(initValue);
   const [isValidate, setIsValidate] = useState(true);
 
@@ -15,7 +12,7 @@ export const useInput = (
     setValue(currentValue);
   };
 
-  const validateValue = (input: string | number) => {
+  const validateValue = (input: string) => {
     if (validator!(input)) {
       setIsValidate(true);
       return;

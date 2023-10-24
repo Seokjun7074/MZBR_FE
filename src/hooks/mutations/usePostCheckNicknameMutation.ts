@@ -4,7 +4,7 @@ import { postCheckNickname } from '@/apis/auth/postCheckNickname';
 
 export const usePostCheckNicknameMutation = () => {
   const postCheckNicknameMutation = useMutation({
-    mutationFn: (nickname: string) => postCheckNickname(nickname),
+    mutationFn: postCheckNickname,
   });
 
   return postCheckNicknameMutation;
