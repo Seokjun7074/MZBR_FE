@@ -7,9 +7,6 @@ assignees: ''
 
 ---
 
-## :memo: Description
-리팩토링을 해야하는 이유를 작성해주세요
-
 ## :white_check_mark: To-do
 - [ ] todo
 - [ ] todo

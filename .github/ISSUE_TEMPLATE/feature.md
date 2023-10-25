@@ -7,9 +7,6 @@ assignees: ''
 
 ---
 
-## :rewind: PreIssue
-[선택] 이 이슈 이전에 해야하는 이슈를 작성해주세요
-
 ## :memo: Description
 설명을 상세하게 작성해주세요.
 

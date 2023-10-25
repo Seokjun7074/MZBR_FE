@@ -3,7 +3,7 @@ name: Bug
 about: Bug 가 발생한 곳을 입력해주세요
 title: ''
 labels: "\U0001F41B Bug"
-assignees: ''
+assignees: Seokjun7074
 
 ---
 
