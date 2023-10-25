@@ -14,7 +14,7 @@ const GoogleMapWrapper = ({ children }: { children: React.ReactNode }) => {
     <Wrapper
       apiKey={process.env.GOOGLE_MAP_API_KEY}
       render={render}
-      libraries={['places', 'marker']}
+      libraries={['marker']}
       language="KO"
     >
       {children}

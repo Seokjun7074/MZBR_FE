@@ -16,5 +16,5 @@ export const OutletWrapper = styled(Flex)`
   width: 100%;
   height: calc(100vh - 6rem);
   flex-direction: column;
-  padding: 0 2rem;
+  /* padding: 0 2rem; */
 `;

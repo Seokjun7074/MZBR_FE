@@ -8,7 +8,7 @@ export const SignupPageWrapper = styled(Flex)`
   height: 100%;
   flex-direction: column;
   justify-content: space-between;
-  padding: 4rem 0;
+  padding: 4rem;
 `;
 
 export const SignupMessage = styled.span`
@@ -33,18 +33,18 @@ export const InputContainer = styled(Flex)`
 `;
 
 export const NicknameInput = styled.input`
-  width: 70%;
+  width: 60%;
   border-radius: 8px;
   background-color: ${({ theme }) => theme.color.lightgray};
   padding: 1rem;
 `;
 
 export const DuplicationButton = styled(Button)`
-  font-size: ${({ theme }) => theme.fontSize.m};
+  font-size: ${({ theme }) => theme.fontSize.s};
   padding: none;
   color: ${({ theme }) => theme.color.darkgray};
   background-color: transparent;
-  width: 30%;
+  width: 40%;
 `;
 
 export const NicknameNotification = styled.span`
