@@ -1,6 +1,7 @@
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 
 import IntroPage from '@/pages/IntroPage/IntroPage';
+import MapPage from '@/pages/MapPage/MapPage';
 import MyPage from '@/pages/MyPage/MyMain';
 import FavoriteRestaurants from '@/pages/MyPage/Restaurant/FavoriteRestaurants';
 import BlockedUsers from '@/pages/MyPage/Social/BlockedUsers';
@@ -61,6 +62,10 @@ const AppRouter = () => {
         {
           path: PATH.KAKAO_REDIRECT,
           element: <KakaoRedirectPage />,
+        },
+        {
+          path: PATH.MAP,
+          element: <MapPage />,
         },
       ],
     },
