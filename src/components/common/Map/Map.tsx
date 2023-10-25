@@ -17,6 +17,7 @@ const Map = ({ center, zoom }: MapProps) => {
         center,
         zoom,
         clickableIcons: false,
+        disableDefaultUI: true,
         mapId: 'MAIN_PAGE_MAP',
       });
       setMap(mapInfo);

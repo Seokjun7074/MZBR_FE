@@ -36,13 +36,10 @@ export const Spot = styled.div`
   box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.5);
 `;
 
-export const SpotAnimation = styled.div`
+export const SpotAnimation = styled(Flex)`
   width: 30px;
   height: 30px;
   border-radius: 50%;
   background-color: red;
   animation: ${scale} 1s 0.1s infinite;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 `;
