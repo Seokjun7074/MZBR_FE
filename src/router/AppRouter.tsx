@@ -2,6 +2,7 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 
 import IntroPage from '@/pages/IntroPage/IntroPage';
 import MapPage from '@/pages/MapPage/MapPage';
+import EditProfile from '@/pages/MyPage/EditProfile';
 import MyPage from '@/pages/MyPage/MyMain';
 import FavoriteRestaurants from '@/pages/MyPage/Restaurant/FavoriteRestaurants';
 import BlockedUsers from '@/pages/MyPage/Social/BlockedUsers';
@@ -66,6 +67,10 @@ const AppRouter = () => {
         {
           path: PATH.MAP,
           element: <MapPage />,
+        },
+        {
+          path: '/mypage/edit',
+          element: <EditProfile />,
         },
       ],
     },
