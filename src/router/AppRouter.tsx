@@ -10,6 +10,7 @@ import SubcribedUsers from '@/pages/MyPage/Social/SubscribedUsers';
 import LikeVideo from '@/pages/MyPage/Video/LikeVideo';
 import MyVideo from '@/pages/MyPage/Video/MyVideo';
 import WatchingList from '@/pages/MyPage/Video/WatchingList';
+import Withdrawal from '@/pages/MyPage/Withdrawal';
 import KakaoRedirectPage from '@/pages/RedirectPage/KakaoRedirectPage';
 import SignupPage from '@/pages/SignupPage/SignupPage';
 
@@ -71,6 +72,10 @@ const AppRouter = () => {
         {
           path: '/mypage/edit',
           element: <EditProfile />,
+        },
+        {
+          path: '/mypage/withdrawal',
+          element: <Withdrawal />,
         },
       ],
     },
