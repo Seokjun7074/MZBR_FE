@@ -1,4 +1,5 @@
 import { axiosInstance } from '@/apis';
+import { RestaurantResponse } from '@/types/restaurant';
 
 export interface getRestaurantListRequest {
   latitude: number;
@@ -11,7 +12,7 @@ export const getRestaurantList = async ({
   longitude,
   radius,
 }: getRestaurantListRequest) => {
-  const { data } = await axiosInstance.get('/restaurants', {
+  const { data } = await axiosInstance.get<RestaurantResponse>('/restaurants', {
     params: {
       latitude,
       longitude,
