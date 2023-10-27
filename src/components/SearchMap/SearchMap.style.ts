@@ -1,6 +1,12 @@
 import styled from 'styled-components';
 
 import { Button } from '@/components/common/Button/Button';
+import { Flex } from '@/components/common/Flex/Flex';
+
+export const SearchMapWrapper = styled(Flex)`
+  width: 100%;
+  height: 100%;
+`;
 
 export const SearchCurrentPosition = styled(Button)`
   position: fixed;
