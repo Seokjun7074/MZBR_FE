@@ -31,6 +31,10 @@ const dummyData: Video[] = [
 const LikeVideo = () => {
   const navigate = useNavigate();
 
+  const handleThumbnailClick = (id: number) => {
+    navigate(`/video/${id}`);
+  };
+
   return (
     <div>
       <S.ButtonContainer>
@@ -46,6 +50,7 @@ const LikeVideo = () => {
             key={video.id}
             src={video.thumbnail}
             alt={`Thumbnail for video ${video.id}`}
+            onClick={() => handleThumbnailClick(video.id)}
           />
         ))}
       </S.VideoGrid>

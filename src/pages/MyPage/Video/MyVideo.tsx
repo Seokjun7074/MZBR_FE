@@ -31,6 +31,11 @@ const dummyData: Video[] = [
 const MyVideo = () => {
   const navigate = useNavigate();
 
+  // 이 함수를 추가합니다.
+  const handleThumbnailClick = (id: number) => {
+    navigate(`/video/${id}`);
+  };
+
   return (
     <div>
       <S.ButtonContainer>
@@ -43,10 +48,12 @@ const MyVideo = () => {
 
       <S.VideoGrid>
         {dummyData.map((video) => (
+          // Thumbnail을 클릭할 때 handleThumbnailClick 함수를 호출합니다.
           <S.Thumbnail
             key={video.id}
             src={video.thumbnail}
             alt={`Thumbnail for video ${video.id}`}
+            onClick={() => handleThumbnailClick(video.id)}
           />
         ))}
       </S.VideoGrid>
