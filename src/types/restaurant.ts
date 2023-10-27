@@ -11,3 +11,16 @@ export interface Restaurant {
 export interface RestaurantResponse {
   restaurants: Restaurant[];
 }
+
+export interface RestaurantListRequest {
+  latitude: number;
+  longitude: number;
+  radius: number;
+}
+
+export interface RestaurantListByKeywordRequest extends RestaurantListRequest {
+  keyword: string;
+  star: string;
+  day: string;
+  time: string;
+}

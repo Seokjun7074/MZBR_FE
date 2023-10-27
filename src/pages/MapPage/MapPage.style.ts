@@ -1,12 +1,12 @@
 import styled from 'styled-components';
 
-import { Button } from '@/components/common/Button/Button';
 import { Flex } from '@/components/common/Flex/Flex';
 
 export const MapPageWrapper = styled(Flex)`
   width: 100%;
   height: 100%;
   flex-direction: column;
+  justify-content: space-between;
   .map-container {
     width: 100%;
     height: 100%;

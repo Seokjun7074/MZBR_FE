@@ -4,10 +4,9 @@ import { useRecoilState } from 'recoil';
 
 import * as S from '@/pages/MapPage/MapPage.style';
 
+import SearchMap from '@/components/Map/SearchMap/SearchMap';
 import GoogleMapWrapper from '@/components/common/GoogleMapWrapper/GoogleMapWrapper';
-import Map from '@/components/common/Map/Map';
 
-// import { useRestaurantListQuery } from '@/hooks/queries/userestaurantListQuery';
 import { useMyLocation } from '@/hooks/useMyLocation';
 
 import AddButton from '@/assets/navigationBar/add_button.svg';
@@ -18,21 +17,17 @@ import { centerState } from '@/store/map';
 
 const MapPage = () => {
   const { myLocation } = useMyLocation();
+
   const [center, setCenter] = useRecoilState(centerState);
 
   useEffect(() => {
     setCenter(myLocation);
   }, [myLocation]);
 
-  // const { restaurantListData } = useRestaurantListQuery({
-  //   latitude: center.lat,
-  //   longitude: center.lng,
-  //   radius: 5,
-  // });
   return (
     <S.MapPageWrapper>
       <GoogleMapWrapper>
-        <Map zoom={14}></Map>
+        <SearchMap />
       </GoogleMapWrapper>
       <S.MapPageNavigationBar>
         <AddButton style={{ cursor: 'pointer' }} />

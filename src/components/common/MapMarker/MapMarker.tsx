@@ -5,7 +5,7 @@ import * as S from '@/components/common/MapMarker/MapMarker.style';
 
 import Pin from '@/assets/map/pin.svg';
 
-interface MapMarker {
+export interface MapMarker {
   id: string;
   lat: number;
   lng: number;
