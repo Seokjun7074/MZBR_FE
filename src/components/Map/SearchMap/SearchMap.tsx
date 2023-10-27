@@ -1,6 +1,9 @@
+import { useState } from 'react';
+
 import { useRecoilState } from 'recoil';
 
-import * as S from '@/components/SearchMap/SearchMap.style';
+import MapMarkerList from '@/components/Map/MapMarkerList/MapMarkerList';
+import * as S from '@/components/Map/SearchMap/SearchMap.style';
 import MapMarker from '@/components/common/MapMarker/MapMarker';
 
 import { useRestaurantListByKeywordQuery } from '@/hooks/queries/useRestaurantListByKeywordQuery';
@@ -13,6 +16,7 @@ import Search from '@/assets/map/search_button.svg';
 import { centerState } from '@/store/map';
 
 const SearchMap = () => {
+  const [placeType, setPlaceType] = useState<'POSITION' | 'KEYWORD' | 'HASHTAG'>('POSITION');
   const { map, mapRef } = useGoogleMap(14);
   const [center, setCenter] = useRecoilState(centerState);
   const { value, handleInput } = useInput('');
@@ -45,8 +49,14 @@ const SearchMap = () => {
     }
   };
 
+  const searchByPosition = () => {
+    setCurrentCenter();
+    setPlaceType('POSITION');
+  };
+
   const searchByKeyword = () => {
     setCurrentCenter();
+    setPlaceType('KEYWORD');
     refetch();
   };
 
@@ -54,12 +64,20 @@ const SearchMap = () => {
     <S.SearchMapWrapper>
       <div id="map" ref={mapRef} style={{ height: '100%', width: '100%' }}>
         {map && <MapMarker id="CENTER" lat={center.lat} lng={center.lng} map={map} />}
+        {map && (
+          <MapMarkerList
+            map={map}
+            restaurantListData={restaurantListData}
+            restaurantListByKeywordData={restaurantListByKeywordData}
+            placeType={placeType}
+          />
+        )}
       </div>
       <S.SearchInputContainer>
         <S.SearchInput placeholder="검색어를 입력하세요" value={value} onChange={handleInput} />
         <Search style={{ cursor: 'pointer' }} onClick={searchByKeyword} />
       </S.SearchInputContainer>
-      <S.SearchCurrentPosition onClick={setCurrentCenter}>
+      <S.SearchCurrentPosition onClick={searchByPosition}>
         현재 위치에서 검색
       </S.SearchCurrentPosition>
     </S.SearchMapWrapper>

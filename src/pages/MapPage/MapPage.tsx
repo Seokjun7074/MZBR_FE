@@ -4,7 +4,7 @@ import { useRecoilState } from 'recoil';
 
 import * as S from '@/pages/MapPage/MapPage.style';
 
-import SearchMap from '@/components/SearchMap/SearchMap';
+import SearchMap from '@/components/Map/SearchMap/SearchMap';
 import GoogleMapWrapper from '@/components/common/GoogleMapWrapper/GoogleMapWrapper';
 
 import { useMyLocation } from '@/hooks/useMyLocation';
