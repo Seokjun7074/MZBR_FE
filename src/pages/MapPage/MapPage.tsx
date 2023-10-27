@@ -7,7 +7,6 @@ import * as S from '@/pages/MapPage/MapPage.style';
 import SearchMap from '@/components/SearchMap/SearchMap';
 import GoogleMapWrapper from '@/components/common/GoogleMapWrapper/GoogleMapWrapper';
 
-// import { useRestaurantListQuery } from '@/hooks/queries/userestaurantListQuery';
 import { useMyLocation } from '@/hooks/useMyLocation';
 
 import AddButton from '@/assets/navigationBar/add_button.svg';
@@ -24,13 +23,6 @@ const MapPage = () => {
   useEffect(() => {
     setCenter(myLocation);
   }, [myLocation]);
-
-  // 식당 리스트 fetch
-  // const { restaurantListData } = useRestaurantListQuery({
-  //   latitude: center.lat,
-  //   longitude: center.lng,
-  //   radius: 5,
-  // });
 
   return (
     <S.MapPageWrapper>
