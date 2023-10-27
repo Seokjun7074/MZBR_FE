@@ -1,7 +1,32 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import Profile from '../../../assets/Profile.png';
 import * as S from './MyVideo.style';
+
+type Video = {
+  thumbnail: string;
+  id: number;
+};
+
+const dummyData: Video[] = [
+  {
+    thumbnail: Profile,
+    id: 1,
+  },
+  {
+    thumbnail: Profile,
+    id: 2,
+  },
+  {
+    thumbnail: Profile,
+    id: 3,
+  },
+  {
+    thumbnail: Profile,
+    id: 4,
+  },
+];
 
 const MyVideo = () => {
   const navigate = useNavigate();
@@ -15,7 +40,16 @@ const MyVideo = () => {
         <S.Button onClick={() => navigate('/mypage/likevideo')}>좋아요한 영상</S.Button>
         <S.Button onClick={() => navigate('/mypage/watchinglist')}>시청기록</S.Button>
       </S.ButtonContainer>
-      {/* 추가적으로 여기에 각 버튼에 따른 영상 목록을 렌더링할 수 있습니다. */}
+
+      <S.VideoGrid>
+        {dummyData.map((video) => (
+          <S.Thumbnail
+            key={video.id}
+            src={video.thumbnail}
+            alt={`Thumbnail for video ${video.id}`}
+          />
+        ))}
+      </S.VideoGrid>
     </div>
   );
 };
