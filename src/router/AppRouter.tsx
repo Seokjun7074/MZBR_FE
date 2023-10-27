@@ -12,6 +12,8 @@ import MyVideo from '@/pages/MyPage/Video/MyVideo';
 import WatchingList from '@/pages/MyPage/Video/WatchingList';
 import Withdrawal from '@/pages/MyPage/Withdrawal';
 import KakaoRedirectPage from '@/pages/RedirectPage/KakaoRedirectPage';
+import Hashtag from '@/pages/ReviewPage/Hashtag';
+import Review from '@/pages/ReviewPage/ReviewTitle';
 import SignupPage from '@/pages/SignupPage/SignupPage';
 
 import { PATH } from '@/constants/path';
@@ -76,6 +78,14 @@ const AppRouter = () => {
         {
           path: '/mypage/withdrawal',
           element: <Withdrawal />,
+        },
+        {
+          path: '/review/:restaurant_id',
+          element: <Review />,
+        },
+        {
+          path: '/review/:restaurant_id/hashtag',
+          element: <Hashtag />,
         },
       ],
     },
