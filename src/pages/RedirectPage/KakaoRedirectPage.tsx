@@ -1,11 +1,12 @@
-import { useLoginQuery } from '@/hooks/queries/useLoginQuery';
+import { PATH } from '@/constants/path';
 
 const KakaoRedirectPage = () => {
-  const code = new URL(window.location.href).searchParams.get('code');
+  const accessToken = new URL(window.location.href).searchParams.get('accessToken');
+  const refreshToken = new URL(window.location.href).searchParams.get('refreshToken');
 
-  const { kakaoLoginData, status } = useLoginQuery(code!, 'KAKAO');
-  if (status === 'success') {
-    console.log(kakaoLoginData);
+  if (accessToken && refreshToken) {
+    window.localStorage.setItem('accessToken', accessToken);
+    window.location.replace(PATH.MAP);
   }
 
   return <div>카카오 로그인중...</div>;
