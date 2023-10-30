@@ -12,8 +12,12 @@ const HashTagContainer = styled(Flex)`
   border-radius: 16px;
   padding: 0.5rem 1rem;
   font-weight: bold;
+  border: 2px solid ${({ theme }) => theme.color.gray};
+  cursor: pointer;
   &:hover {
-    background-color: #f99468;
+    background-color: #a8a8a8;
+    border: 2px solid #a8a8a8;
+    color: white;
   }
 `;
 

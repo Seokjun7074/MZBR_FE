@@ -6,6 +6,7 @@ interface MapMarkerListProps {
   map: google.maps.Map;
   restaurantListData: RestaurantResponse;
   restaurantListByKeywordData: RestaurantResponse;
+  restaurantListByHashTagData: RestaurantResponse;
   placeType: string;
 }
 
@@ -14,10 +15,12 @@ const MapMarkerList = ({
   placeType,
   restaurantListData,
   restaurantListByKeywordData,
+  restaurantListByHashTagData,
 }: MapMarkerListProps) => {
   const filterPlaceType = (placeType: string) => {
     if (placeType == 'POSITION') return restaurantListData;
     if (placeType == 'KEYWORD') return restaurantListByKeywordData;
+    if (placeType == 'HASHTAG') return restaurantListByHashTagData;
   };
 
   return (

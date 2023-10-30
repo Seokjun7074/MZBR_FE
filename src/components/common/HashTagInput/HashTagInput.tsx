@@ -8,11 +8,6 @@ const HashTagInput = () => {
 
   return (
     <S.HashTagInputWrapper>
-      <S.TagContainer>
-        {tagList.map((item, idx) => (
-          <HashTag key={idx + item} text={item} />
-        ))}
-      </S.TagContainer>
       <S.TagInput
         type="text"
         placeholder="태그를 입력해주세요."
@@ -20,6 +15,11 @@ const HashTagInput = () => {
         onChange={onChange}
         onKeyDown={onKeydown}
       />
+      <S.TagContainer>
+        {tagList.map((item, idx) => (
+          <HashTag key={idx + item} text={item} />
+        ))}
+      </S.TagContainer>
     </S.HashTagInputWrapper>
   );
 };
