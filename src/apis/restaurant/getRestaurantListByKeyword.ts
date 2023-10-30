@@ -1,5 +1,5 @@
 import { axiosInstance } from '@/apis';
-import { RestaurantResponse, getRestaurantListByKeywordRequest } from '@/types/restaurant';
+import { RestaurantListByKeywordRequest, RestaurantResponse } from '@/types/restaurant';
 
 export const getRestaurantListByKeyword = async ({
   latitude,
@@ -9,7 +9,7 @@ export const getRestaurantListByKeyword = async ({
   star,
   day,
   time,
-}: getRestaurantListByKeywordRequest) => {
+}: RestaurantListByKeywordRequest) => {
   const { data } = await axiosInstance.get<RestaurantResponse>('/restaurants/search', {
     params: {
       latitude,
