@@ -24,3 +24,9 @@ export interface RestaurantListByKeywordRequest extends RestaurantListRequest {
   day: string;
   time: string;
 }
+export interface RestaurantListByHashTagRequest extends RestaurantListRequest {
+  hashtag: string[];
+  star: string;
+  day: string;
+  time: string;
+}
