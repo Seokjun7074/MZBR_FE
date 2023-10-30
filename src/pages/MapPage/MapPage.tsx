@@ -17,7 +17,6 @@ import { centerState } from '@/store/map';
 
 const MapPage = () => {
   const { myLocation } = useMyLocation();
-
   const [center, setCenter] = useRecoilState(centerState);
 
   useEffect(() => {

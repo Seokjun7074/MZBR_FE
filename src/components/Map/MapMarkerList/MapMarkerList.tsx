@@ -22,11 +22,16 @@ const MapMarkerList = ({
     if (placeType == 'KEYWORD') return restaurantListByKeywordData;
     if (placeType == 'HASHTAG') return restaurantListByHashTagData;
   };
-
   return (
     <>
       {filterPlaceType(placeType)?.restaurants.map((item: Restaurant) => (
-        <MapMarker id={item.restaurantId} lat={item.latitude} lng={item.longitude} map={map} />
+        <MapMarker
+          key={item.restaurantId}
+          id={item.restaurantId}
+          lat={item.latitude}
+          lng={item.longitude}
+          map={map}
+        />
       ))}
     </>
   );
