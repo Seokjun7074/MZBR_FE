@@ -4,15 +4,10 @@ import * as S from '@/components/common/HashTagInput/HashTagInput.style';
 import { useHasgTag } from '@/hooks/useHashTag';
 
 const HashTagInput = () => {
-  const { tag, tagList, onChange, onKeydown } = useHasgTag();
+  const { tag, tagList, onChange, onKeydown, deleteHashTag } = useHasgTag();
 
   return (
     <S.HashTagInputWrapper>
-      <S.TagContainer>
-        {tagList.map((item, idx) => (
-          <HashTag key={idx + item} text={item} />
-        ))}
-      </S.TagContainer>
       <S.TagInput
         type="text"
         placeholder="태그를 입력해주세요."
@@ -20,6 +15,11 @@ const HashTagInput = () => {
         onChange={onChange}
         onKeyDown={onKeydown}
       />
+      <S.TagContainer>
+        {tagList.map((item, idx) => (
+          <HashTag key={idx + item} text={item} deleteHashTag={() => deleteHashTag(item)} />
+        ))}
+      </S.TagContainer>
     </S.HashTagInputWrapper>
   );
 };

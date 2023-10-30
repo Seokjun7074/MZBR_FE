@@ -30,9 +30,9 @@ const MapPage = () => {
         <SearchMap />
       </GoogleMapWrapper>
       <S.MapPageNavigationBar>
+        <ShortFormButton style={{ cursor: 'pointer' }} />
         <AddButton style={{ cursor: 'pointer' }} />
         <MypageButton style={{ cursor: 'pointer' }} />
-        <ShortFormButton style={{ cursor: 'pointer' }} />
       </S.MapPageNavigationBar>
     </S.MapPageWrapper>
   );
