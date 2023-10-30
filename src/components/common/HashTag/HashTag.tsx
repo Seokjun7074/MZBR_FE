@@ -2,8 +2,8 @@ import styled from 'styled-components';
 
 import { Flex } from '@/components/common/Flex/Flex';
 
-const HashTag = ({ text }: { text: string }) => {
-  return <HashTagContainer>#{text}</HashTagContainer>;
+const HashTag = ({ text, deleteHashTag }: { text: string; deleteHashTag: () => void }) => {
+  return <HashTagContainer onClick={deleteHashTag}>#{text}</HashTagContainer>;
 };
 
 const HashTagContainer = styled(Flex)`

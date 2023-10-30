@@ -18,10 +18,16 @@ export const useHasgTag = () => {
     setTag(event.target.value);
   };
 
+  const deleteHashTag = (text: string) => {
+    const deletedList = tagList.filter((item) => item !== text);
+    setTagList(deletedList);
+  };
+
   return {
     tag,
     tagList,
     onKeydown,
     onChange,
+    deleteHashTag,
   };
 };

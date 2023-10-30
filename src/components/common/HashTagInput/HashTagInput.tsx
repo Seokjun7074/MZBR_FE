@@ -4,7 +4,7 @@ import * as S from '@/components/common/HashTagInput/HashTagInput.style';
 import { useHasgTag } from '@/hooks/useHashTag';
 
 const HashTagInput = () => {
-  const { tag, tagList, onChange, onKeydown } = useHasgTag();
+  const { tag, tagList, onChange, onKeydown, deleteHashTag } = useHasgTag();
 
   return (
     <S.HashTagInputWrapper>
@@ -17,7 +17,7 @@ const HashTagInput = () => {
       />
       <S.TagContainer>
         {tagList.map((item, idx) => (
-          <HashTag key={idx + item} text={item} />
+          <HashTag key={idx + item} text={item} deleteHashTag={() => deleteHashTag(item)} />
         ))}
       </S.TagContainer>
     </S.HashTagInputWrapper>
