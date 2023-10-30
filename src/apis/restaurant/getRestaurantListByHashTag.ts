@@ -23,7 +23,7 @@ export const getRestaurantListByHashTag = async ({
       time,
     },
     paramsSerializer: (params) => {
-      return qs.stringify(params);
+      return qs.stringify(params, { arrayFormat: 'repeat' });
     },
   });
 

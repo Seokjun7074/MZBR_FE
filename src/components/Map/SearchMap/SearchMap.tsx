@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 
 import MapMarkerList from '@/components/Map/MapMarkerList/MapMarkerList';
 import * as S from '@/components/Map/SearchMap/SearchMap.style';
@@ -15,6 +15,7 @@ import { useInput } from '@/hooks/useInput';
 
 import Search from '@/assets/map/search_button.svg';
 
+import { hashtagState } from '@/store/hashtag';
 import { centerState } from '@/store/map';
 
 const SearchMap = () => {
@@ -23,6 +24,7 @@ const SearchMap = () => {
   const { map, mapRef } = useGoogleMap(14);
   const [center, setCenter] = useRecoilState(centerState);
   const { value, handleInput } = useInput('');
+  const hashtagList = useRecoilValue(hashtagState);
 
   // 식당 리스트 fetch
   const { restaurantListData } = useRestaurantListQuery({
@@ -46,7 +48,7 @@ const SearchMap = () => {
     latitude: center.lat,
     longitude: center.lng,
     radius: 5,
-    hashtag: [],
+    hashtag: hashtagList,
     day: '',
     star: '',
     time: '',
