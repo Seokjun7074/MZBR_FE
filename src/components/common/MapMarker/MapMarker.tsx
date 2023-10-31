@@ -25,7 +25,7 @@ const MapMarker = ({ id, lat, lng, map }: MapMarkerProps) => {
       });
     }
     return () => {
-      if (markerRef.current) markerRef.current = null;
+      if (markerRef.current) markerRef.current.map = null;
     };
   }, [id, lat, lng, map]);
 

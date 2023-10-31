@@ -5,7 +5,6 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 import MapMarkerList from '@/components/Map/MapMarkerList/MapMarkerList';
 import * as S from '@/components/Map/SearchMap/SearchMap.style';
 import HashTagInput from '@/components/common/HashTagInput/HashTagInput';
-import MapMarker from '@/components/common/MapMarker/MapMarker';
 
 import { useRestaurantListByHashTagQuery } from '@/hooks/queries/useRestaurantListByHashTagQuery';
 import { useRestaurantListByKeywordQuery } from '@/hooks/queries/useRestaurantListByKeywordQuery';
@@ -83,7 +82,6 @@ const SearchMap = () => {
   return (
     <S.SearchMapWrapper>
       <div id="map" ref={mapRef} style={{ height: '100%', width: '100%' }}>
-        {map && <MapMarker id="CENTER" lat={center.lat} lng={center.lng} map={map} />}
         {map && (
           <MapMarkerList
             map={map}

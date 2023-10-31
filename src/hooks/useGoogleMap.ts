@@ -19,10 +19,6 @@ export const useGoogleMap = (zoom: number) => {
         mapId: 'MAIN_PAGE_MAP',
       });
       setMap(mapInfo);
-      new google.maps.Marker({
-        position: center,
-        map,
-      });
     }
   }, [center]);
 

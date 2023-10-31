@@ -1,7 +1,10 @@
 import { useEffect, useState } from 'react';
 
+import { useRecoilValue } from 'recoil';
+
 import MapMarker from '@/components/common/MapMarker/MapMarker';
 
+import { myPositionState } from '@/store/map';
 import { RestaurantResponse } from '@/types/restaurant';
 
 interface MapMarkerListProps {
@@ -26,6 +29,7 @@ const MapMarkerList = ({
   restaurantListByHashTagData,
 }: MapMarkerListProps) => {
   const [markers, setMarkers] = useState<MarkerType[] | undefined>([]);
+  const myPosition = useRecoilValue(myPositionState);
 
   const filterPlaceType = (placeType: string) => {
     if (placeType == 'POSITION') return restaurantListData;
@@ -39,23 +43,22 @@ const MapMarkerList = ({
       filteredList?.restaurants?.forEach((item) =>
         bounds.extend(new google.maps.LatLng(item.latitude, item.longitude)),
       );
-      const center = bounds.getCenter();
-      map.panTo(center);
+      const boundCenter = bounds.getCenter();
+      map.panTo(boundCenter);
       map.fitBounds(bounds);
     }
-    const newMarkers = filteredList?.restaurants.map((item) => {
-      return {
-        key: item.restaurantId,
-        id: item.restaurantId,
-        lat: item.latitude,
-        lng: item.longitude,
-      };
-    });
+    const newMarkers = filteredList?.restaurants.map((item) => ({
+      key: item.restaurantId,
+      id: item.restaurantId,
+      lat: item.latitude,
+      lng: item.longitude,
+    }));
     setMarkers(newMarkers);
   }, [placeType, restaurantListData, restaurantListByKeywordData, restaurantListByHashTagData]);
-  console.log(markers);
+
   return (
     <>
+      <MapMarker id="CENTER" lat={myPosition.lat} lng={myPosition.lng} map={map} />
       {markers?.map((item: MarkerType) => (
         <MapMarker key={item.id} id={item.id} lat={item.lat} lng={item.lng} map={map} />
       ))}
