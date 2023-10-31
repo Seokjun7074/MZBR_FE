@@ -5,21 +5,19 @@ import * as S from '@/components/common/MapMarker/MapMarker.style';
 
 import Pin from '@/assets/map/pin.svg';
 
-export interface MapMarker {
+export interface MapMarkerProps {
   id: string;
   lat: number;
   lng: number;
   map: google.maps.Map;
 }
-const MapMarker = ({ id, lat, lng, map }: MapMarker) => {
+const MapMarker = ({ id, lat, lng, map }: MapMarkerProps) => {
   const markerRef = useRef<google.maps.marker.AdvancedMarkerElement | null>(null);
   const rootRef = useRef<Root | null>(null);
-
   useEffect(() => {
     if (!rootRef.current) {
       const container = document.createElement('div');
       rootRef.current = createRoot(container);
-
       markerRef.current = new google.maps.marker.AdvancedMarkerElement({
         position: { lat, lng },
         map,
@@ -27,14 +25,16 @@ const MapMarker = ({ id, lat, lng, map }: MapMarker) => {
       });
     }
     return () => {
-      if (markerRef.current) markerRef.current = null;
+      if (markerRef.current) markerRef.current.map = null;
     };
   }, [id, lat, lng, map]);
 
   useEffect(() => {
     if (rootRef.current && markerRef.current) {
       rootRef.current.render(
-        <S.PinContainer>{id === 'CENTER' ? <LocatioinSpot /> : <Pin />}</S.PinContainer>,
+        <S.PinContainer>
+          {id === 'CENTER' ? <LocatioinSpot /> : <Pin className={id} />}
+        </S.PinContainer>,
       );
 
       markerRef.current.position = { lat, lng };

@@ -4,6 +4,7 @@ export const axiosInstance = axios.create({
   baseURL: process.env.SERVER_URL,
   headers: {
     'Content-Type': 'application/json',
-    Authorization: `Bearer`,
+    Authorization: `Bearer `,
+    'Authorization-refresh': 'Bearer ',
   },
 });

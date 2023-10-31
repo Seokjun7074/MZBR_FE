@@ -2,6 +2,7 @@
 const webpack = require('webpack');
 const { merge } = require('webpack-merge');
 const path = require('path');
+const CopyPlugin = require('copy-webpack-plugin');
 const common = require('./webpack.common');
 
 module.exports = merge(common, {
@@ -14,5 +15,10 @@ module.exports = merge(common, {
     port: 3000,
     static: path.resolve(__dirname, 'dist'),
   },
-  plugins: [new webpack.HotModuleReplacementPlugin()],
+  plugins: [
+    new webpack.HotModuleReplacementPlugin(),
+    new CopyPlugin({
+      patterns: [{ from: 'public/mockServiceWorker.js', to: '' }],
+    }),
+  ],
 });
