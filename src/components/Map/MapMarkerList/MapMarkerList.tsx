@@ -26,7 +26,6 @@ const MapMarkerList = ({
   restaurantListByHashTagData,
 }: MapMarkerListProps) => {
   const [markers, setMarkers] = useState<MarkerType[] | undefined>([]);
-  const [restaurantIdList, setRestaurantIdList] = useState<string[]>([]);
 
   const filterPlaceType = (placeType: string) => {
     if (placeType == 'POSITION') return restaurantListData;
@@ -35,10 +34,16 @@ const MapMarkerList = ({
   };
   useEffect(() => {
     const filteredList = filterPlaceType(placeType);
-    const idList: string[] = [];
-
+    if (filteredList?.restaurants?.length! > 0) {
+      const bounds = new google.maps.LatLngBounds();
+      filteredList?.restaurants?.forEach((item) =>
+        bounds.extend(new google.maps.LatLng(item.latitude, item.longitude)),
+      );
+      const center = bounds.getCenter();
+      map.panTo(center);
+      map.fitBounds(bounds);
+    }
     const newMarkers = filteredList?.restaurants.map((item) => {
-      idList.push(item.restaurantId);
       return {
         key: item.restaurantId,
         id: item.restaurantId,
@@ -46,11 +51,9 @@ const MapMarkerList = ({
         lng: item.longitude,
       };
     });
-
-    setRestaurantIdList([...idList]);
     setMarkers(newMarkers);
   }, [placeType, restaurantListData, restaurantListByKeywordData, restaurantListByHashTagData]);
-
+  console.log(markers);
   return (
     <>
       {markers?.map((item: MarkerType) => (

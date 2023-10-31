@@ -17,15 +17,12 @@ const MapMarker = ({ id, lat, lng, map }: MapMarkerProps) => {
   useEffect(() => {
     if (!rootRef.current) {
       const container = document.createElement('div');
-      container.className = id;
       rootRef.current = createRoot(container);
-
       markerRef.current = new google.maps.marker.AdvancedMarkerElement({
         position: { lat, lng },
         map,
         content: container,
       });
-      console.log(markerRef.current);
     }
     return () => {
       if (markerRef.current) markerRef.current = null;
