@@ -3,7 +3,7 @@ import { HttpResponse, http } from 'msw';
 const restaurantDummy1 = {
   restaurants: [
     {
-      restaurantId: 'string1',
+      restaurantId: '1',
       restaurant_name: '털보네', // 식당 이름
       latitude: 37.5099054, // 식당 위도
       longitude: 127.0317466, // 식당 경도
@@ -20,7 +20,7 @@ const restaurantDummy1 = {
       ],
     },
     {
-      restaurantId: 'string2',
+      restaurantId: '2',
       restaurant_name: '김치찌개', // 식당 이름
       latitude: 37.5196054, // 식당 위도
       longitude: 127.0217466, // 식당 경도
@@ -41,7 +41,7 @@ const restaurantDummy1 = {
 const restaurantDummy2 = {
   restaurants: [
     {
-      restaurantId: 'string1',
+      restaurantId: '3',
       restaurant_name: '털보네', // 식당 이름
       latitude: 37.5199054, // 식당 위도
       longitude: 127.0317466, // 식당 경도
@@ -58,7 +58,7 @@ const restaurantDummy2 = {
       ],
     },
     {
-      restaurantId: 'string2',
+      restaurantId: '4',
       restaurant_name: '김치찌개', // 식당 이름
       latitude: 37.5126054, // 식당 위도
       longitude: 127.0217466, // 식당 경도
@@ -79,7 +79,7 @@ const restaurantDummy2 = {
 const restaurantDummy3 = {
   restaurants: [
     {
-      restaurantId: 'string1',
+      restaurantId: '5',
       restaurant_name: '털보네', // 식당 이름
       latitude: 37.5129054, // 식당 위도
       longitude: 127.0317466, // 식당 경도
@@ -96,7 +96,7 @@ const restaurantDummy3 = {
       ],
     },
     {
-      restaurantId: 'string2',
+      restaurantId: '6',
       restaurant_name: '김치찌개', // 식당 이름
       latitude: 37.5126054, // 식당 위도
       longitude: 127.0237466, // 식당 경도

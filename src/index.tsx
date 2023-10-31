@@ -20,6 +20,7 @@ const startMockWorker = async () => {
       serviceWorker: {
         url: '/mockServiceWorker.js',
       },
+      onUnhandledRequest: 'bypass',
     });
   }
 };
