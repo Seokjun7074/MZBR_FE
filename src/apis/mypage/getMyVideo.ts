@@ -18,12 +18,14 @@ const defaultTeachers = [
   },
 ];
 type User = {
+  userId: number;
   accessToken: string;
   refreshToken: string;
 };
 
 const [videos, setVideos] = useState(defaultTeachers);
 const [user, setUser] = useState<User>({
+  userId: 1,
   accessToken: 'some_initial_access_token',
   refreshToken: 'some_initial_refresh_token',
 });
@@ -41,9 +43,12 @@ useEffect(() => {
     };
 
     try {
-      const response = await axios.get<ApiResponse<videos[]>>(BASE_URL + '/mypage/myvideo', {
-        headers: { 'access-token': user.accessToken },
-      });
+      const response = await axios.get<ApiResponse<videos[]>>(
+        BASE_URL + `/videos/users/${user.userId}`,
+        {
+          headers: { 'access-token': user.accessToken },
+        },
+      );
 
       if (response.data.success) {
         setVideos(response.data.data);
