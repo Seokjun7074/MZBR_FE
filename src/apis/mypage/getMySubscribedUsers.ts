@@ -7,33 +7,37 @@ import { getNewAccessToken } from '../getNewAccessToken';
 
 const BASE_URL = 'http://localhost:3000';
 const navigate = useNavigate();
-const defaultLikeVideos = [
+const defaultSubscribes = [
   {
-    id: '1',
-    thumbnail_url: 'asdasdasdas',
+    userId: '1',
+    profileImage: 'sad',
+    nickname: 'sada',
   },
   {
-    id: '2',
-    thumbnail_url: 'asdasadsdasdas',
+    userId: '2',
+    profileImage: 'ssaad',
+    nickname: 'saasdda',
   },
 ];
+
 type User = {
   userId: number;
   accessToken: string;
   refreshToken: string;
 };
 
-const [videos, setVideos] = useState(defaultLikeVideos);
+const [subscribes, setSubscribes] = useState(defaultSubscribes);
 const [user, setUser] = useState<User>({
   userId: 1,
   accessToken: 'some_initial_access_token',
   refreshToken: 'some_initial_refresh_token',
 });
 useEffect(() => {
-  const fetchVideos = async () => {
-    type videos = {
-      id: string;
-      thumbnail_url: string;
+  const fetchSubscribe = async () => {
+    type subscribes = {
+      userId: string;
+      profileImage: string;
+      nickname: string;
     };
 
     type ApiResponse<T> = {
@@ -43,26 +47,26 @@ useEffect(() => {
     };
 
     try {
-      const response = await axios.get<ApiResponse<videos[]>>(
-        BASE_URL + `/videos/${user.userId}/likes`,
-        {
-          headers: { 'access-token': user.accessToken },
-        },
-      );
+      const response = await axios.get<ApiResponse<subscribes[]>>(BASE_URL + '/users/subscriber', {
+        headers: { 'access-token': user.accessToken },
+      });
 
       if (response.data.success) {
-        setVideos(response.data.data);
+        setSubscribes(response.data.data);
       } else if (response.data.error && response.data.error === 'JWT_TOKEN_EXPIRED_EXCEPTION') {
         const newAccessToken = await getNewAccessToken(user.refreshToken);
         if (newAccessToken) {
           setUser({ ...user, accessToken: newAccessToken });
 
-          const newResponse = await axios.get<ApiResponse<videos[]>>(BASE_URL + '/mypage/myvideo', {
-            headers: { 'access-token': newAccessToken },
-          });
+          const newResponse = await axios.get<ApiResponse<subscribes[]>>(
+            BASE_URL + '/mypage/myvideo',
+            {
+              headers: { 'access-token': newAccessToken },
+            },
+          );
 
           if (newResponse.data.success) {
-            setVideos(newResponse.data.data);
+            setSubscribes(newResponse.data.data);
           } else {
             navigate('/error');
           }
@@ -76,6 +80,6 @@ useEffect(() => {
   };
 
   if (user) {
-    fetchVideos();
+    fetchSubscribe();
   }
 }, [user, setUser, navigate]);

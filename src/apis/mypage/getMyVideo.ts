@@ -7,7 +7,7 @@ import { getNewAccessToken } from '../getNewAccessToken';
 
 const BASE_URL = 'http://localhost:3000';
 const navigate = useNavigate();
-const defaultTeachers = [
+const defaultMyVideos = [
   {
     id: '1',
     thumbnail_url: 'asdasdasdas',
@@ -23,7 +23,7 @@ type User = {
   refreshToken: string;
 };
 
-const [videos, setVideos] = useState(defaultTeachers);
+const [videos, setVideos] = useState(defaultMyVideos);
 const [user, setUser] = useState<User>({
   userId: 1,
   accessToken: 'some_initial_access_token',
