@@ -18,7 +18,7 @@ const [user, setUser] = useState<User>({
   accessToken: 'some_initial_access_token',
   refreshToken: 'some_initial_refresh_token',
 });
-
+const BASE_URL = 'http://localhost:3000';
 const newNickname = 'haha';
 const navigate = useNavigate();
 
@@ -26,7 +26,7 @@ useEffect(() => {
   const changeAndHandleNickname = async () => {
     try {
       const response = await axios.put(
-        '/users/nickname',
+        BASE_URL + '/users/nickname',
         { nickname: newNickname },
         { headers: { 'access-token': user.accessToken } },
       );
