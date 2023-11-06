@@ -32,6 +32,7 @@ const [user, setUser] = useState<User>({
   accessToken: 'some_initial_access_token',
   refreshToken: 'some_initial_refresh_token',
 });
+
 useEffect(() => {
   const fetchSubscribe = async () => {
     type subscribes = {
