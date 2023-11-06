@@ -41,27 +41,27 @@ const AppRouter = () => {
           element: <MyPage />,
         },
         {
-          path: 'mypage/favoriterestaurnat',
+          path: '/mypage/favoriterestaurnat',
           element: <FavoriteRestaurants />,
         },
         {
-          path: 'mypage/blockedusers',
+          path: '/mypage/blockedusers',
           element: <BlockedUsers />,
         },
         {
-          path: 'mypage/subscribedusers',
+          path: '/mypage/subscribedusers',
           element: <SubcribedUsers />,
         },
         {
-          path: 'mypage/likevideo',
+          path: '/mypage/likevideo',
           element: <LikeVideo />,
         },
         {
-          path: 'mypage/myvideo',
+          path: '/mypage/myvideo',
           element: <MyVideo />,
         },
         {
-          path: 'mypage/watchinglist',
+          path: '/mypage/watchinglist',
           element: <WatchingList />,
         },
         {
@@ -73,11 +73,11 @@ const AppRouter = () => {
           element: <MapPage />,
         },
         {
-          path: 'mypage/edit',
+          path: '/mypage/edit',
           element: <EditProfile />,
         },
         {
-          path: 'mypage/withdrawal',
+          path: '/mypage/withdrawal',
           element: <Withdrawal />,
         },
         {
