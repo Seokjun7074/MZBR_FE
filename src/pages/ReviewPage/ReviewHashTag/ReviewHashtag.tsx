@@ -25,7 +25,7 @@ const ReviewHashTag = () => {
 
   return (
     <S.ReviewHashTagWrapper>
-      <S.ReviewTitleHeaderText>해시태그를 입력해주세요.</S.ReviewTitleHeaderText>
+      <S.ReviewTitleHeaderText>해시태그를 입력해주세요!</S.ReviewTitleHeaderText>
       <S.ReviewHashTag>
         <HashTagInput
           tag={tag}

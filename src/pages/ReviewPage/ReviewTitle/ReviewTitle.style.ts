@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 
+import { Button } from '@/components/common/Button/Button';
 import { Flex } from '@/components/common/Flex/Flex';
 
 export const ReviewTitleWrapper = styled(Flex)`
@@ -14,8 +15,6 @@ export const ReviewTitleHeaderText = styled.h1`
   color: ${({ theme }) => theme.color.primary};
   font-size: 24px;
   font-weight: bold;
-  margin-top: -2em;
-  margin-bottom: 1em;
 `;
 
 export const LabelContainer = styled(Flex)`
@@ -42,7 +41,7 @@ export const ReviewTitleTextArea = styled(ReviewTitleInput)`
   height: 100px;
 `;
 
-export const ReviewTitleSubmitButton = styled.button`
+export const ReviewTitleSubmitButton = styled(Button)`
   width: 100%;
   background-color: ${({ theme }) => theme.color.primary};
   border: none;
