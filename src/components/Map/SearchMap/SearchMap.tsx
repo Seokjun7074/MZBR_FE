@@ -10,6 +10,7 @@ import { useRestaurantListByHashTagQuery } from '@/hooks/queries/useRestaurantLi
 import { useRestaurantListByKeywordQuery } from '@/hooks/queries/useRestaurantListByKeywordQuery';
 import { useRestaurantListQuery } from '@/hooks/queries/useRestaurantListQuery';
 import { useGoogleMap } from '@/hooks/useGoogleMap';
+import { useHasgTag } from '@/hooks/useHashTag';
 import { useInput } from '@/hooks/useInput';
 
 import Search from '@/assets/map/search_button.svg';
@@ -21,6 +22,7 @@ const SearchMap = () => {
   const [isKeyord, setIsKeyword] = useState(true);
   const [placeType, setPlaceType] = useState<'POSITION' | 'KEYWORD' | 'HASHTAG'>('POSITION');
   const { map, mapRef } = useGoogleMap(14);
+  const { tag, tagList, onChange, onKeydown, deleteHashTag } = useHasgTag();
   const [center, setCenter] = useRecoilState(centerState);
   const { value, handleInput } = useInput('');
   const hashtagList = useRecoilValue(hashtagState);
@@ -101,7 +103,13 @@ const SearchMap = () => {
       ) : (
         <S.HashTagInputContainer>
           <S.SearchChangeButton onClick={() => setIsKeyword(true)}>키워드</S.SearchChangeButton>
-          <HashTagInput />
+          <HashTagInput
+            tag={tag}
+            tagList={tagList}
+            onChange={onChange}
+            onKeydown={onKeydown}
+            deleteHashTag={deleteHashTag}
+          />
           <Search style={{ cursor: 'pointer', position: 'relative' }} onClick={searchByHashTag} />
         </S.HashTagInputContainer>
       )}

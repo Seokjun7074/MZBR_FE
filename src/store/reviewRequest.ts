@@ -5,7 +5,7 @@ const initState = {
     videoUUID: '', //영상의 외부 식별자 UUID
     restaurantId: 3, //식당의 ID
     description: 'A short film about the ambiance in our restaurant.', //영상의 설명
-    tags: [],
+    tags: [''],
     duration: 60000, //영상 재생시간의 밀리세컨트 단위
     star: 1, //식당의 별점
     resolution: {
