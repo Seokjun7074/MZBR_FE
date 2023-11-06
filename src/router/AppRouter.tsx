@@ -12,9 +12,9 @@ import MyVideo from '@/pages/MyPage/Video/MyVideo';
 import WatchingList from '@/pages/MyPage/Video/WatchingList';
 import Withdrawal from '@/pages/MyPage/Withdrawal';
 import KakaoRedirectPage from '@/pages/RedirectPage/KakaoRedirectPage';
-import Hashtag from '@/pages/ReviewPage/Hashtag';
-import Review from '@/pages/ReviewPage/ReviewTitle';
-import UpLoad from '@/pages/ReviewPage/UpLoad';
+import Hashtag from '@/pages/ReviewPage/ReviewHashTag/ReviewHashtag';
+import ReviewTitle from '@/pages/ReviewPage/ReviewTitle/ReviewTitle';
+import UpLoad from '@/pages/ReviewPage/ReviewUpload/ReviewUpLoad';
 import SignupPage from '@/pages/SignupPage/SignupPage';
 
 import { PATH } from '@/constants/path';
@@ -37,31 +37,31 @@ const AppRouter = () => {
           element: <SignupPage />,
         },
         {
-          path: '/mypage',
+          path: PATH.MYPAGE,
           element: <MyPage />,
         },
         {
-          path: '/mypage/favoriterestaurnat',
+          path: 'mypage/favoriterestaurnat',
           element: <FavoriteRestaurants />,
         },
         {
-          path: '/mypage/blockedusers',
+          path: 'mypage/blockedusers',
           element: <BlockedUsers />,
         },
         {
-          path: '/mypage/subscribedusers',
+          path: 'mypage/subscribedusers',
           element: <SubcribedUsers />,
         },
         {
-          path: '/mypage/likevideo',
+          path: 'mypage/likevideo',
           element: <LikeVideo />,
         },
         {
-          path: '/mypage/myvideo',
+          path: 'mypage/myvideo',
           element: <MyVideo />,
         },
         {
-          path: '/mypage/watchinglist',
+          path: 'mypage/watchinglist',
           element: <WatchingList />,
         },
         {
@@ -73,23 +73,23 @@ const AppRouter = () => {
           element: <MapPage />,
         },
         {
-          path: '/mypage/edit',
+          path: 'mypage/edit',
           element: <EditProfile />,
         },
         {
-          path: '/mypage/withdrawal',
+          path: 'mypage/withdrawal',
           element: <Withdrawal />,
         },
         {
-          path: '/review/:restaurant_id',
-          element: <Review />,
+          path: PATH.REVIEW(':restaurant_id'),
+          element: <ReviewTitle />,
         },
         {
-          path: '/review/:restaurant_id/hashtag',
+          path: PATH.REVIEW_HASHTAG(':restaurant_id'),
           element: <Hashtag />,
         },
         {
-          path: '/review/:restaurant_id/upload',
+          path: PATH.REVIEW_UPLOAD(':restaurant_id'),
           element: <UpLoad />,
         },
       ],

@@ -1,12 +1,12 @@
 // UpLoad.tsx
-import React from 'react';
+import ArchiveBox from '@assets/ArchiveBox.png';
+import Vector from '@assets/Group.png';
+
 import { useNavigate, useParams } from 'react-router-dom';
 
-import ArchiveBox from '../../assets/ArchiveBox.png';
-import Vector from '../../assets/Group.png';
-import * as S from './UpLoad.style';
+import * as S from './ReviewUpLoad.style';
 
-const UpLoad = () => {
+const ReviewUpLoad = () => {
   const { restaurant_id } = useParams<{ restaurant_id: string }>();
   const navigate = useNavigate();
 
@@ -34,4 +34,4 @@ const UpLoad = () => {
   );
 };
 
-export default UpLoad;
+export default ReviewUpLoad;

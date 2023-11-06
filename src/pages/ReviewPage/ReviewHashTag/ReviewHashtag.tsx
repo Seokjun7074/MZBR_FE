@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 
-const Hashtag = () => {
+const ReviewHashTag = () => {
   const { restaurant_id } = useParams<{ restaurant_id: string }>();
 
   return (
@@ -11,4 +11,4 @@ const Hashtag = () => {
   );
 };
 
-export default Hashtag;
+export default ReviewHashTag;
