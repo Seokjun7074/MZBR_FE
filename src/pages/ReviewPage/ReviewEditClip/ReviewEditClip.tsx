@@ -135,9 +135,13 @@ const ReviewEditClip = () => {
         </S.VideoContainer>
       )}
       <div style={{ width: '100%', padding: '0 2rem' }}>
-        <Slider duration={duration} videoRef={videoRef} currentTimeCode={currentTimeCode} />
+        <Slider
+          duration={duration}
+          videoRef={videoRef}
+          currentTimeCode={currentTimeCode}
+          setCurrentTimeCode={setCurrentTimeCode}
+        />
       </div>
-
       <S.NextButton onClick={handelCutVideo}>자르기</S.NextButton>
     </S.ReviewEditClipWrapper>
   );

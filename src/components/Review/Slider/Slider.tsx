@@ -10,9 +10,10 @@ interface SliderProps {
   duration: number;
   videoRef: React.MutableRefObject<HTMLVideoElement | null>;
   currentTimeCode: number;
+  setCurrentTimeCode: React.Dispatch<React.SetStateAction<number>>;
 }
 
-const Slider = ({ duration, videoRef, currentTimeCode }: SliderProps) => {
+const Slider = ({ duration, videoRef, currentTimeCode, setCurrentTimeCode }: SliderProps) => {
   const GAP = 0;
   // 실제 시작,종료 값
   const [rangeMinValue, setRangeMinValue] = useRecoilState(startAtom);
@@ -22,22 +23,23 @@ const Slider = ({ duration, videoRef, currentTimeCode }: SliderProps) => {
   const [rangeMaxPercent, setRangeMaxPercent] = useState(0);
 
   const currentTimeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setCurrentTimeCode(parseFloat(e.target.value));
     if (videoRef?.current) {
-      videoRef.current.currentTime = parseInt(e.target.value);
+      videoRef.current.currentTime = parseFloat(e.target.value);
     }
   };
 
   const minValueHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setRangeMinValue(parseInt(e.target.value));
+    setRangeMinValue(parseFloat(e.target.value));
     if (videoRef?.current) {
-      videoRef.current.currentTime = parseInt(e.target.value);
+      videoRef.current.currentTime = parseFloat(e.target.value);
     }
   };
 
   const maxValueHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setRangeMaxValue(parseInt(e.target.value));
+    setRangeMaxValue(parseFloat(e.target.value));
     if (videoRef?.current) {
-      videoRef.current.currentTime = parseInt(e.target.value);
+      videoRef.current.currentTime = parseFloat(e.target.value);
     }
   };
 

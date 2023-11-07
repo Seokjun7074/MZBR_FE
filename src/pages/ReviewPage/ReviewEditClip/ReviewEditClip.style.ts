@@ -21,6 +21,7 @@ export const VideoContainer = styled(Flex)`
   width: 100%;
   height: 30rem;
   flex-direction: column;
+  justify-content: space-evenly;
   background-color: black;
   gap: 1rem;
   padding: 1rem 0;

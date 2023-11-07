@@ -11,7 +11,7 @@ export const FilterPriceSlide = styled.div`
   position: relative;
   height: 40px;
   width: 100%;
-  border-radius: 10px;
+  border-radius: 5px;
   background-color: lightgray;
 `;
 interface InnerSliderProps {
@@ -26,7 +26,7 @@ export const FilterPriceSlideInner = styled.div<InnerSliderProps>`
   right: ${(props) => props.$rangeMaxPercent}%;
   height: 40px;
   border-radius: 10px;
-  background-color: lightgreen;
+  background-color: #f99468;
 `;
 
 export const FilterPriceRangeWrap = styled.div`
@@ -67,7 +67,7 @@ export const CurrentRange = styled(FilterPriceRangeMin)`
     height: 70px;
     width: 5px;
     border-radius: 5px;
-    background-color: green;
+    background-color: #f1500a;
     -webkit-appearance: none;
   }
   pointer-events: none;
