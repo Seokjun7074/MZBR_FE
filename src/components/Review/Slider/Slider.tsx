@@ -9,9 +9,10 @@ import { endAtom, startAtom } from '@/store/video';
 interface SliderProps {
   duration: number;
   videoRef: React.MutableRefObject<HTMLVideoElement | null>;
+  currentTimeCode: number;
 }
 
-const Slider = ({ duration, videoRef }: SliderProps) => {
+const Slider = ({ duration, videoRef, currentTimeCode }: SliderProps) => {
   const GAP = 0;
   // 실제 시작,종료 값
   const [rangeMinValue, setRangeMinValue] = useRecoilState(startAtom);
@@ -19,6 +20,12 @@ const Slider = ({ duration, videoRef }: SliderProps) => {
   // 색으로 보이는 부분
   const [rangeMinPercent, setRangeMinPercent] = useState(0);
   const [rangeMaxPercent, setRangeMaxPercent] = useState(0);
+
+  const currentTimeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (videoRef?.current) {
+      videoRef.current.currentTime = parseInt(e.target.value);
+    }
+  };
 
   const minValueHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setRangeMinValue(parseInt(e.target.value));
@@ -56,6 +63,14 @@ const Slider = ({ duration, videoRef }: SliderProps) => {
         />
       </S.FilterPriceSlide>
       <S.FilterPriceRangeWrap>
+        <S.CurrentRange
+          type="range"
+          min={0}
+          step="0.2"
+          max={duration - GAP}
+          value={currentTimeCode}
+          onChange={currentTimeHandler}
+        />
         <S.FilterPriceRangeMin
           type="range"
           min={0}

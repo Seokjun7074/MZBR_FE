@@ -25,6 +25,7 @@ const ReviewEditClip = () => {
   const [startTime, setStartTime] = useRecoilState(startAtom);
   const [endTime, setEndTime] = useRecoilState(endAtom);
   const [duration, setDuration] = useState(0);
+  const [currentTimeCode, setCurrentTimeCode] = useState(0);
 
   const [isPlaying, setIsPlaying] = useState(false);
 
@@ -79,9 +80,20 @@ const ReviewEditClip = () => {
 
   const handleOverEndTime = (e: React.SyntheticEvent<HTMLVideoElement, Event>) => {
     const video = e.target as HTMLVideoElement;
+
     if (video.currentTime >= endTime) {
-      handlePlayVideo();
+      video.pause();
+      setIsPlaying(false);
+      setCurrentTimeCode(endTime);
+      return;
     }
+    if (video.currentTime <= startTime) {
+      video.pause();
+      setIsPlaying(false);
+      setCurrentTimeCode(startTime);
+      return;
+    }
+    setCurrentTimeCode(video.currentTime);
   };
 
   useEffect(() => {
@@ -95,16 +107,15 @@ const ReviewEditClip = () => {
   return (
     <S.ReviewEditClipWrapper>
       <S.EditHeader>영상의 구간을 선택해주세요!</S.EditHeader>
-
+      {/* <S.VideoTag
+        src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/WhatCarCanYouGetForAGrand.mp4"
+        ref={videoRef}
+        crossOrigin="anonymous"
+        onTimeUpdate={handleOverEndTime}
+        onClick={handlePlayVideo}
+      /> */}
       {videoState.url && (
         <S.VideoContainer>
-          {/* <S.VideoTag
-            src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/WhatCarCanYouGetForAGrand.mp4"
-            ref={videoRef}
-            crossOrigin="anonymous"
-            onTimeUpdate={handleOverEndTime}
-            onClick={handlePlayVideo}
-          /> */}
           <S.VideoTag
             src={videoState.url}
             ref={videoRef}
@@ -124,7 +135,7 @@ const ReviewEditClip = () => {
         </S.VideoContainer>
       )}
       <div style={{ width: '100%', padding: '0 2rem' }}>
-        <Slider duration={duration} videoRef={videoRef} />
+        <Slider duration={duration} videoRef={videoRef} currentTimeCode={currentTimeCode} />
       </div>
 
       <S.NextButton onClick={handelCutVideo}>자르기</S.NextButton>

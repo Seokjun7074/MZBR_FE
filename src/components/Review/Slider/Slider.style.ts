@@ -60,3 +60,20 @@ export const FilterPriceRangeMin = styled.input`
 export const FilterPriceRangeMax = styled(FilterPriceRangeMin)`
   left: 5px;
 `;
+
+export const CurrentRange = styled(FilterPriceRangeMin)`
+  left: 5px;
+  &::-webkit-slider-thumb {
+    height: 70px;
+    width: 5px;
+    border-radius: 5px;
+    background-color: green;
+    -webkit-appearance: none;
+  }
+  pointer-events: none;
+  cursor: grabbing;
+
+  &::-webkit-slider-thumb {
+    pointer-events: auto;
+  }
+`;
