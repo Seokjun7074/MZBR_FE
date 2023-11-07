@@ -12,6 +12,7 @@ import MyVideo from '@/pages/MyPage/Video/MyVideo';
 import WatchingList from '@/pages/MyPage/Video/WatchingList';
 import Withdrawal from '@/pages/MyPage/Withdrawal';
 import KakaoRedirectPage from '@/pages/RedirectPage/KakaoRedirectPage';
+import ReviewEditClip from '@/pages/ReviewPage/ReviewEditClip/ReviewEditClip';
 import Hashtag from '@/pages/ReviewPage/ReviewHashTag/ReviewHashtag';
 import ReviewTitle from '@/pages/ReviewPage/ReviewTitle/ReviewTitle';
 import UpLoad from '@/pages/ReviewPage/ReviewUpload/ReviewUpLoad';
@@ -91,6 +92,10 @@ const AppRouter = () => {
         {
           path: PATH.REVIEW_UPLOAD(':restaurant_id'),
           element: <UpLoad />,
+        },
+        {
+          path: PATH.REVIEW_EDIT_CLIP(':restaurant_id'),
+          element: <ReviewEditClip />,
         },
       ],
     },

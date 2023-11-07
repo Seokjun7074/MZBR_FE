@@ -6,6 +6,8 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 import { useSetRecoilState } from 'recoil';
 
+import { PATH } from '@/constants/path';
+
 import { videoAtom } from '@/store/video';
 
 import * as S from './ReviewUpLoad.style';
@@ -24,7 +26,7 @@ const ReviewUpLoad = () => {
   };
 
   const handleNextButtonClick = () => {
-    navigate(`/review/${restaurant_id}/edit`);
+    navigate(PATH.REVIEW_EDIT_CLIP(restaurant_id!));
   };
 
   const handleClickInput = () => {
