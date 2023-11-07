@@ -23,6 +23,7 @@ const ReviewUpLoad = () => {
       file: e.target.files![0],
       url: URL.createObjectURL(e.target.files![0]),
     });
+    navigate(PATH.REVIEW_EDIT_CLIP(restaurant_id!));
   };
 
   const handleNextButtonClick = () => {

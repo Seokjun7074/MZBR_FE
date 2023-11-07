@@ -50,7 +50,6 @@ const ReviewEditClip = () => {
     }
     const result = ffmpeg.FS('readFile', 'newVideo.mp4');
     const blob = new Blob([result.buffer], { type: 'video/mp4' });
-    console.log(blob);
     const file = new File([blob], 'newVideo.mp4', { type: 'video/mp4', lastModified: Date.now() });
     const resultPreview = URL.createObjectURL(blob);
     return resultPreview;
@@ -97,16 +96,15 @@ const ReviewEditClip = () => {
     <S.ReviewEditClipWrapper>
       <S.EditHeader>영상의 구간을 선택해주세요!</S.EditHeader>
 
-      {/* <S.VideoTag
-        src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/WhatCarCanYouGetForAGrand.mp4"
-        ref={videoRef}
-        crossOrigin="anonymous"
-        onTimeUpdate={handleOverEndTime}
-        onLoadedData={handlePlayVideo}
-        onClick={handlePlayVideo}
-      /> */}
       {videoState.url && (
-        <>
+        <S.VideoContainer>
+          {/* <S.VideoTag
+            src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/WhatCarCanYouGetForAGrand.mp4"
+            ref={videoRef}
+            crossOrigin="anonymous"
+            onTimeUpdate={handleOverEndTime}
+            onClick={handlePlayVideo}
+          /> */}
           <S.VideoTag
             src={videoState.url}
             ref={videoRef}
@@ -123,10 +121,11 @@ const ReviewEditClip = () => {
             )}
             <SkipForward style={{ cursor: 'pointer' }} onClick={handelSkipForward} />
           </S.VideoController>
-        </>
+        </S.VideoContainer>
       )}
-
-      <Slider duration={duration} videoRef={videoRef} />
+      <div style={{ width: '100%', padding: '0 2rem' }}>
+        <Slider duration={duration} videoRef={videoRef} />
+      </div>
 
       <S.NextButton onClick={handelCutVideo}>자르기</S.NextButton>
     </S.ReviewEditClipWrapper>

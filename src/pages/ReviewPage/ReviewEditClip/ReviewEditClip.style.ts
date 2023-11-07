@@ -7,7 +7,7 @@ export const ReviewEditClipWrapper = styled(Flex)`
   width: 100%;
   height: 100%;
   flex-direction: column;
-  padding: 2em;
+  padding: 2em 0;
   justify-content: space-between;
 `;
 
@@ -17,19 +17,29 @@ export const EditHeader = styled.h1`
   font-weight: bold;
 `;
 
-export const VideoTag = styled.video`
+export const VideoContainer = styled(Flex)`
   width: 100%;
-  background-color: whitesmoke;
-  border-radius: 8px;
+  height: 30rem;
+  flex-direction: column;
+  background-color: black;
+  gap: 1rem;
+  padding: 1rem 0;
+`;
+
+export const VideoTag = styled.video`
+  width: 80%;
+  background-color: black;
+  border-radius: 4px;
 `;
 
 export const VideoController = styled(Flex)`
   width: 100%;
-  gap: 1rem;
+  gap: 2rem;
+  background-color: black;
 `;
 
 export const NextButton = styled(Button)`
-  width: 100%;
+  width: calc(100% - 4rem);
   background-color: ${({ theme }) => theme.color.primary};
   border: none;
   color: white;
@@ -37,7 +47,6 @@ export const NextButton = styled(Button)`
   border-radius: 5px;
   cursor: pointer;
   font-size: 16px;
-  margin-top: 80px;
   transition: background-color 0.3s;
 
   &:hover {
