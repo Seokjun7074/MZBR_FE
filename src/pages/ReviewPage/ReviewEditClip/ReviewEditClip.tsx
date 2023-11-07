@@ -7,13 +7,9 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 import * as S from '@/pages/ReviewPage/ReviewEditClip/ReviewEditClip.style';
 
 import Slider from '@/components/Review/Slider/Slider';
+import VideoPlayer from '@/components/Review/VideoPlayer/VideoPlayer';
 
 import { useFFmpeg } from '@/hooks/useFFmpeg';
-
-import Pause from '@/assets/videoPlayer/pause.svg';
-import Play from '@/assets/videoPlayer/play.svg';
-import SkipBack from '@/assets/videoPlayer/skipBack.svg';
-import SkipForward from '@/assets/videoPlayer/skipForward.svg';
 
 import { endAtom, startAtom, videoAtom } from '@/store/video';
 
@@ -26,8 +22,6 @@ const ReviewEditClip = () => {
   const [endTime, setEndTime] = useRecoilState(endAtom);
   const [duration, setDuration] = useState(0);
   const [currentTimeCode, setCurrentTimeCode] = useState(0);
-
-  const [isPlaying, setIsPlaying] = useState(false);
 
   const cutVideo = async (url: string) => {
     const ffmpeg = ffmpegRef.current;
@@ -61,41 +55,6 @@ const ReviewEditClip = () => {
     console.log(res);
   };
 
-  const handlePlayVideo = () => {
-    if (isPlaying) {
-      videoRef.current?.pause();
-      setIsPlaying(!isPlaying);
-      return;
-    }
-    videoRef.current?.play();
-    setIsPlaying(!isPlaying);
-  };
-
-  const handelSkipBack = () => {
-    if (videoRef.current) videoRef.current.currentTime = startTime;
-  };
-  const handelSkipForward = () => {
-    if (videoRef.current) videoRef.current.currentTime = endTime;
-  };
-
-  const handleOverEndTime = (e: React.SyntheticEvent<HTMLVideoElement, Event>) => {
-    const video = e.target as HTMLVideoElement;
-
-    if (video.currentTime >= endTime) {
-      video.pause();
-      setIsPlaying(false);
-      setCurrentTimeCode(endTime);
-      return;
-    }
-    if (video.currentTime <= startTime) {
-      video.pause();
-      setIsPlaying(false);
-      setCurrentTimeCode(startTime);
-      return;
-    }
-    setCurrentTimeCode(video.currentTime);
-  };
-
   useEffect(() => {
     const video = videoRef.current;
     video?.addEventListener('loadedmetadata', () => {
@@ -107,33 +66,8 @@ const ReviewEditClip = () => {
   return (
     <S.ReviewEditClipWrapper>
       <S.EditHeader>영상의 구간을 선택해주세요!</S.EditHeader>
-      {/* <S.VideoTag
-        src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/WhatCarCanYouGetForAGrand.mp4"
-        ref={videoRef}
-        crossOrigin="anonymous"
-        onTimeUpdate={handleOverEndTime}
-        onClick={handlePlayVideo}
-      /> */}
-      {videoState.url && (
-        <S.VideoContainer>
-          <S.VideoTag
-            src={videoState.url}
-            ref={videoRef}
-            crossOrigin="use-credentials"
-            onTimeUpdate={handleOverEndTime}
-            onClick={handlePlayVideo}
-          />
-          <S.VideoController>
-            <SkipBack style={{ cursor: 'pointer' }} onClick={handelSkipBack} />
-            {isPlaying ? (
-              <Pause style={{ cursor: 'pointer' }} onClick={handlePlayVideo} />
-            ) : (
-              <Play style={{ cursor: 'pointer' }} onClick={handlePlayVideo} />
-            )}
-            <SkipForward style={{ cursor: 'pointer' }} onClick={handelSkipForward} />
-          </S.VideoController>
-        </S.VideoContainer>
-      )}
+
+      <VideoPlayer videoRef={videoRef} setCurrentTimeCode={setCurrentTimeCode} />
       <div style={{ width: '100%', padding: '0 2rem' }}>
         <Slider
           duration={duration}
