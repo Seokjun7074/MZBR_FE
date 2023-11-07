@@ -60,7 +60,7 @@ const Slider = ({ duration, videoRef }: SliderProps) => {
           type="range"
           min={0}
           max={duration - GAP}
-          step="0.5"
+          step="0.2"
           value={rangeMinValue}
           onChange={minValueHandler}
         />
@@ -68,7 +68,7 @@ const Slider = ({ duration, videoRef }: SliderProps) => {
           type="range"
           min={0 + GAP}
           max={duration}
-          step="0.5"
+          step="0.2"
           value={rangeMaxValue}
           onChange={maxValueHandler}
         />

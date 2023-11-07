@@ -17,7 +17,7 @@ export const useFFmpeg = () => {
     ffmpegRef.current = createFFmpeg({
       log: false,
       corePath: 'https://unpkg.com/@ffmpeg/core@0.10.0/dist/ffmpeg-core.js',
-      progress: (p) => console.log(p),
+      progress: (p) => console.log(p.ratio),
     });
     init();
   }, []);
