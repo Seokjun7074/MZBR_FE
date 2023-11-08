@@ -4,7 +4,7 @@ import { Flex } from '@/components/common/Flex/Flex';
 
 export const VideoContainer = styled(Flex)`
   width: 100%;
-  height: 30rem;
+  height: 35rem;
   flex-direction: column;
   justify-content: space-evenly;
   background-color: black;
@@ -12,14 +12,20 @@ export const VideoContainer = styled(Flex)`
   padding: 1rem 0;
 `;
 
+export const VideoOverlay = styled(Flex)`
+  width: 100%;
+  position: relative;
+`;
+
 export const VideoTag = styled.video`
-  width: 80%;
+  max-width: 100%;
+  max-height: 30rem;
   background-color: black;
-  border-radius: 4px;
 `;
 
 export const VideoController = styled(Flex)`
   width: 100%;
+  height: 3rem;
   gap: 2rem;
   background-color: black;
 `;
