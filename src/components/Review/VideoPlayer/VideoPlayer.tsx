@@ -60,22 +60,22 @@ const VideoPlayer = ({ videoRef, setCurrentTimeCode }: VideoPlayerProps) => {
 
   return (
     <>
-      {/* <S.VideoTag
+      <S.VideoTag
         src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/WhatCarCanYouGetForAGrand.mp4"
         ref={videoRef}
         crossOrigin="anonymous"
         onTimeUpdate={handleOverEndTime}
         onClick={handlePlayVideo}
-      /> */}
+      />
       {videoState.url && (
         <S.VideoContainer>
-          <S.VideoTag
+          {/* <S.VideoTag
             src={videoState.url}
             ref={videoRef}
             crossOrigin="use-credentials"
             onTimeUpdate={handleOverEndTime}
             onClick={handlePlayVideo}
-          />
+          /> */}
           <S.VideoController>
             <SkipBack style={{ cursor: 'pointer' }} onClick={handelSkipBack} />
             {isPlaying ? (

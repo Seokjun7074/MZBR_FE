@@ -11,15 +11,16 @@ import VideoPlayer from '@/components/Review/VideoPlayer/VideoPlayer';
 
 import { useFFmpeg } from '@/hooks/useFFmpeg';
 
-import { endAtom, startAtom, videoAtom } from '@/store/video';
+import { endAtom, preparedVideoAtom, startAtom, videoAtom } from '@/store/video';
 
 const ReviewEditClip = () => {
   const videoState = useRecoilValue(videoAtom);
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const { ffmpegRef } = useFFmpeg();
 
-  const [startTime, setStartTime] = useRecoilState(startAtom);
+  const startTime = useRecoilValue(startAtom);
   const [endTime, setEndTime] = useRecoilState(endAtom);
+  const [preparedVideo, setPreparedVideo] = useRecoilState(preparedVideoAtom);
   const [duration, setDuration] = useState(0);
   const [currentTimeCode, setCurrentTimeCode] = useState(0);
 
@@ -47,12 +48,17 @@ const ReviewEditClip = () => {
     const blob = new Blob([result.buffer], { type: 'video/mp4' });
     const file = new File([blob], 'newVideo.mp4', { type: 'video/mp4', lastModified: Date.now() });
     const resultPreview = URL.createObjectURL(blob);
-    return resultPreview;
+    return { resultPreview, file };
   };
 
   const handelCutVideo = async () => {
     const res = await cutVideo(videoState.url);
-    console.log(res);
+    const preparedRes = {
+      file: res!.file,
+      url: res!.resultPreview,
+    };
+    setPreparedVideo([...preparedVideo, preparedRes]);
+    alert('구간 자르기 완료');
   };
 
   useEffect(() => {
@@ -68,7 +74,7 @@ const ReviewEditClip = () => {
       <S.EditHeader>영상의 구간을 선택해주세요!</S.EditHeader>
 
       <VideoPlayer videoRef={videoRef} setCurrentTimeCode={setCurrentTimeCode} />
-      <div style={{ width: '100%', padding: '0 2rem' }}>
+      <div style={{ width: '80%', padding: '0 2rem' }}>
         <Slider
           duration={duration}
           videoRef={videoRef}

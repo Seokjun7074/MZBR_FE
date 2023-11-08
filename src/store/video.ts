@@ -1,16 +1,21 @@
 import { atom } from 'recoil';
 
-interface VideoAton {
+interface VideoAtom {
   file: File | null;
   url: string;
 }
 
-export const videoAtom = atom<VideoAton>({
+export const videoAtom = atom<VideoAtom>({
   key: 'videoAtom',
   default: {
     file: null,
     url: '',
   },
+});
+
+export const preparedVideoAtom = atom<VideoAtom[]>({
+  key: 'preparedVideoAtom',
+  default: [],
 });
 
 export const startAtom = atom({
