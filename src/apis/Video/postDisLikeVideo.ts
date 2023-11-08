@@ -5,65 +5,50 @@ import axios from 'axios';
 
 import { getNewAccessToken } from '../getNewAccessToken';
 
-const BASE_URL = 'http://localhost:3000';
-const navigate = useNavigate();
-const defaultMyVideos = [
-  {
-    id: '1',
-    thumbnail_url: 'asdasdasdas',
-  },
-  {
-    id: '2',
-    thumbnail_url: 'asdasadsdasdas',
-  },
-];
+type Video = {
+  videoId: number;
+  UUID: string;
+};
+
+const video: Video = {
+  videoId: 1,
+  UUID: 'SADS',
+};
+
 type User = {
   userId: number;
   accessToken: string;
   refreshToken: string;
 };
 
-const [videos, setVideos] = useState(defaultMyVideos);
 const [user, setUser] = useState<User>({
   userId: 1,
+
   accessToken: 'some_initial_access_token',
   refreshToken: 'some_initial_refresh_token',
 });
 
+const BASE_URL = 'http://localhost:3000';
+const navigate = useNavigate();
 useEffect(() => {
-  const fetchVideos = async () => {
-    type videos = {
-      id: string;
-      thumbnail_url: string;
-    };
-
-    type ApiResponse<T> = {
-      success: boolean;
-      data: T;
-      error?: string;
-    };
-
+  const dislikeVideo = async () => {
     try {
-      const response = await axios.get<ApiResponse<videos[]>>(
-        BASE_URL + `/videos/users/${user.userId}`,
-        {
-          headers: { 'access-token': user.accessToken },
-        },
-      );
-
-      if (response.data.success) {
-        setVideos(response.data.data);
+      const response = await axios.post(BASE_URL + `/videos/${video.UUID}/dislike`, {
+        headers: { 'access-token': user.accessToken },
+      });
+      if (response.data.success && response.data.data) {
+        return response.data;
       } else if (response.data.error && response.data.error === 'JWT_TOKEN_EXPIRED_EXCEPTION') {
         const newAccessToken = await getNewAccessToken(user.refreshToken);
         if (newAccessToken) {
           setUser({ ...user, accessToken: newAccessToken });
-
-          const newResponse = await axios.get<ApiResponse<videos[]>>(BASE_URL + '/mypage/myvideo', {
-            headers: { 'access-token': newAccessToken },
+          const newResponse = await axios.post(BASE_URL + `/videos/${video.UUID}/dislike`, {
+            headers: { 'access-token': user.accessToken },
           });
-
           if (newResponse.data.success) {
-            setVideos(newResponse.data.data);
+            setUser({
+              ...user,
+            });
           } else {
             navigate('/error');
           }
@@ -75,8 +60,7 @@ useEffect(() => {
       navigate('/error');
     }
   };
-
   if (user) {
-    fetchVideos();
+    dislikeVideo();
   }
 }, [user, setUser, navigate]);
