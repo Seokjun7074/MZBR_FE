@@ -1,15 +1,22 @@
 import { axiosInstance } from '@/apis';
 
 export interface VideoListRequest {
-  latitude: number;
-  longitude: number;
+  toplat: number;
+  toplong: number;
+  bottomlat: number;
+  bottomlong: number;
 }
 
-export const getVideoList = async ({ latitude, longitude }: VideoListRequest, page: number) => {
+export const getVideoList = async (
+  { toplat, toplong, bottomlat, bottomlong }: VideoListRequest,
+  page: number,
+) => {
   const { data } = await axiosInstance.get(`/videos/${page}`, {
     params: {
-      latitude,
-      longitude,
+      toplat,
+      toplong,
+      bottomlat,
+      bottomlong,
     },
   });
 

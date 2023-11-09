@@ -6,11 +6,10 @@ import { ShotFormContainerWrapper } from '@/components/ShortForm/ShotFormContain
 import { useIntersectionObserver } from '@/hooks/useIntersectionObserver';
 
 interface ShortFormContainer {
-  videoUUID: string;
   videoPath: string;
 }
 
-const ShotFormContainer = ({ videoUUID, videoPath }: ShortFormContainer) => {
+const ShotFormContainer = ({ videoPath }: ShortFormContainer) => {
   const [playing, setPlaying] = useState(false);
   const videoRef = useRef<ReactPlayer | null>(null);
   const observerRef = useIntersectionObserver(
