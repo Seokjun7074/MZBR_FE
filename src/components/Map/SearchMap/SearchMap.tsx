@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { useRecoilState, useRecoilValue } from 'recoil';
 
@@ -15,13 +15,14 @@ import { useInput } from '@/hooks/useInput';
 import Search from '@/assets/map/search_button.svg';
 
 import { hashtagState } from '@/store/hashtag';
-import { centerState } from '@/store/map';
+import { centerState, mapBoundaryState } from '@/store/map';
 
 const SearchMap = () => {
   const [isKeyord, setIsKeyword] = useState(true);
   const [placeType, setPlaceType] = useState<'POSITION' | 'KEYWORD' | 'HASHTAG'>('POSITION');
   const { map, mapRef } = useGoogleMap(14);
   const [center, setCenter] = useRecoilState(centerState);
+  const [mapBoundary, setMapBoundary] = useRecoilState(mapBoundaryState);
   const { value, handleInput } = useInput('');
   const hashtagList = useRecoilValue(hashtagState);
 
@@ -78,6 +79,21 @@ const SearchMap = () => {
     setPlaceType('HASHTAG');
     refetchHastTag();
   };
+
+  const setBoundary = () => {
+    const bounds = new window.google.maps.LatLngBounds();
+    bounds.extend(new window.google.maps.LatLng(center.lat, center.lng));
+    setMapBoundary({
+      toplat: bounds.getNorthEast().lat(),
+      toplng: bounds.getNorthEast().lng(),
+      bottomlat: bounds.getSouthWest().lat(),
+      bottomlng: bounds.getSouthWest().lng(),
+    });
+  };
+
+  useEffect(() => {
+    setBoundary();
+  }, [center]);
 
   return (
     <S.SearchMapWrapper>
