@@ -3,6 +3,7 @@ import * as S from '@/pages/ShortFormPage/ShortFormPage.style';
 import ShotFormContainer from '@/components/ShortForm/ShotFormContainer/ShotFormContainer';
 
 import { useVideoListQuery } from '@/hooks/queries/useVideoListQuery';
+import { useIntersectionObserver } from '@/hooks/useIntersectionObserver';
 
 const ShortFormPage = () => {
   const aa = {
@@ -13,18 +14,17 @@ const ShortFormPage = () => {
   };
 
   const { videoListData, fetchNextPage } = useVideoListQuery(aa);
+  const observerRef = useIntersectionObserver(() => fetchNextPage());
   const getNextVideoList = () => {
     fetchNextPage();
   };
 
   return (
     <S.ShortFormPageWrapper>
-      <button style={{ position: 'fixed', top: '10px' }} onClick={getNextVideoList}>
-        <h1>FFFFFFFFFFFFFFFFF</h1>
-      </button>
       {videoListData?.pages.map((item) => (
         <ShotFormContainer key={item.videoUUID} videoPath={item.videoPath} />
       ))}
+      <div ref={observerRef} />
     </S.ShortFormPageWrapper>
   );
 };

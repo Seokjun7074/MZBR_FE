@@ -1,19 +1,18 @@
 import { useEffect, useRef } from 'react';
 
-export const useIntersectionObserver = (onObserve: () => void, outObserve: () => void) => {
+export const useIntersectionObserver = (onObserve: () => void, outObserve?: () => void) => {
   const observerRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     const options = {
       root: null,
-      rootMargin: '0px',
       threshold: 0.5,
     };
 
     const callback = (entries: IntersectionObserverEntry[]) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) onObserve();
-        else outObserve();
+        else outObserve && outObserve();
       });
     };
 
