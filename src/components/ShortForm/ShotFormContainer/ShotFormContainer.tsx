@@ -5,7 +5,12 @@ import { ShotFormContainerWrapper } from '@/components/ShortForm/ShotFormContain
 
 import { useIntersectionObserver } from '@/hooks/useIntersectionObserver';
 
-const ShotFormContainer = () => {
+interface ShortFormContainer {
+  videoUUID: string;
+  videoPath: string;
+}
+
+const ShotFormContainer = ({ videoUUID, videoPath }: ShortFormContainer) => {
   const [playing, setPlaying] = useState(false);
   const videoRef = useRef<ReactPlayer | null>(null);
   const observerRef = useIntersectionObserver(
@@ -23,7 +28,7 @@ const ShotFormContainer = () => {
         ref={videoRef}
         onClick={handlePlay}
         className="react-player"
-        url="https://joo-test-bucket-2023.s3.ap-northeast-2.amazonaws.com/encoded-video/c4730998-77c0-45d2-bb88-781e06d634fd/master.m3u8"
+        url={videoPath}
         width="100%"
         height="100%"
         playing={playing}
