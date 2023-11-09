@@ -14,13 +14,13 @@ type User = {
 };
 
 type Comment = {
-  id: number;
+  commentId: number;
   content: string;
   userid: number;
 };
 
 const comments: Comment = {
-  id: 1,
+  commentId: 1,
   content: 'sdasadsadsa',
   userid: 12,
 };
