@@ -16,9 +16,8 @@ const ShotFormContainer = ({ videoPath }: ShortFormContainer) => {
     () => setPlaying(true),
     () => setPlaying(false),
   );
-
   const handlePlay = () => {
-    setPlaying(!playing);
+    setPlaying((prev) => !prev);
   };
 
   return (
@@ -32,7 +31,7 @@ const ShotFormContainer = ({ videoPath }: ShortFormContainer) => {
         height="100%"
         playing={playing}
         muted={true}
-        controls={true}
+        controls={false}
         pip={true}
       />
     </ShotFormContainerWrapper>
