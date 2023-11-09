@@ -15,6 +15,7 @@ import KakaoRedirectPage from '@/pages/RedirectPage/KakaoRedirectPage';
 import Hashtag from '@/pages/ReviewPage/Hashtag';
 import Review from '@/pages/ReviewPage/ReviewTitle';
 import UpLoad from '@/pages/ReviewPage/UpLoad';
+import ShortFormPage from '@/pages/ShortFormPage/ShortFormPage';
 import SignupPage from '@/pages/SignupPage/SignupPage';
 
 import { PATH } from '@/constants/path';
@@ -67,6 +68,10 @@ const AppRouter = () => {
         {
           path: PATH.KAKAO_REDIRECT,
           element: <KakaoRedirectPage />,
+        },
+        {
+          path: PATH.SHORT_FORM,
+          element: <ShortFormPage />,
         },
         {
           path: PATH.MAP,
