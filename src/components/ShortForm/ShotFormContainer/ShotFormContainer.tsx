@@ -1,43 +1,21 @@
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import ReactPlayer from 'react-player';
 
 import { ShotFormContainerWrapper } from '@/components/ShortForm/ShotFormContainer/ShotFormContainer.style';
 
+import { useIntersectionObserver } from '@/hooks/useIntersectionObserver';
+
 const ShotFormContainer = () => {
   const [playing, setPlaying] = useState(false);
   const videoRef = useRef<ReactPlayer | null>(null);
-  const observerRef = useRef<HTMLDivElement | null>(null);
+  const observerRef = useIntersectionObserver(
+    () => setPlaying(true),
+    () => setPlaying(false),
+  );
 
   const handlePlay = () => {
     setPlaying(!playing);
   };
-
-  useEffect(() => {
-    const options = {
-      root: null,
-      rootMargin: '0px',
-      threshold: 0.5,
-    };
-
-    const callback = (entries: IntersectionObserverEntry[]) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          setPlaying(true);
-        } else {
-          setPlaying(false);
-        }
-      });
-    };
-
-    const observer = new IntersectionObserver(callback, options);
-    if (observerRef.current) {
-      observer.observe(observerRef.current);
-    }
-
-    return () => {
-      observer.disconnect();
-    };
-  }, []);
 
   return (
     <ShotFormContainerWrapper ref={observerRef}>
