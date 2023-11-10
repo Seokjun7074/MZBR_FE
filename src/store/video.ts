@@ -3,6 +3,7 @@ import { atom } from 'recoil';
 interface VideoAtom {
   file: File | null;
   url: string;
+  blob: Blob | null;
 }
 
 export const videoAtom = atom<VideoAtom>({
@@ -10,6 +11,7 @@ export const videoAtom = atom<VideoAtom>({
   default: {
     file: null,
     url: '',
+    blob: null,
   },
 });
 
@@ -26,4 +28,14 @@ export const startAtom = atom({
 export const endAtom = atom({
   key: 'endAtom',
   default: 0,
+});
+
+export const croppedVideoAtom = atom({
+  key: 'croppedVideoAtom',
+  default: {
+    x: 0,
+    y: 0,
+    height: 0,
+    width: 0,
+  },
 });
