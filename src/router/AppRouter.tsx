@@ -16,6 +16,7 @@ import ReviewEditClip from '@/pages/ReviewPage/ReviewEditClip/ReviewEditClip';
 import Hashtag from '@/pages/ReviewPage/ReviewHashTag/ReviewHashtag';
 import ReviewTitle from '@/pages/ReviewPage/ReviewTitle/ReviewTitle';
 import UpLoad from '@/pages/ReviewPage/ReviewUpload/ReviewUpLoad';
+import VideoPreview from '@/pages/ReviewPage/VideoPreview/VideoPreview';
 import ShortFormPage from '@/pages/ShortFormPage/ShortFormPage';
 import SignupPage from '@/pages/SignupPage/SignupPage';
 
@@ -101,6 +102,10 @@ const AppRouter = () => {
         {
           path: PATH.REVIEW_EDIT_CLIP(':restaurant_id'),
           element: <ReviewEditClip />,
+        },
+        {
+          path: PATH.VIDEO_PREVIEW(':restaurant_id'),
+          element: <VideoPreview />,
         },
       ],
     },

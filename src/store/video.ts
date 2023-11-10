@@ -15,7 +15,7 @@ export const videoAtom = atom<VideoAtom>({
   },
 });
 
-export const preparedVideoAtom = atom<VideoAtom[]>({
+export const preparedVideoAtom = atom<string[]>({
   key: 'preparedVideoAtom',
   default: [],
 });

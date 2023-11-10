@@ -2,6 +2,7 @@ import { fetchFile } from '@ffmpeg/ffmpeg';
 import { v4 } from 'uuid';
 
 import { useEffect, useRef, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import { useRecoilState, useRecoilValue } from 'recoil';
 
@@ -12,13 +13,17 @@ import VideoPlayer from '@/components/Review/VideoPlayer/VideoPlayer';
 
 import { useFFmpeg } from '@/hooks/useFFmpeg';
 
-import { getPresignedUrl } from '@/apis/videoEdit/getPresignedURL';
+import { getPresignedUrl } from '@/apis/videoEdit/getPresignedUrl';
 import { postUploadComplete } from '@/apis/videoEdit/postUploadComplete';
 import { uploadVideo } from '@/apis/videoEdit/uploadVideo';
+
+import { PATH } from '@/constants/path';
 
 import { croppedVideoAtom, endAtom, preparedVideoAtom, startAtom, videoAtom } from '@/store/video';
 
 const ReviewEditClip = () => {
+  const { restaurant_id } = useParams<{ restaurant_id: string }>();
+
   const videoState = useRecoilValue(videoAtom);
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const { ffmpegRef } = useFFmpeg();
@@ -28,7 +33,9 @@ const ReviewEditClip = () => {
   const [preparedVideo, setPreparedVideo] = useRecoilState(preparedVideoAtom);
   const [duration, setDuration] = useState(0);
   const [currentTimeCode, setCurrentTimeCode] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
   const croppedVideo = useRecoilValue(croppedVideoAtom);
+  const navigate = useNavigate();
 
   const cutVideo = async (url: string) => {
     const ffmpeg = ffmpegRef.current;
@@ -54,28 +61,26 @@ const ReviewEditClip = () => {
     }
     const result = ffmpeg.FS('readFile', outputFileName);
     const blob = new Blob([result.buffer], { type: 'video/mp4' });
-    const file = new File([blob], outputFileName, { type: 'video/mp4', lastModified: Date.now() });
-    const resultPreview = URL.createObjectURL(blob);
-    return { resultPreview, file, blob, outputFileName };
+    // const file = new File([blob], outputFileName, { type: 'video/mp4', lastModified: Date.now() });
+    return { blob, outputFileName };
   };
 
   const handelCutVideo = async () => {
-    const res = await cutVideo(videoState.url);
-    const preparedRes = {
-      file: res!.file,
-      url: res!.resultPreview,
-      blob: res!.blob,
-    };
-    setPreparedVideo([...preparedVideo, preparedRes]);
+    setIsLoading((prev) => !prev);
+    const cuttedVideo = await cutVideo(videoState.url);
 
     const presignedUrl = await getPresignedUrl({
-      videoName: res!.outputFileName,
+      videoName: cuttedVideo!.outputFileName,
       crop: croppedVideo,
     });
-    await uploadVideo(presignedUrl, preparedRes.blob);
-    const videoUrl = await postUploadComplete(res!.outputFileName);
+    await uploadVideo(presignedUrl, cuttedVideo!.blob);
+
+    const videoUrl = await postUploadComplete(cuttedVideo!.outputFileName);
+
+    setPreparedVideo([...preparedVideo, videoUrl]);
+    setIsLoading((prev) => !prev);
     console.log(videoUrl);
-    alert('구간 자르기 완료');
+    navigate(PATH.VIDEO_PREVIEW(restaurant_id!));
   };
 
   useEffect(() => {
@@ -87,20 +92,25 @@ const ReviewEditClip = () => {
   }, [videoState]);
 
   return (
-    <S.ReviewEditClipWrapper>
-      <S.EditHeader>영상의 구간을 선택해주세요!</S.EditHeader>
-
-      <VideoPlayer videoRef={videoRef} setCurrentTimeCode={setCurrentTimeCode} />
-      <div style={{ width: '80%', padding: '0 2rem' }}>
-        <Slider
-          duration={duration}
-          videoRef={videoRef}
-          currentTimeCode={currentTimeCode}
-          setCurrentTimeCode={setCurrentTimeCode}
-        />
-      </div>
-      <S.NextButton onClick={handelCutVideo}>자르기</S.NextButton>
-    </S.ReviewEditClipWrapper>
+    <>
+      {isLoading ? (
+        <h1>loading...</h1>
+      ) : (
+        <S.ReviewEditClipWrapper>
+          <S.EditHeader>영상의 구간을 선택해주세요!</S.EditHeader>
+          <VideoPlayer videoRef={videoRef} setCurrentTimeCode={setCurrentTimeCode} />
+          <div style={{ width: '80%', padding: '0 2rem' }}>
+            <Slider
+              duration={duration}
+              videoRef={videoRef}
+              currentTimeCode={currentTimeCode}
+              setCurrentTimeCode={setCurrentTimeCode}
+            />
+          </div>
+          <S.NextButton onClick={handelCutVideo}>자르기</S.NextButton>
+        </S.ReviewEditClipWrapper>
+      )}
+    </>
   );
 };
 
