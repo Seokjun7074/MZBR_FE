@@ -16,6 +16,7 @@ import ReviewEditClip from '@/pages/ReviewPage/ReviewEditClip/ReviewEditClip';
 import Hashtag from '@/pages/ReviewPage/ReviewHashTag/ReviewHashtag';
 import ReviewTitle from '@/pages/ReviewPage/ReviewTitle/ReviewTitle';
 import UpLoad from '@/pages/ReviewPage/ReviewUpload/ReviewUpLoad';
+import ShortFormPage from '@/pages/ShortFormPage/ShortFormPage';
 import SignupPage from '@/pages/SignupPage/SignupPage';
 
 import { PATH } from '@/constants/path';
@@ -68,6 +69,10 @@ const AppRouter = () => {
         {
           path: PATH.KAKAO_REDIRECT,
           element: <KakaoRedirectPage />,
+        },
+        {
+          path: PATH.SHORT_FORM,
+          element: <ShortFormPage />,
         },
         {
           path: PATH.MAP,

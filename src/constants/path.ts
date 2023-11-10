@@ -2,6 +2,7 @@ export const PATH = {
   ROOT: '/',
   SIGNUP: '/signup',
   KAKAO_REDIRECT: '/kakao/redirect',
+  SHORT_FORM: '/shorts',
   MAP: '/map',
   MYPAGE: '/mypage',
   REVIEW: (restaurant_id: string) => `/review/${restaurant_id}`,
