@@ -6,6 +6,7 @@ import axios from 'axios';
 import { getNewAccessToken } from '../getNewAccessToken';
 
 const BASE_URL = 'http://localhost:3000';
+const navigate = useNavigate();
 
 type User = {
   userId: number;
@@ -13,62 +14,62 @@ type User = {
   refreshToken: string;
 };
 
-type Comment = {
-  commentId: number;
-  content: string;
-  userid: number;
-};
-
-const comments: Comment = {
-  commentId: 1,
-  content: 'sdasadsadsa',
-  userid: 12,
-};
-
-type Video = {
-  videoId: number;
-  videoUUID: string;
-};
-const video: Video = {
-  videoId: 1,
-  videoUUID: 'SADS',
-};
-
 const [user, setUser] = useState<User>({
   userId: 1,
-  accessToken: 'initial_access_token',
-  refreshToken: 'initial_refresh_token',
+  accessToken: 'some_initial_access_token',
+  refreshToken: 'some_initial_refresh_token',
 });
 
-const navigate = useNavigate();
+const defaultVideos = [
+  {
+    id: 'uuid',
+    thumbnail_url: 'sdsas',
+  },
+  {
+    id: 'uuid',
+    thumbnail_url: 'sdsas',
+  },
+];
+
+const [videos, setVideos] = useState(defaultVideos);
 
 useEffect(() => {
-  const addComments = async () => {
+  const fetchVideos = async () => {
+    type videos = {
+      id: string;
+      thumbnail_url: string;
+    };
+
+    type ApiResponse<T> = {
+      success: boolean;
+      data: T;
+      error?: string;
+    };
+
     try {
-      const response = await axios.post(
-        BASE_URL + `/videos/${video.videoUUID}/comments`,
-        { content: comments.content },
+      const response = await axios.get<ApiResponse<videos[]>>(
+        BASE_URL + `/videos/${user.userId}/likes`,
         {
           headers: { 'access-token': user.accessToken },
         },
       );
-      if (response.data.success && response.data.data) {
-        return response.data;
+
+      if (response.data.success) {
+        setVideos(response.data.data);
       } else if (response.data.error && response.data.error === 'JWT_TOKEN_EXPIRED_EXCEPTION') {
         const newAccessToken = await getNewAccessToken(user.refreshToken);
         if (newAccessToken) {
           setUser({ ...user, accessToken: newAccessToken });
-          const newResponse = await axios.post(
-            BASE_URL + `/videos/${video.videoUUID}/comments`,
-            { content: comments.content },
+
+          const newResponse = await axios.get<ApiResponse<videos[]>>(
+            BASE_URL + `/videos/${user.userId}/likes`,
             {
-              headers: { 'access-token': user.accessToken },
+              headers: { 'access-token': newAccessToken },
             },
           );
+
           if (newResponse.data.success) {
-            setUser({
-              ...user,
-            });
+            setVideos(newResponse.data.data);
           } else {
             navigate('/error');
           }
@@ -80,7 +81,8 @@ useEffect(() => {
       navigate('/error');
     }
   };
+
   if (user) {
-    addComments();
+    fetchVideos();
   }
 }, [user, setUser, navigate]);

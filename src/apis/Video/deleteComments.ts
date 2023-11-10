@@ -27,11 +27,11 @@ const comments: Comment = {
 
 type Video = {
   videoId: number;
-  UUID: string;
+  videoUUID: string;
 };
 const video: Video = {
   videoId: 1,
-  UUID: 'SADS',
+  videoUUID: 'SADS',
 };
 
 const [user, setUser] = useState<User>({
@@ -46,7 +46,7 @@ useEffect(() => {
   const addComments = async () => {
     try {
       const response = await axios.delete(
-        BASE_URL + `/videos/${video.UUID}/comments/${comments.commentId}`,
+        BASE_URL + `/videos/${video.videoUUID}/comments/${comments.commentId}`,
         {
           headers: { 'access-token': user.accessToken },
         },
@@ -58,7 +58,7 @@ useEffect(() => {
         if (newAccessToken) {
           setUser({ ...user, accessToken: newAccessToken });
           const newResponse = await axios.post(
-            BASE_URL + `/videos/${video.UUID}/comments`,
+            BASE_URL + `/videos/${video.videoUUID}/comments`,
             { content: comments.content },
             {
               headers: { 'access-token': user.accessToken },
