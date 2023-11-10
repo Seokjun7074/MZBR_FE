@@ -22,19 +22,13 @@ const VideoPlayer = ({ videoRef, setCurrentTimeCode }: VideoPlayerProps) => {
   const startTime = useRecoilValue(startAtom);
   const endTime = useRecoilValue(endAtom);
   const [isPlaying, setIsPlaying] = useState(false);
-  const overlayRef = useRef(null);
-  const rndRef = useRef(null);
+  // const overlayRef = useRef<HTMLDivElement | null>(null);
+  const rndRef = useRef<HTMLDivElement | null>(null);
 
-  const [boxData, setBoxData] = useState({
-    x: 0,
-    y: 0,
-    width: 'auto',
-    height: '100%',
-  });
   const rndStyle = {
     height: '100%',
     aspectRatio: 9 / 16,
-    // border: 'solid 1px blue',
+    border: 'solid 1px blue',
   };
 
   const handlePlayVideo = () => {
@@ -73,28 +67,42 @@ const VideoPlayer = ({ videoRef, setCurrentTimeCode }: VideoPlayerProps) => {
   };
 
   const onDragStop = (data: any) => {
-    // setBoxData({ ...boxData, x: data.x, y: data.y });
-    if (overlayRef.current && rndRef.current) {
-      const overlayRect = overlayRef.current!.getBoundingClientRect();
-      const rndRect = rndRef.current!.getBoundingClientRect();
+    if (videoRef.current && rndRef.current) {
+      const videoRect = videoRef.current.getBoundingClientRect();
+      const rndRect = rndRef.current.getBoundingClientRect();
 
-      const relativeX = rndRect.left - overlayRect.left;
-      const relativeY = rndRect.top - overlayRect.top;
+      // 크롭 데이터에서 비디오 요소의 상대적인 좌표를 계산
+      const cropStartX = Math.round(rndRect.x - videoRect.x + window.scrollX);
+      const cropStartY = Math.round(rndRect.y - videoRect.y + window.scrollY);
 
-      console.log(videoRef.current?.videoWidth);
-      console.log(videoRef.current?.videoHeight);
+      const cropRatio = videoRect.width / videoRef.current.videoWidth;
 
-      // 이제 relativeX와 relativeY에는 Rnd 컴포넌트와 VideoOverlay 사이의 상대적인 좌표가 저장됩니다.
-      console.log('상대적인 X 좌표:', relativeX);
-      console.log('상대적인 Y 좌표:', relativeY);
+      const cropWidth = Math.round(rndRect.width / cropRatio);
+      const cropHeight = Math.round(rndRect.height / cropRatio);
+
+      // 원본 비디오 크기 대비 크롭 크기의 비율을 계산하여 백분율로 표현
+
+      console.log(`크롭 상대 시작점: (${cropStartX}, ${cropStartY})`);
+      console.log(`크롭 크기: (${cropWidth}, ${cropHeight})`);
+
+      ////////
+
+      // const relativeX = rndRect.left - videoRect.left;
+      // const relativeY = rndRect.top - videoRect.top;
+
+      // console.log(videoRef.current?.videoWidth);
+      // console.log(videoRef.current?.videoHeight);
+
+      // // 이제 relativeX와 relativeY에는 Rnd 컴포넌트와 VideoOverlay 사이의 상대적인 좌표가 저장됩니다.
+      // console.log('상대적인 X 좌표:', relativeX);
+      // console.log('상대적인 Y 좌표:', relativeY);
     }
   };
   const onResizeStop = () => {};
-  //   console.log(boxData);
   return (
     <>
       {/* <S.VideoContainer>
-        <S.VideoOverlay ref={overlayRef}>
+        <S.VideoOverlay>
           <S.VideoTag
             src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/WhatCarCanYouGetForAGrand.mp4"
             ref={videoRef}
@@ -106,10 +114,10 @@ const VideoPlayer = ({ videoRef, setCurrentTimeCode }: VideoPlayerProps) => {
             style={rndStyle}
             bounds={'parent'}
             default={{
-              x: boxData.x,
-              y: boxData.y,
-              width: boxData.width,
-              height: boxData.height,
+              x: 100,
+              y: 0,
+              width: 'auto',
+              height: '100%',
             }}
             lockAspectRatio={true}
             onDragStop={onDragStop}
@@ -133,7 +141,7 @@ const VideoPlayer = ({ videoRef, setCurrentTimeCode }: VideoPlayerProps) => {
       </S.VideoContainer> */}
       {videoState.url && (
         <S.VideoContainer>
-          <S.VideoOverlay ref={overlayRef}>
+          <S.VideoOverlay>
             <S.VideoTag
               src={videoState.url}
               ref={videoRef}
@@ -145,10 +153,10 @@ const VideoPlayer = ({ videoRef, setCurrentTimeCode }: VideoPlayerProps) => {
               style={rndStyle}
               bounds={'parent'}
               default={{
-                x: boxData.x,
-                y: boxData.y,
-                width: boxData.width,
-                height: boxData.height,
+                x: 100,
+                y: 0,
+                width: 'auto',
+                height: '100%',
               }}
               lockAspectRatio={true}
               onDragStop={onDragStop}
@@ -156,7 +164,7 @@ const VideoPlayer = ({ videoRef, setCurrentTimeCode }: VideoPlayerProps) => {
             >
               <div
                 ref={rndRef}
-                style={{ width: '100%', height: '100%', backgroundColor: 'red' }}
+                style={{ width: '100%', height: '100%', border: '1px dashed gray' }}
               ></div>
             </Rnd>
           </S.VideoOverlay>
