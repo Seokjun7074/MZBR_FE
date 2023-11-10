@@ -48,7 +48,7 @@ useEffect(() => {
 
     try {
       const response = await axios.get<ApiResponse<videos[]>>(
-        BASE_URL + `/videos/users/${user.userId}`,
+        BASE_URL + `/videos/${user.userId}/likes`,
         {
           headers: { 'access-token': user.accessToken },
         },
@@ -62,7 +62,7 @@ useEffect(() => {
           setUser({ ...user, accessToken: newAccessToken });
 
           const newResponse = await axios.get<ApiResponse<videos[]>>(
-            BASE_URL + `/videos/users/${user.userId}`,
+            BASE_URL + `/videos/${user.userId}/likes`,
             {
               headers: { 'access-token': newAccessToken },
             },
