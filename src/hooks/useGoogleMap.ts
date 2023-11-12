@@ -20,30 +20,25 @@ export const useGoogleMap = (zoom: number) => {
         mapId: 'MAIN_PAGE_MAP',
       });
 
-      const idleListener = mapInfo.addListener('idle', () => {
-        const bounds = mapInfo.getBounds();
-        if (bounds) {
-          const ne = bounds.getNorthEast();
-          const sw = bounds.getSouthWest();
-          console.log('NorthEast:', ne.lat(), ne.lng());
-          console.log('SouthWest:', sw.lat(), sw.lng());
-
-          setMapBoundary({
-            toplat: ne.lat(),
-            toplng: ne.lng(),
-            bottomlat: sw.lat(),
-            bottomlng: sw.lng(),
-          });
-        }
-      });
-
       setMap(mapInfo);
+    }
+  }, []);
 
-      return () => {
-        if (idleListener) {
-          google.maps.event.removeListener(idleListener);
-        }
-      };
+  useEffect(() => {
+    if (!map) return;
+
+    map.setCenter(center);
+    const bounds = map.getBounds();
+    if (bounds) {
+      const ne = bounds.getNorthEast();
+      const sw = bounds.getSouthWest();
+
+      setMapBoundary({
+        toplat: ne.lat(),
+        toplng: ne.lng(),
+        bottomlat: sw.lat(),
+        bottomlng: sw.lng(),
+      });
     }
   }, [center]);
 

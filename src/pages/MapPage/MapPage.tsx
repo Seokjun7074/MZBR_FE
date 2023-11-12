@@ -23,16 +23,10 @@ const MapPage = () => {
 
   useEffect(() => {
     if (myLocation) {
-      console.log('내 위치');
       setMyPositionState(myLocation);
       setCenter(myLocation);
     }
   }, [myLocation]);
-
-  const checkMapBoundary = () => {
-    if (mapBoundary) return true;
-    return false;
-  };
 
   return (
     <S.MapPageWrapper>

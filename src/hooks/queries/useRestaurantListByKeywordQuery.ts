@@ -4,8 +4,11 @@ import { getRestaurantListByKeyword } from '@/apis/restaurant/getRestaurantListB
 
 import { RestaurantListByKeywordRequest } from '@/types/restaurant';
 
-export const useRestaurantListByKeywordQuery = (paramData: RestaurantListByKeywordRequest) => {
-  const { data, refetch } = useQuery({
+export const useRestaurantListByKeywordQuery = (
+  paramData: RestaurantListByKeywordRequest,
+  placeType: string,
+) => {
+  const { data, isSuccess } = useQuery({
     queryKey: [
       'restaurantListByKeyword',
       paramData.bottomlat,
@@ -14,11 +17,10 @@ export const useRestaurantListByKeywordQuery = (paramData: RestaurantListByKeywo
       paramData.toplng,
     ],
     queryFn: () => getRestaurantListByKeyword(paramData),
-    enabled: false,
+    enabled: placeType === 'KEYWORD',
   });
-
   return {
     restaurantListByKeywordData: data!,
-    refetch,
+    isSuccess,
   };
 };

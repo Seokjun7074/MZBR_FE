@@ -4,8 +4,11 @@ import { getRestaurantListByHashTag } from '@/apis/restaurant/getRestaurantListB
 
 import { RestaurantListByHashTagRequest } from '@/types/restaurant';
 
-export const useRestaurantListByHashTagQuery = (paramData: RestaurantListByHashTagRequest) => {
-  const { data, refetch } = useQuery({
+export const useRestaurantListByHashTagQuery = (
+  paramData: RestaurantListByHashTagRequest,
+  placeType: string,
+) => {
+  const { data, isSuccess } = useQuery({
     queryKey: [
       'restaurantListByHashTag',
       paramData.bottomlat,
@@ -14,11 +17,10 @@ export const useRestaurantListByHashTagQuery = (paramData: RestaurantListByHashT
       paramData.toplng,
     ],
     queryFn: () => getRestaurantListByHashTag(paramData),
-    enabled: false,
+    enabled: placeType === 'HASHTAG',
   });
-
   return {
     restaurantListByHashTagData: data!,
-    refetch,
+    isSuccess,
   };
 };

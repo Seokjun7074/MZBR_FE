@@ -23,7 +23,12 @@ interface Boundary {
   bottomlng: number;
 }
 
-export const mapBoundaryState = atom<Boundary | null>({
+export const mapBoundaryState = atom<Boundary>({
   key: 'mapBoundaryState',
-  default: null,
+  default: {
+    toplat: 0,
+    toplng: 0,
+    bottomlat: 0,
+    bottomlng: 0,
+  },
 });
