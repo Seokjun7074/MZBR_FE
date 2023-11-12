@@ -1,6 +1,10 @@
 import { useEffect, useState } from 'react';
 
+import RestaurantDetail from '@/components/Map/RestaurantDetail/RestaurantDetail';
 import MapMarker from '@/components/common/MapMarker/MapMarker';
+import Modal from '@/components/common/Modal/Modal';
+
+import useModal from '@/hooks/useModal';
 
 import { Restaurant } from '@/types/restaurant';
 
@@ -17,6 +21,8 @@ interface MarkerType {
 
 const MapMarkerList = ({ map, restaurantList }: MapMarkerListProps) => {
   const [markers, setMarkers] = useState<MarkerType[] | undefined>([]);
+  const [selectedMarker, setSelectedMarker] = useState('');
+  const { openModal } = useModal();
 
   useEffect(() => {
     if (restaurantList?.length! > 0) {
@@ -39,11 +45,31 @@ const MapMarkerList = ({ map, restaurantList }: MapMarkerListProps) => {
     setMarkers(newMarkers);
   }, [restaurantList]);
 
+  const selectMarker = (id: string) => {
+    setSelectedMarker(id);
+    openModal();
+  };
+
   return (
     <>
       {markers?.map((item: MarkerType) => (
-        <MapMarker key={item.id} id={item.id} lat={item.lat} lng={item.lng} map={map} />
+        <div
+          key={item.id}
+          style={{ zIndex: '100', width: '100px', height: '100px', backgroundColor: 'red' }}
+        >
+          <MapMarker
+            key={item.id}
+            id={item.id}
+            lat={item.lat}
+            lng={item.lng}
+            map={map}
+            openModal={selectMarker}
+          />
+        </div>
       ))}
+      <Modal>
+        <RestaurantDetail id={selectedMarker} />
+      </Modal>
     </>
   );
 };
