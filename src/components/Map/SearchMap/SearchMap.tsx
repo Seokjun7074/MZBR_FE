@@ -18,26 +18,28 @@ import { hashtagState } from '@/store/hashtag';
 import { centerState, mapBoundaryState } from '@/store/map';
 
 const SearchMap = () => {
-  const [isKeyord, setIsKeyword] = useState(true);
+  const [isKeword, setIsKeyword] = useState(true);
   const [placeType, setPlaceType] = useState<'POSITION' | 'KEYWORD' | 'HASHTAG'>('POSITION');
-  const { map, mapRef } = useGoogleMap(14);
+  const { map, mapRef } = useGoogleMap(15);
   const [center, setCenter] = useRecoilState(centerState);
-  const [mapBoundary, setMapBoundary] = useRecoilState(mapBoundaryState);
+  const mapBoundary = useRecoilValue(mapBoundaryState);
   const { value, handleInput } = useInput('');
   const hashtagList = useRecoilValue(hashtagState);
 
   // 식당 리스트 fetch
   const { restaurantListData } = useRestaurantListQuery({
-    latitude: center.lat,
-    longitude: center.lng,
-    radius: 5,
+    toplat: mapBoundary.toplat,
+    toplng: mapBoundary.toplng,
+    bottomlat: mapBoundary.bottomlat,
+    bottomlng: mapBoundary.bottomlng,
   });
 
   // 키워드 검색
   const { restaurantListByKeywordData, refetch: refetchKeyword } = useRestaurantListByKeywordQuery({
-    latitude: center.lat,
-    longitude: center.lng,
-    radius: 5,
+    toplat: mapBoundary.toplat,
+    toplng: mapBoundary.toplng,
+    bottomlat: mapBoundary.bottomlat,
+    bottomlng: mapBoundary.bottomlng,
     keyword: value,
     day: '',
     star: '',
@@ -45,9 +47,10 @@ const SearchMap = () => {
   });
   // 해시태그 검색
   const { restaurantListByHashTagData, refetch: refetchHastTag } = useRestaurantListByHashTagQuery({
-    latitude: center.lat,
-    longitude: center.lng,
-    radius: 5,
+    toplat: mapBoundary.toplat,
+    toplng: mapBoundary.toplng,
+    bottomlat: mapBoundary.bottomlat,
+    bottomlng: mapBoundary.bottomlng,
     hashtag: hashtagList,
     day: '',
     star: '',
@@ -56,12 +59,12 @@ const SearchMap = () => {
 
   const setCurrentCenter = () => {
     if (map) {
+      console.log('set Center');
       const mapCenter = map.getCenter();
       setCenter({
         lat: mapCenter!.lat(),
         lng: mapCenter!.lng(),
       });
-      setBoundary(map);
     }
   };
 
@@ -81,24 +84,6 @@ const SearchMap = () => {
     refetchHastTag();
   };
 
-  const setBoundary = (map: google.maps.Map) => {
-    const bounds = map.getBounds();
-    console.log(bounds);
-    if (bounds) {
-      const ne = bounds.getNorthEast();
-      const sw = bounds.getSouthWest();
-      console.log('NorthEast:', ne.lat(), ne.lng());
-      console.log('SouthWest:', sw.lat(), sw.lng());
-
-      setMapBoundary({
-        toplat: ne.lat(),
-        toplng: ne.lng(),
-        bottomlat: sw.lat(),
-        bottomlng: sw.lng(),
-      });
-    }
-  };
-
   return (
     <S.SearchMapWrapper>
       <div id="map" ref={mapRef} style={{ height: '100%', width: '100%' }}>
@@ -112,7 +97,7 @@ const SearchMap = () => {
           />
         )}
       </div>
-      {isKeyord ? (
+      {isKeword ? (
         <S.SearchInputContainer>
           <S.SearchChangeButton onClick={() => setIsKeyword(false)}>해시태그</S.SearchChangeButton>
           <S.SearchInput placeholder="검색어를 입력하세요" value={value} onChange={handleInput} />

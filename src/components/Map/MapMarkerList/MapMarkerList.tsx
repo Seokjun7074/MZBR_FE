@@ -36,17 +36,18 @@ const MapMarkerList = ({
     if (placeType == 'KEYWORD') return restaurantListByKeywordData;
     if (placeType == 'HASHTAG') return restaurantListByHashTagData;
   };
+
   useEffect(() => {
     const filteredList = filterPlaceType(placeType);
-    if (filteredList?.restaurants?.length! > 0) {
-      const bounds = new google.maps.LatLngBounds();
-      filteredList?.restaurants?.forEach((item) =>
-        bounds.extend(new google.maps.LatLng(item.latitude, item.longitude)),
-      );
-      const boundCenter = bounds.getCenter();
-      map.panTo(boundCenter);
-      map.fitBounds(bounds);
-    }
+    // if (filteredList?.restaurants?.length! > 0) {
+    //   const bounds = new google.maps.LatLngBounds();
+    //   filteredList?.restaurants?.forEach((item) =>
+    //     bounds.extend(new google.maps.LatLng(item.latitude, item.longitude)),
+    //   );
+    //   const boundCenter = bounds.getCenter();
+    //   map.panTo(boundCenter);
+    //   map.fitBounds(bounds);
+    // }
     const newMarkers = filteredList?.restaurants.map((item) => ({
       key: item.restaurantId,
       id: item.restaurantId,

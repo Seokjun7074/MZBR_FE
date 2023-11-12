@@ -13,9 +13,10 @@ export interface RestaurantResponse {
 }
 
 export interface RestaurantListRequest {
-  latitude: number;
-  longitude: number;
-  radius: number;
+  toplat: number;
+  toplng: number;
+  bottomlat: number;
+  bottomlng: number;
 }
 
 export interface RestaurantListByKeywordRequest extends RestaurantListRequest {

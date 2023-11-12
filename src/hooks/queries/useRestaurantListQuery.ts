@@ -6,7 +6,13 @@ import { RestaurantListRequest } from '@/types/restaurant';
 
 export const useRestaurantListQuery = (paramData: RestaurantListRequest) => {
   const { data } = useQuery({
-    queryKey: ['restaurantList', paramData.latitude, paramData.longitude, paramData.radius],
+    queryKey: [
+      'restaurantList',
+      paramData.bottomlat,
+      paramData.bottomlng,
+      paramData.toplat,
+      paramData.toplng,
+    ],
     queryFn: () => getRestaurantList(paramData),
   });
   return { restaurantListData: data! };

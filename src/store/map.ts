@@ -16,12 +16,14 @@ export const myPositionState = atom<google.maps.LatLngLiteral>({
   },
 });
 
-export const mapBoundaryState = atom({
+interface Boundary {
+  toplat: number;
+  toplng: number;
+  bottomlat: number;
+  bottomlng: number;
+}
+
+export const mapBoundaryState = atom<Boundary | null>({
   key: 'mapBoundaryState',
-  default: {
-    toplat: 0,
-    toplng: 0,
-    bottomlat: 0,
-    bottomlng: 0,
-  },
+  default: null,
 });
