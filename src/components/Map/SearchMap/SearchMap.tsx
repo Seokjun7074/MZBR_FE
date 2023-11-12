@@ -61,6 +61,7 @@ const SearchMap = () => {
         lat: mapCenter!.lat(),
         lng: mapCenter!.lng(),
       });
+      setBoundary(map);
     }
   };
 
@@ -80,20 +81,23 @@ const SearchMap = () => {
     refetchHastTag();
   };
 
-  const setBoundary = () => {
-    const bounds = new window.google.maps.LatLngBounds();
-    bounds.extend(new window.google.maps.LatLng(center.lat, center.lng));
-    setMapBoundary({
-      toplat: bounds.getNorthEast().lat(),
-      toplng: bounds.getNorthEast().lng(),
-      bottomlat: bounds.getSouthWest().lat(),
-      bottomlng: bounds.getSouthWest().lng(),
-    });
-  };
+  const setBoundary = (map: google.maps.Map) => {
+    const bounds = map.getBounds();
+    console.log(bounds);
+    if (bounds) {
+      const ne = bounds.getNorthEast();
+      const sw = bounds.getSouthWest();
+      console.log('NorthEast:', ne.lat(), ne.lng());
+      console.log('SouthWest:', sw.lat(), sw.lng());
 
-  useEffect(() => {
-    setBoundary();
-  }, [center]);
+      setMapBoundary({
+        toplat: ne.lat(),
+        toplng: ne.lng(),
+        bottomlat: sw.lat(),
+        bottomlng: sw.lng(),
+      });
+    }
+  };
 
   return (
     <S.SearchMapWrapper>
