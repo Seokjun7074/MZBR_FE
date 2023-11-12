@@ -10,8 +10,9 @@ export interface MapMarkerProps {
   lat: number;
   lng: number;
   map: google.maps.Map;
+  openModal?: (id: string) => void;
 }
-const MapMarker = ({ id, lat, lng, map }: MapMarkerProps) => {
+const MapMarker = ({ id, lat, lng, map, openModal }: MapMarkerProps) => {
   const markerRef = useRef<google.maps.marker.AdvancedMarkerElement | null>(null);
   const rootRef = useRef<Root | null>(null);
   useEffect(() => {
@@ -23,9 +24,15 @@ const MapMarker = ({ id, lat, lng, map }: MapMarkerProps) => {
         map,
         content: container,
       });
+      if (id !== 'CENTER' && openModal) {
+        markerRef.current.addListener('click', () => openModal(id));
+      }
     }
     return () => {
-      if (markerRef.current) markerRef.current.map = null;
+      if (markerRef.current) {
+        markerRef.current.map = null;
+        if (openModal) markerRef.current.removeEventListener('click', () => openModal(id));
+      }
     };
   }, [id, lat, lng, map]);
 

@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 
-import { useRecoilState, useSetRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 
 import * as S from '@/pages/MapPage/MapPage.style';
 
@@ -13,16 +13,19 @@ import AddButton from '@/assets/navigationBar/add_button.svg';
 import MypageButton from '@/assets/navigationBar/mypage_button.svg';
 import ShortFormButton from '@/assets/navigationBar/shortform_button.svg';
 
-import { centerState, myPositionState } from '@/store/map';
+import { centerState, mapBoundaryState, myPositionState } from '@/store/map';
 
 const MapPage = () => {
   const { myLocation } = useMyLocation();
   const [myPosition, setMyPositionState] = useRecoilState(myPositionState);
   const setCenter = useSetRecoilState(centerState);
+  const mapBoundary = useRecoilValue(mapBoundaryState);
 
   useEffect(() => {
-    setMyPositionState(myLocation);
-    setCenter(myLocation);
+    if (myLocation) {
+      setMyPositionState(myLocation);
+      setCenter(myLocation);
+    }
   }, [myLocation]);
 
   return (
