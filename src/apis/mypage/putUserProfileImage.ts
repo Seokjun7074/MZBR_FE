@@ -1,14 +1,12 @@
+// useProfileImageUpdater.ts
 import { useEffect, useState } from 'react';
 
 import axios from 'axios';
 
-import { Profile } from '../../assets/Profile.png';
-import { Member, User } from '../../pages/MyPage/EditProfile';
+import { User } from '../../pages/MyPage/EditProfile';
 import { getNewAccessToken } from '../getNewAccessToken';
 
-const [profileImage, setProfileImage] = useState<File | null>(null);
 const BASE_URL = 'http://localhost:3000';
-
 export const useProfileImageUpdater = (
   user: User,
   setUser: React.Dispatch<React.SetStateAction<User>>,

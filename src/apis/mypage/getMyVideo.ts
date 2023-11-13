@@ -7,11 +7,9 @@ import { ApiResponse, User, Video } from '../../pages/MyPage/Video/MyVideo';
 import { getNewAccessToken } from '../getNewAccessToken';
 
 const BASE_URL = 'http://localhost:3000';
-const navigate = useNavigate();
 
 export const useMyVideos = (user: User, setUser: React.Dispatch<React.SetStateAction<User>>) => {
   const [videos, setVideos] = useState<Video[]>([]);
-  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchVideos = async () => {
@@ -31,16 +29,13 @@ export const useMyVideos = (user: User, setUser: React.Dispatch<React.SetStateAc
             setUser((prev) => ({ ...prev, accessToken: newAccessToken }));
             // Retry the request with the new access token
           } else {
-            navigate('/error');
           }
         }
-      } catch (error) {
-        navigate('/error');
-      }
+      } catch (error) {}
     };
 
     fetchVideos();
-  }, [user, setUser, navigate]);
+  }, [user, setUser]);
 
   return videos;
 };

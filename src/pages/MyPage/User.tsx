@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import axios from 'axios';
 
@@ -41,12 +41,12 @@ export interface ApiResponse<T> {
 
 const BASE_URL = 'http://localhost:3000';
 
-const MyUserPage = () => {
+const UserPage = () => {
   const { userId } = useParams<{ userId?: string }>();
   const parsedUserId = userId ? parseInt(userId, 10) : null;
 
   const [user, setUser] = useState<User>({
-    userId: 123, // 예시 userId, 실제로는 동적으로 설정해야 함
+    userId: 123,
     accessToken: 'some_initial_access_token',
     refreshToken: 'some_initial_refresh_token',
   });
@@ -58,12 +58,14 @@ const MyUserPage = () => {
     postNum: 0,
   });
 
+  const navigate = useNavigate();
+
   const [videos, setVideos] = useState<Video[]>([]);
 
   useEffect(() => {
     if (parsedUserId !== null && !isNaN(parsedUserId)) {
       useUserProfile(parsedUserId, user, setUser, setUserProfile);
-      useMyVideos(parsedUserId, user, setUser);
+      useMyVideos(parsedUserId, user, setUser, navigate);
     }
   }, [parsedUserId, user.accessToken]);
 
@@ -109,4 +111,4 @@ const MyUserPage = () => {
   );
 };
 
-export default MyUserPage;
+export default UserPage;

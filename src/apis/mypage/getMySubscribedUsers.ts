@@ -7,14 +7,13 @@ import { ApiResponse, SubscribedUser, User } from '../../pages/MyPage/Social/Sub
 import { getNewAccessToken } from '../getNewAccessToken';
 
 const BASE_URL = 'http://localhost:3000';
-const navigate = useNavigate();
 
 export const useSubscribedUsers = (
   user: User,
   setUser: React.Dispatch<React.SetStateAction<User>>,
+  navigate: ReturnType<typeof useNavigate>,
 ) => {
   const [subscribes, setSubscribes] = useState<SubscribedUser[]>([]);
-  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchSubscribe = async () => {

@@ -1,5 +1,6 @@
 // hooks/useMyVideos.ts
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import axios from 'axios';
 
@@ -12,6 +13,7 @@ export const useMyVideos = (
   userId: number,
   user: User,
   setUser: React.Dispatch<React.SetStateAction<User>>,
+  navigate: ReturnType<typeof useNavigate>,
 ) => {
   const [videos, setVideos] = useState<Video[]>([]);
 
@@ -40,7 +42,7 @@ export const useMyVideos = (
     };
 
     fetchVideos();
-  }, [userId, user, setUser]);
+  }, [userId, user, setUser, navigate]);
 
   return videos;
 };

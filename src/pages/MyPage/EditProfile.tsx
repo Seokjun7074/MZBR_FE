@@ -24,6 +24,7 @@ const EditProfile = () => {
     nickname: 'JohnDoe',
     profile_image: Profile,
   });
+
   const [user, setUser] = useState<User>({
     userId: 1,
     profileImage: Profile,
@@ -31,20 +32,22 @@ const EditProfile = () => {
     refreshToken: 'some_initial_refresh_token',
   });
 
+  // useProfileImageUpdater 훅 호출
   const { setProfileImage, updateResult } = useProfileImageUpdater(user, setUser);
 
+  // 파일 변경 핸들러
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       setProfileImage(e.target.files[0]);
     }
   };
-
   return (
     <S.Container>
       <S.TopSection>
         <S.ProfileImage src={member.profile_image} alt="Profile" />
         <S.RightSection>
           <S.Nickname>{member.nickname}</S.Nickname>
+          <input type="file" onChange={handleFileChange} />
           <S.ChangeImageButton>프로필 이미지 변경</S.ChangeImageButton>
         </S.RightSection>
       </S.TopSection>

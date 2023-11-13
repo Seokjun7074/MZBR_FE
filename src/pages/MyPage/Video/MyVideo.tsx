@@ -24,11 +24,10 @@ export interface ApiResponse<T> {
 
 const MyVideo = () => {
   const navigate = useNavigate();
-
   const [user, setUser] = useState<User>({
     userId: 1,
     accessToken: 'some_initial_access_token',
-    refreshToken: 'some_initial_refresh_token',
+    refreshToken: 'some_initdsial_refresh_token',
   });
 
   const videos = useMyVideos(user, setUser);
@@ -39,7 +38,7 @@ const MyVideo = () => {
 
   return (
     <div>
-      <S.ButtonContainer>{/* 버튼 구현 */}</S.ButtonContainer>
+      <S.ButtonContainer></S.ButtonContainer>
 
       <S.VideoGrid>
         {videos.map((video) => (

@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import { useSubscribedUsers } from '@/apis/mypage/getMySubscribedUsers';
 
-import Profile from '../../../assets/Profile.png';
 import { Button, Container, Header, UserItem } from './SubscribedUsers.style';
 
 export interface User {
@@ -29,8 +29,8 @@ const SubscribedUsers = () => {
     accessToken: 'some_initial_access_token',
     refreshToken: 'some_initial_refresh_token',
   });
-
-  const subscribes = useSubscribedUsers(user, setUser);
+  const navigate = useNavigate();
+  const subscribes = useSubscribedUsers(user, setUser, navigate);
 
   return (
     <Container>
