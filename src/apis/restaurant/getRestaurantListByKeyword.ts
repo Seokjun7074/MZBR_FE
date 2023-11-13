@@ -8,10 +8,8 @@ export const getRestaurantListByKeyword = async ({
   bottomlng,
   keyword,
   star,
-  day,
-  time,
 }: RestaurantListByKeywordRequest) => {
-  const { data } = await axiosInstance.get<RestaurantResponse>('/restaurants/search', {
+  const { data } = await axiosInstance.get<RestaurantResponse>('/api/b/restaurants/search', {
     params: {
       toplat,
       toplng,
@@ -19,8 +17,6 @@ export const getRestaurantListByKeyword = async ({
       bottomlng,
       keyword,
       star,
-      day,
-      time,
     },
   });
   return data;
