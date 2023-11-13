@@ -15,7 +15,13 @@ export const videoAtom = atom<VideoAtom>({
   },
 });
 
-export const preparedVideoAtom = atom<string[]>({
+interface PreparedVideo {
+  videoName: string;
+  videoUrl: string;
+}
+
+// 편집이 완료된 비디오 정보
+export const preparedVideoAtom = atom<PreparedVideo[]>({
   key: 'preparedVideoAtom',
   default: [],
 });
@@ -30,6 +36,7 @@ export const endAtom = atom({
   default: 0,
 });
 
+// 비율에 맞게 자른 영상 좌표 정보
 export const croppedVideoAtom = atom({
   key: 'croppedVideoAtom',
   default: {

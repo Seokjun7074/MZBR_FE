@@ -31,7 +31,7 @@ const ReviewUpLoad = () => {
   const handleNextButtonClick = async () => {
     const videoUuid = v4();
     const { status } = await startEditVideo(videoUuid);
-    if (status === 201) navigate(PATH.REVIEW_EDIT_CLIP(restaurant_id!));
+    if (status === 201) navigate(PATH.REVIEW_EDIT_CLIP(restaurant_id!), { state: { videoUuid } });
   };
 
   const handleClickInput = () => {

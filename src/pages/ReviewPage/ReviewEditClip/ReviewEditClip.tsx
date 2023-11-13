@@ -2,7 +2,7 @@ import { fetchFile } from '@ffmpeg/ffmpeg';
 import { v4 } from 'uuid';
 
 import { useEffect, useRef, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
 import { useRecoilState, useRecoilValue } from 'recoil';
 
@@ -23,7 +23,7 @@ import { croppedVideoAtom, endAtom, preparedVideoAtom, startAtom, videoAtom } fr
 
 const ReviewEditClip = () => {
   const { restaurant_id } = useParams<{ restaurant_id: string }>();
-
+  const location = useLocation();
   const videoState = useRecoilValue(videoAtom);
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const { ffmpegRef } = useFFmpeg();
@@ -61,27 +61,26 @@ const ReviewEditClip = () => {
     }
     const result = ffmpeg.FS('readFile', outputFileName);
     const blob = new Blob([result.buffer], { type: 'video/mp4' });
-    // const file = new File([blob], outputFileName, { type: 'video/mp4', lastModified: Date.now() });
     return { blob, outputFileName };
   };
 
   const handelCutVideo = async () => {
     setIsLoading((prev) => !prev);
-    const videoUuid = v4();
     const cuttedVideo = await cutVideo(videoState.url);
 
+    const videoName = cuttedVideo!.outputFileName;
+    const videoUuid = location.state.videoUuid;
     const presignedUrl = await getPresignedUrl({
-      videoName: cuttedVideo!.outputFileName,
-      videoUuid: videoUuid,
-      crop: croppedVideo,
+      videoName,
+      videoUuid,
+      crop: croppedVideo, // 자른 비디오 좌표 정보
     });
     await uploadVideo(presignedUrl, cuttedVideo!.blob);
 
-    const videoUrl = await postUploadComplete(cuttedVideo!.outputFileName);
-
-    setPreparedVideo([...preparedVideo, videoUrl]);
-    setIsLoading((prev) => !prev);
+    const videoUrl = await postUploadComplete(cuttedVideo!.outputFileName, videoUuid);
     console.log(videoUrl);
+    setPreparedVideo([...preparedVideo, { videoName, videoUrl }]);
+    setIsLoading((prev) => !prev);
     navigate(PATH.VIDEO_PREVIEW(restaurant_id!));
   };
 
@@ -96,7 +95,7 @@ const ReviewEditClip = () => {
   return (
     <>
       {isLoading ? (
-        <h1>loading...</h1>
+        <h1>편집중...</h1>
       ) : (
         <S.ReviewEditClipWrapper>
           <S.EditHeader>영상의 구간을 선택해주세요!</S.EditHeader>

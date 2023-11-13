@@ -6,6 +6,7 @@ import { preparedVideoAtom } from '@/store/video';
 
 const VideoPreview = () => {
   const preparedVideo = useRecoilValue(preparedVideoAtom);
+  console.log(preparedVideo);
 
   return (
     <S.VideoPreviewWrapper>

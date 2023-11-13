@@ -1,7 +1,10 @@
 import { axiosInstance } from '@/apis';
 
-export const postUploadComplete = async (videoName: string) => {
-  const { data } = await axiosInstance.post(`/api/temp-video/upload/${videoName}/upload-complete`);
+export const postUploadComplete = async (videoName: string, videoUuid: string) => {
+  const { data } = await axiosInstance.post(`/api/v/video/temp/upload-complete`, {
+    videoName,
+    videoUuid,
+  });
 
   return data?.url;
 };
