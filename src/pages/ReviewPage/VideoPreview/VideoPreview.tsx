@@ -32,6 +32,7 @@ const VideoPreview = () => {
     const fetchPreviewUrl = async () => {
       const versionId = v4();
       const videoNameList = preparedVideoState.map((vido) => vido.videoName);
+      console.log(videoNameList);
       // 현재 편집된 영상 미리보기 요청
       const { url } = await getPreviewVideo(versionId, videoNameList);
       console.log(url);
@@ -78,12 +79,8 @@ const VideoPreview = () => {
     <S.VideoPreviewWrapper>
       <S.PreviewHeaderText>이대로 업로드할까요?</S.PreviewHeaderText>
       <S.PreviewVideoContainer>
-        <S.PreviewVideo
-          crossOrigin="anonymous"
-          autoPlay
-          controls
-          src="https://mzbr-temp-video-bucket.s3.ap-northeast-2.amazonaws.com/crop/1c366c63-c45a-456c-9bd6-3249c6f44b0d.mp4"
-        />
+        {/* <S.PreviewVideo crossOrigin="anonymous" autoPlay controls src={videoPreview} /> */}
+        <S.PreviewVideo crossOrigin="anonymous" autoPlay controls src={DUMMY_VIDEO} />
       </S.PreviewVideoContainer>
       <S.PreviewSection>
         <S.ReviewTitleSubmitButton onClick={() => navigate(PATH.REVIEW_UPLOAD(restaurant_id!))}>

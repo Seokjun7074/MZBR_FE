@@ -26,6 +26,8 @@ export const PreviewHeaderText = styled.h1`
 export const PreviewVideoContainer = styled(Flex)`
   max-height: 40rem;
   width: 100%;
+  background-color: black;
+  padding: 1rem;
 `;
 
 export const PreviewVideo = styled.video`

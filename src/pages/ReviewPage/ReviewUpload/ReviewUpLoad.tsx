@@ -11,7 +11,7 @@ import { startEditVideo } from '@/apis/videoEdit/startEditVideo';
 
 import { PATH } from '@/constants/path';
 
-import { videoAtom } from '@/store/video';
+import { editingUUIDState, videoAtom } from '@/store/video';
 
 import * as S from './ReviewUpLoad.style';
 
@@ -20,6 +20,7 @@ const ReviewUpLoad = () => {
   const navigate = useNavigate();
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [videoState, setVideoState] = useRecoilState(videoAtom);
+  const [editingUUID, setEditingUUID] = useRecoilState(editingUUIDState);
 
   const videoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     setVideoState({
@@ -29,9 +30,17 @@ const ReviewUpLoad = () => {
   };
 
   const handleNextButtonClick = async () => {
-    const videoUuid = v4(); // 편집될 영상의 식별자
-    const { status } = await startEditVideo(videoUuid);
-    if (status === 201) navigate(PATH.REVIEW_EDIT_CLIP(restaurant_id!), { state: { videoUuid } });
+    let videoUuid = '';
+    if (editingUUID === '') {
+      videoUuid = v4(); // 편집될 영상의 식별자
+      setEditingUUID(videoUuid);
+      const status = await startEditVideo(videoUuid);
+      if (status.status === 201)
+        navigate(PATH.REVIEW_EDIT_CLIP(restaurant_id!), { state: { videoUuid } });
+    } else {
+      videoUuid = editingUUID;
+      navigate(PATH.REVIEW_EDIT_CLIP(restaurant_id!), { state: { videoUuid } });
+    }
   };
 
   const handleClickInput = () => {

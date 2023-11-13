@@ -44,3 +44,8 @@ export const croppedVideoAtom = atom({
     width: 0,
   },
 });
+
+export const editingUUIDState = atom({
+  key: 'editingUUIDState',
+  default: '',
+});
