@@ -13,7 +13,7 @@ export const TagInput = styled.input`
 `;
 
 export const TagContainer = styled(Flex)`
-  width: 100%;
+  width: 35rem;
   gap: 0.5rem;
   flex-wrap: wrap;
   position: absolute;

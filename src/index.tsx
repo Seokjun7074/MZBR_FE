@@ -26,10 +26,10 @@ const startMockWorker = async () => {
 };
 startMockWorker();
 
-const queryClient = new QueryClient({
+export const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      retry: 2,
+      retry: 0,
       // suspense: true,
       // useErrorBoundary: true,
     },

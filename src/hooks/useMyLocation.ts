@@ -1,7 +1,12 @@
 import { useEffect, useState } from 'react';
 
+interface Center {
+  lat: number;
+  lng: number;
+}
+
 export const useMyLocation = () => {
-  const [myLocation, setMyLocation] = useState({ lat: 12.345, lng: 678.91 });
+  const [myLocation, setMyLocation] = useState<Center | null>(null);
 
   const getSuccess = (position: any) => {
     const lat = position.coords.latitude;
@@ -12,8 +17,6 @@ export const useMyLocation = () => {
 
   const getError = () => {
     alert('Geolocation Error');
-    const center = { lat: 37.569227, lng: 126.9777256 };
-    setMyLocation(center);
   };
 
   useEffect(() => {

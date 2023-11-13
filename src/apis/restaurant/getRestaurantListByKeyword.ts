@@ -2,9 +2,10 @@ import { axiosInstance } from '@/apis';
 import { RestaurantListByKeywordRequest, RestaurantResponse } from '@/types/restaurant';
 
 export const getRestaurantListByKeyword = async ({
-  latitude,
-  longitude,
-  radius,
+  toplat,
+  toplng,
+  bottomlat,
+  bottomlng,
   keyword,
   star,
   day,
@@ -12,9 +13,10 @@ export const getRestaurantListByKeyword = async ({
 }: RestaurantListByKeywordRequest) => {
   const { data } = await axiosInstance.get<RestaurantResponse>('/restaurants/search', {
     params: {
-      latitude,
-      longitude,
-      radius,
+      toplat,
+      toplng,
+      bottomlat,
+      bottomlng,
       keyword,
       star,
       day,
