@@ -11,10 +11,13 @@ import { useFFmpeg } from '@/hooks/useFFmpeg';
 
 import { getAudioThumbnail } from '@/apis/videoEdit/getAudioThumbnail';
 import { getPreviewVideo } from '@/apis/videoEdit/getPreviewViewo';
+import { uploadVideo } from '@/apis/videoEdit/uploadVideo';
 
 import { preparedVideoAtom } from '@/store/video';
 
 const VideoPreview = () => {
+  const DUMMY_VIDEO =
+    'https://mzbr-temp-video-bucket.s3.ap-northeast-2.amazonaws.com/crop/2ac6fe92-cb3c-4de7-b6bb-1d77ed25e524.mp4';
   const { ffmpegRef } = useFFmpeg();
   const preparedVideoState = useRecoilValue(preparedVideoAtom);
   const [videoPreview, setVideoPreview] = useState<string>('');
@@ -33,8 +36,7 @@ const VideoPreview = () => {
   const makeThumbnail = async () => {
     const ffmpeg = ffmpegRef.current;
     if (!ffmpeg) return;
-    const url =
-      'https://mzbr-temp-video-bucket.s3.ap-northeast-2.amazonaws.com/crop/2ac6fe92-cb3c-4de7-b6bb-1d77ed25e524.mp4';
+    const url = DUMMY_VIDEO;
     // const url = preparedVideoState[0].videoUrl;
     const thumbnailName = `${v4()}.jpeg`;
 
@@ -46,17 +48,23 @@ const VideoPreview = () => {
     }
     const result = ffmpeg.FS('readFile', thumbnailName);
     const blob = new Blob([result.buffer], { type: 'image/jpeg' });
-    // const dataUrl = URL.createObjectURL(blob);
     return { blob, thumbnailName };
+  };
+  const uploadThumbnail = async (thumbnailUrl: string, file: Blob) => {
+    const response = await uploadVideo(thumbnailUrl, file);
+    console.log(response.status);
   };
 
   const handleSubmit = async () => {
     const result = await makeThumbnail();
-    console.log(result);
-    if (result?.thumbnailName) {
-      const presignUrl = await getAudioThumbnail(result.thumbnailName, '');
-      console.log('presignUrl', presignUrl);
-    }
+    if (!result?.thumbnailName) return;
+    // S3 업로드 URL
+    const presignUrl = await getAudioThumbnail(result.thumbnailName, '오디오 추가');
+    // 썸네일 S3업로드
+    await uploadThumbnail(presignUrl.thumbnailUrl, result.blob);
+    // 오디오 있으면 S3업로드
+
+    // 최종 업로드 완료 요청
   };
 
   return (
