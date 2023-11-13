@@ -78,7 +78,6 @@ const ReviewEditClip = () => {
     await uploadVideo(presignedUrl, cuttedVideo!.blob);
 
     const videoUrl = await postUploadComplete(cuttedVideo!.outputFileName, videoUuid);
-    console.log(videoUrl);
     setPreparedVideo([...preparedVideo, { videoName, videoUrl }]);
     setIsLoading((prev) => !prev);
     navigate(PATH.VIDEO_PREVIEW(restaurant_id!));

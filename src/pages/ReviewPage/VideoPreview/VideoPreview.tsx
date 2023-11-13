@@ -1,12 +1,29 @@
+import { v4 } from 'uuid';
+
+import { useEffect, useState } from 'react';
+
 import { useRecoilValue } from 'recoil';
 
 import * as S from '@/pages/ReviewPage/VideoPreview/VideoPreview.style';
 
+import { getPreviewVideo } from '@/apis/videoEdit/getPreviewViewo';
+
 import { preparedVideoAtom } from '@/store/video';
 
 const VideoPreview = () => {
-  const preparedVideo = useRecoilValue(preparedVideoAtom);
-  console.log(preparedVideo);
+  const preparedVideoState = useRecoilValue(preparedVideoAtom);
+  const [videoPreview, setVideoPreview] = useState<string>('');
+
+  useEffect(() => {
+    const fetchPreviewUrl = async () => {
+      const versionId = v4();
+      const videoNameList = preparedVideoState.map((vido) => vido.videoName);
+      const response = await getPreviewVideo(versionId, videoNameList);
+      console.log(response);
+      setVideoPreview(response.url);
+    };
+    fetchPreviewUrl();
+  }, []);
 
   return (
     <S.VideoPreviewWrapper>
