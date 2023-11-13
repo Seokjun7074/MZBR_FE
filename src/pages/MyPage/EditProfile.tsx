@@ -1,38 +1,53 @@
-import React, { useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
+
+import { useProfileImageUpdater } from '@/apis/mypage/putUserProfileImage';
 
 import Profile from '../../assets/Profile.png';
 import * as S from './EditProfile.style';
 
-type Member = {
+export type Member = {
   id: number;
   nickname: string;
   profile_image: string;
 };
 
-const EditProfile: React.FC = () => {
-  const [member] = useState<Member>({
-    id: 1, // 더미 데이터
+export type User = {
+  userId: number;
+  profileImage: string;
+  accessToken: string;
+  refreshToken: string;
+};
+
+const EditProfile = () => {
+  const [member, setMember] = useState<Member>({
+    id: 1,
     nickname: 'JohnDoe',
     profile_image: Profile,
   });
-  const [newNickname, setNewNickname] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
 
-  const handleCheckNickname = () => {
-    // 중복 검사 로직
+  const [user, setUser] = useState<User>({
+    userId: 1,
+    profileImage: Profile,
+    accessToken: 'some_initial_access_token',
+    refreshToken: 'some_initial_refresh_token',
+  });
+
+  // useProfileImageUpdater 훅 호출
+  const { setProfileImage, updateResult } = useProfileImageUpdater(user, setUser);
+
+  // 파일 변경 핸들러
+  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      setProfileImage(e.target.files[0]);
+    }
   };
-
-  const handleUpdateProfile = () => {
-    // 프로필 업데이트 로직
-  };
-
   return (
     <S.Container>
       <S.TopSection>
         <S.ProfileImage src={member.profile_image} alt="Profile" />
         <S.RightSection>
           <S.Nickname>{member.nickname}</S.Nickname>
+          <input type="file" onChange={handleFileChange} />
           <S.ChangeImageButton>프로필 이미지 변경</S.ChangeImageButton>
         </S.RightSection>
       </S.TopSection>

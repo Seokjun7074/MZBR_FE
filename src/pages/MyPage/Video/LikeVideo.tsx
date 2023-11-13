@@ -1,37 +1,59 @@
-import React from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+
+import { useLikedVideos } from '@/apis/mypage/getLikeVideo';
 
 import Profile from '../../../assets/Profile.png';
 import * as S from './MyVideo.style';
 
-type Video = {
-  thumbnail: string;
-  id: number;
-};
+export interface User {
+  userId: number;
+  accessToken: string;
+  refreshToken: string;
+}
 
-const dummyData: Video[] = [
-  {
-    thumbnail: Profile,
-    id: 1,
-  },
-  {
-    thumbnail: Profile,
-    id: 2,
-  },
-  {
-    thumbnail: Profile,
-    id: 3,
-  },
-  {
-    thumbnail: Profile,
-    id: 4,
-  },
-];
+export interface Video {
+  thumbnail_url: string;
+  id: string;
+}
+
+export interface ApiResponse<T> {
+  success: boolean;
+  data: T;
+  error?: string;
+}
+
+// const dummyData: Video[] = [
+//   {
+//     thumbnail_url: Profile,
+//     id: 'uuid',
+//   },
+//   {
+//     thumbnail_url: Profile,
+//     id: 'uuid',
+//   },
+//   {
+//     thumbnail_url: Profile,
+//     id: 'uuid',
+//   },
+//   {
+//     thumbnail_url: Profile,
+//     id: 'uuid',
+//   },
+// ];
 
 const LikeVideo = () => {
   const navigate = useNavigate();
 
-  const handleThumbnailClick = (id: number) => {
+  const [user, setUser] = useState<User>({
+    userId: 1,
+    accessToken: 'some_initial_access_token',
+    refreshToken: 'some_initial_refresh_token',
+  });
+
+  const videos = useLikedVideos(user, setUser);
+
+  const handleThumbnailClick = (id: string) => {
     navigate(`/video/${id}`);
   };
 
@@ -45,10 +67,10 @@ const LikeVideo = () => {
         <S.Button onClick={() => navigate('/mypage/watchinglist')}>시청기록</S.Button>
       </S.ButtonContainer>
       <S.VideoGrid>
-        {dummyData.map((video) => (
+        {videos.map((video) => (
           <S.Thumbnail
             key={video.id}
-            src={video.thumbnail}
+            src={video.thumbnail_url}
             alt={`Thumbnail for video ${video.id}`}
             onClick={() => handleThumbnailClick(video.id)}
           />
