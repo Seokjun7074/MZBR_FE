@@ -90,44 +90,6 @@ const VideoPlayer = ({ videoRef, setCurrentTimeCode }: VideoPlayerProps) => {
 
   return (
     <>
-      {/* <S.VideoContainer>
-        <S.VideoOverlay>
-          <S.VideoTag
-            src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/WhatCarCanYouGetForAGrand.mp4"
-            ref={videoRef}
-            crossOrigin="anonymous"
-            onTimeUpdate={handleOverEndTime}
-            onClick={handlePlayVideo}
-          />
-          <Rnd
-            style={rndStyle}
-            bounds={'parent'}
-            default={{
-              x: 100,
-              y: 0,
-              width: 'auto',
-              height: '100%',
-            }}
-            lockAspectRatio={true}
-            onDragStop={onDragStop}
-            onResizeStop={onResizeStop}
-          >
-            <div
-              ref={rndRef}
-              style={{ width: '100%', height: '100%', backgroundColor: 'red' }}
-            ></div>
-          </Rnd>
-        </S.VideoOverlay>
-        <S.VideoController>
-          <SkipBack style={{ cursor: 'pointer' }} onClick={handelSkipBack} />
-          {isPlaying ? (
-            <Pause style={{ cursor: 'pointer' }} onClick={handlePlayVideo} />
-          ) : (
-            <Play style={{ cursor: 'pointer' }} onClick={handlePlayVideo} />
-          )}
-          <SkipForward style={{ cursor: 'pointer' }} onClick={handelSkipForward} />
-        </S.VideoController>
-      </S.VideoContainer> */}
       {videoState.url && (
         <S.VideoContainer>
           <S.VideoOverlay>

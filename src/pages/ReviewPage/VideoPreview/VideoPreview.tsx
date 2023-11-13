@@ -4,7 +4,7 @@ import { v4 } from 'uuid';
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil';
 
 import * as S from '@/pages/ReviewPage/VideoPreview/VideoPreview.style';
 
@@ -16,7 +16,7 @@ import { uploadVideo } from '@/apis/videoEdit/uploadVideo';
 
 import { PATH } from '@/constants/path';
 
-import { preparedVideoAtom } from '@/store/video';
+import { editingUUIDState, preparedVideoAtom } from '@/store/video';
 
 const VideoPreview = () => {
   const DUMMY_VIDEO =
@@ -25,18 +25,27 @@ const VideoPreview = () => {
   const { ffmpegRef } = useFFmpeg();
   const navigate = useNavigate();
   const { restaurant_id } = useParams<{ restaurant_id: string }>();
-  const preparedVideoState = useRecoilValue(preparedVideoAtom);
-  const [videoPreview, setVideoPreview] = useState<string>('');
+  const [preparedVideo, setPreparedVideo] = useRecoilState(preparedVideoAtom);
+  const resetEditingUUID = useResetRecoilState(editingUUIDState);
+  const [videoPreviewUrl, setVideoPreviewUrl] = useState<string>('');
 
   useEffect(() => {
     const fetchPreviewUrl = async () => {
       const versionId = v4();
-      const videoNameList = preparedVideoState.map((vido) => vido.videoName);
+      const videoNameList = preparedVideo.map((vido) => vido.videoName);
       console.log(videoNameList);
       // 현재 편집된 영상 미리보기 요청
       const { url } = await getPreviewVideo(versionId, videoNameList);
       console.log(url);
-      setVideoPreview(url);
+
+      const mergedVideoName = v4();
+      setVideoPreviewUrl(url);
+      setPreparedVideo([
+        {
+          videoName: mergedVideoName,
+          videoUrl: url,
+        },
+      ]);
     };
     // fetchPreviewUrl();
   }, []);
@@ -44,8 +53,8 @@ const VideoPreview = () => {
   const makeThumbnail = async () => {
     const ffmpeg = ffmpegRef.current;
     if (!ffmpeg) return;
-    const url = DUMMY_VIDEO;
-    // const url = preparedVideoState[0].videoUrl;
+    const url = preparedVideo[0] ? preparedVideo[0].videoUrl : DUMMY_VIDEO;
+    // const url = preparedVideo[0].videoUrl;
     const thumbnailName = `${v4()}.jpeg`;
 
     ffmpeg.FS('writeFile', `inputVideo.mp4`, await fetchFile(url));
@@ -58,6 +67,7 @@ const VideoPreview = () => {
     const blob = new Blob([result.buffer], { type: 'image/jpeg' });
     return { blob, thumbnailName };
   };
+
   const uploadThumbnail = async (thumbnailUrl: string, file: Blob) => {
     const response = await uploadVideo(thumbnailUrl, file);
     console.log(response.status);
@@ -73,13 +83,18 @@ const VideoPreview = () => {
     // 오디오 있으면 S3업로드
 
     // 최종 업로드 완료 요청
+
+    // 편집중인 표시 삭제
+    resetEditingUUID();
   };
 
   return (
     <S.VideoPreviewWrapper>
       <S.PreviewHeaderText>이대로 업로드할까요?</S.PreviewHeaderText>
       <S.PreviewVideoContainer>
-        {/* <S.PreviewVideo crossOrigin="anonymous" autoPlay controls src={videoPreview} /> */}
+        {/* {videoPreviewUrl && (
+          <S.PreviewVideo crossOrigin="anonymous" autoPlay controls src={videoPreviewUrl} />
+        )} */}
         <S.PreviewVideo crossOrigin="anonymous" autoPlay controls src={DUMMY_VIDEO} />
       </S.PreviewVideoContainer>
       <S.PreviewSection>
