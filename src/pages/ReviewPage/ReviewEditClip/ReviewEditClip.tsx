@@ -24,18 +24,19 @@ import { croppedVideoAtom, endAtom, preparedVideoAtom, startAtom, videoAtom } fr
 const ReviewEditClip = () => {
   const { restaurant_id } = useParams<{ restaurant_id: string }>();
   const location = useLocation();
-  const videoState = useRecoilValue(videoAtom);
+  const navigate = useNavigate();
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const { ffmpegRef } = useFFmpeg();
 
-  const startTime = useRecoilValue(startAtom);
-  const [endTime, setEndTime] = useRecoilState(endAtom);
-  const [preparedVideo, setPreparedVideo] = useRecoilState(preparedVideoAtom);
   const [duration, setDuration] = useState(0);
   const [currentTimeCode, setCurrentTimeCode] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
+
+  const videoState = useRecoilValue(videoAtom);
+  const startTime = useRecoilValue(startAtom);
+  const [endTime, setEndTime] = useRecoilState(endAtom);
+  const [preparedVideo, setPreparedVideo] = useRecoilState(preparedVideoAtom);
   const croppedVideo = useRecoilValue(croppedVideoAtom);
-  const navigate = useNavigate();
   const resetStartAtom = useResetRecoilState(startAtom);
   const resetEndAtom = useResetRecoilState(endAtom);
   const resetVideoAtom = useResetRecoilState(videoAtom);
@@ -70,17 +71,21 @@ const ReviewEditClip = () => {
 
   const handelCutVideo = async () => {
     setIsLoading((prev) => !prev);
+    // 영상 컷편집 처리
     const cuttedVideo = await cutVideo(videoState.url);
 
     const videoName = cuttedVideo!.outputFileName;
     const videoUuid = location.state.videoUuid;
+    // S3 presignUrl 받기
     const presignedUrl = await getPresignedUrl({
       videoName,
       videoUuid,
       crop: croppedVideo, // 자른 비디오 좌표 정보
     });
+    // S3에 영상 업로드
     await uploadVideo(presignedUrl, cuttedVideo!.blob);
 
+    // S3업로드 확인 요청
     const videoUrl = await postUploadComplete(cuttedVideo!.outputFileName, videoUuid);
     setPreparedVideo([...preparedVideo, { videoName, videoUrl }]);
     resetEditdata();

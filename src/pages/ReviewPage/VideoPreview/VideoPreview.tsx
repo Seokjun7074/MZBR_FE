@@ -2,6 +2,7 @@ import { fetchFile } from '@ffmpeg/ffmpeg';
 import { v4 } from 'uuid';
 
 import { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import { useRecoilValue } from 'recoil';
 
@@ -13,12 +14,17 @@ import { getAudioThumbnail } from '@/apis/videoEdit/getAudioThumbnail';
 import { getPreviewVideo } from '@/apis/videoEdit/getPreviewViewo';
 import { uploadVideo } from '@/apis/videoEdit/uploadVideo';
 
+import { PATH } from '@/constants/path';
+
 import { preparedVideoAtom } from '@/store/video';
 
 const VideoPreview = () => {
   const DUMMY_VIDEO =
     'https://mzbr-temp-video-bucket.s3.ap-northeast-2.amazonaws.com/crop/2ac6fe92-cb3c-4de7-b6bb-1d77ed25e524.mp4';
+
   const { ffmpegRef } = useFFmpeg();
+  const navigate = useNavigate();
+  const { restaurant_id } = useParams<{ restaurant_id: string }>();
   const preparedVideoState = useRecoilValue(preparedVideoAtom);
   const [videoPreview, setVideoPreview] = useState<string>('');
 
@@ -26,6 +32,7 @@ const VideoPreview = () => {
     const fetchPreviewUrl = async () => {
       const versionId = v4();
       const videoNameList = preparedVideoState.map((vido) => vido.videoName);
+      // 현재 편집된 영상 미리보기 요청
       const { url } = await getPreviewVideo(versionId, videoNameList);
       console.log(url);
       setVideoPreview(url);
@@ -79,8 +86,12 @@ const VideoPreview = () => {
         />
       </S.PreviewVideoContainer>
       <S.PreviewSection>
-        <S.ReviewTitleSubmitButton>영상 추가</S.ReviewTitleSubmitButton>
-        <S.ReviewTitleSubmitButton>음성 / 자막 추가</S.ReviewTitleSubmitButton>
+        <S.ReviewTitleSubmitButton onClick={() => navigate(PATH.REVIEW_UPLOAD(restaurant_id!))}>
+          영상 추가
+        </S.ReviewTitleSubmitButton>
+        <S.ReviewTitleSubmitButton onClick={() => navigate(PATH.VIDEO_TEXT(restaurant_id!))}>
+          음성 / 자막 추가
+        </S.ReviewTitleSubmitButton>
       </S.PreviewSection>
       <S.PreviewSection>
         <S.ReviewTitleSubmitButton onClick={handleSubmit}>

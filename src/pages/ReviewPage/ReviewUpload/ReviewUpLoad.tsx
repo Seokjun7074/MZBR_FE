@@ -29,7 +29,7 @@ const ReviewUpLoad = () => {
   };
 
   const handleNextButtonClick = async () => {
-    const videoUuid = v4();
+    const videoUuid = v4(); // 편집될 영상의 식별자
     const { status } = await startEditVideo(videoUuid);
     if (status === 201) navigate(PATH.REVIEW_EDIT_CLIP(restaurant_id!), { state: { videoUuid } });
   };

@@ -17,6 +17,7 @@ import Hashtag from '@/pages/ReviewPage/ReviewHashTag/ReviewHashtag';
 import ReviewTitle from '@/pages/ReviewPage/ReviewTitle/ReviewTitle';
 import UpLoad from '@/pages/ReviewPage/ReviewUpload/ReviewUpLoad';
 import VideoPreview from '@/pages/ReviewPage/VideoPreview/VideoPreview';
+import VideoText from '@/pages/ReviewPage/VideoText/VideoText';
 import ShortFormPage from '@/pages/ShortFormPage/ShortFormPage';
 import SignupPage from '@/pages/SignupPage/SignupPage';
 
@@ -106,6 +107,10 @@ const AppRouter = () => {
         {
           path: PATH.VIDEO_PREVIEW(':restaurant_id'),
           element: <VideoPreview />,
+        },
+        {
+          path: PATH.VIDEO_TEXT(':restaurant_id'),
+          element: <VideoText />,
         },
       ],
     },
