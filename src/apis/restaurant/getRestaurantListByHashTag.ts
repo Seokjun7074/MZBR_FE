@@ -5,9 +5,10 @@ import { RestaurantListByHashTagRequest, RestaurantResponse } from '@/types/rest
 
 export const getRestaurantListByHashTag = async ({
   hashtag,
-  latitude,
-  longitude,
-  radius,
+  toplat,
+  toplng,
+  bottomlat,
+  bottomlng,
   star,
   day,
   time,
@@ -15,9 +16,10 @@ export const getRestaurantListByHashTag = async ({
   const { data } = await axiosInstance.get<RestaurantResponse>('/restaurants/search/hashtag', {
     params: {
       hashtag,
-      latitude,
-      longitude,
-      radius,
+      toplat,
+      toplng,
+      bottomlat,
+      bottomlng,
       star,
       day,
       time,

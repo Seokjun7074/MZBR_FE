@@ -1,15 +1,11 @@
 import HashTag from '@/components/common/HashTag/HashTag';
 import * as S from '@/components/common/HashTagInput/HashTagInput.style';
 
-interface HashTagProps {
-  tag: string;
-  tagList: string[];
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onKeydown: (e: React.KeyboardEvent<HTMLInputElement>) => void;
-  deleteHashTag: (text: string) => void;
-}
+import { useHasgTag } from '@/hooks/useHashTag';
 
-const HashTagInput = ({ tag, tagList, onChange, onKeydown, deleteHashTag }: HashTagProps) => {
+const HashTagInput = () => {
+  const { tag, tagList, onChange, onKeydown, deleteHashTag } = useHasgTag();
+
   return (
     <S.HashTagInputWrapper>
       <S.TagInput

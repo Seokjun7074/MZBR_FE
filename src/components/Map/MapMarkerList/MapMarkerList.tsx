@@ -1,18 +1,16 @@
 import { useEffect, useState } from 'react';
 
-import { useRecoilValue } from 'recoil';
-
+import RestaurantDetail from '@/components/Map/RestaurantDetail/RestaurantDetail';
 import MapMarker from '@/components/common/MapMarker/MapMarker';
+import Modal from '@/components/common/Modal/Modal';
 
-import { myPositionState } from '@/store/map';
-import { RestaurantResponse } from '@/types/restaurant';
+import useModal from '@/hooks/useModal';
+
+import { Restaurant } from '@/types/restaurant';
 
 interface MapMarkerListProps {
   map: google.maps.Map;
-  restaurantListData: RestaurantResponse;
-  restaurantListByKeywordData: RestaurantResponse;
-  restaurantListByHashTagData: RestaurantResponse;
-  placeType: string;
+  restaurantList: Restaurant[] | [];
 }
 interface MarkerType {
   key: string;
@@ -21,47 +19,57 @@ interface MarkerType {
   lng: number;
 }
 
-const MapMarkerList = ({
-  map,
-  placeType,
-  restaurantListData,
-  restaurantListByKeywordData,
-  restaurantListByHashTagData,
-}: MapMarkerListProps) => {
+const MapMarkerList = ({ map, restaurantList }: MapMarkerListProps) => {
   const [markers, setMarkers] = useState<MarkerType[] | undefined>([]);
-  const myPosition = useRecoilValue(myPositionState);
+  const [selectedMarker, setSelectedMarker] = useState('');
+  const { openModal } = useModal();
 
-  const filterPlaceType = (placeType: string) => {
-    if (placeType == 'POSITION') return restaurantListData;
-    if (placeType == 'KEYWORD') return restaurantListByKeywordData;
-    if (placeType == 'HASHTAG') return restaurantListByHashTagData;
-  };
   useEffect(() => {
-    const filteredList = filterPlaceType(placeType);
-    if (filteredList?.restaurants?.length! > 0) {
+    if (restaurantList?.length! > 0) {
       const bounds = new google.maps.LatLngBounds();
-      filteredList?.restaurants?.forEach((item) =>
+      restaurantList.forEach((item: Restaurant) =>
         bounds.extend(new google.maps.LatLng(item.latitude, item.longitude)),
       );
       const boundCenter = bounds.getCenter();
       map.panTo(boundCenter);
       map.fitBounds(bounds);
     }
-    const newMarkers = filteredList?.restaurants.map((item) => ({
+
+    const newMarkers = restaurantList.map((item: Restaurant) => ({
       key: item.restaurantId,
       id: item.restaurantId,
       lat: item.latitude,
       lng: item.longitude,
     }));
+
     setMarkers(newMarkers);
-  }, [placeType, restaurantListData, restaurantListByKeywordData, restaurantListByHashTagData]);
+  }, [restaurantList]);
+
+  const selectMarker = (id: string) => {
+    setSelectedMarker(id);
+    openModal();
+  };
 
   return (
     <>
-      <MapMarker id="CENTER" lat={myPosition.lat} lng={myPosition.lng} map={map} />
       {markers?.map((item: MarkerType) => (
-        <MapMarker key={item.id} id={item.id} lat={item.lat} lng={item.lng} map={map} />
+        <div
+          key={item.id}
+          style={{ zIndex: '100', width: '100px', height: '100px', backgroundColor: 'red' }}
+        >
+          <MapMarker
+            key={item.id}
+            id={item.id}
+            lat={item.lat}
+            lng={item.lng}
+            map={map}
+            openModal={selectMarker}
+          />
+        </div>
       ))}
+      <Modal>
+        <RestaurantDetail id={selectedMarker} />
+      </Modal>
     </>
   );
 };
