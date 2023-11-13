@@ -67,10 +67,12 @@ const ReviewEditClip = () => {
 
   const handelCutVideo = async () => {
     setIsLoading((prev) => !prev);
+    const videoUuid = v4();
     const cuttedVideo = await cutVideo(videoState.url);
 
     const presignedUrl = await getPresignedUrl({
       videoName: cuttedVideo!.outputFileName,
+      videoUuid: videoUuid,
       crop: croppedVideo,
     });
     await uploadVideo(presignedUrl, cuttedVideo!.blob);

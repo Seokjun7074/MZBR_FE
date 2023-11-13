@@ -34,6 +34,14 @@ export const VideoInput = styled.input`
   display: none;
 `;
 
+export const EditConfirmConatiner = styled(Flex)`
+  flex-direction: column;
+  width: 100%;
+  gap: 3rem;
+  font-weight: bold;
+  color: ${({ theme }) => theme.color.gray};
+`;
+
 export const NextButton = styled(Button)`
   width: 100%;
   background-color: ${({ theme }) => theme.color.primary};
@@ -43,7 +51,6 @@ export const NextButton = styled(Button)`
   border-radius: 5px;
   cursor: pointer;
   font-size: 16px;
-  margin-top: 80px;
   transition: background-color 0.3s;
 
   &:hover {

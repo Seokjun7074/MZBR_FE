@@ -6,5 +6,6 @@ export const axiosInstance = axios.create({
     'Content-Type': 'application/json',
     Authorization: `Bearer `,
     'Authorization-refresh': 'Bearer ',
+    ' member-id': '1',
   },
 });
