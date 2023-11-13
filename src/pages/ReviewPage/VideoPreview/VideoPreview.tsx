@@ -18,11 +18,11 @@ const VideoPreview = () => {
     const fetchPreviewUrl = async () => {
       const versionId = v4();
       const videoNameList = preparedVideoState.map((vido) => vido.videoName);
-      const response = await getPreviewVideo(versionId, videoNameList);
-      console.log(response);
-      setVideoPreview(response.url);
+      const { url } = await getPreviewVideo(versionId, videoNameList);
+      console.log(url);
+      setVideoPreview(url);
     };
-    fetchPreviewUrl();
+    // fetchPreviewUrl();
   }, []);
 
   return (
@@ -37,9 +37,11 @@ const VideoPreview = () => {
         />
       </S.PreviewVideoContainer>
       <S.PreviewSection>
-        <S.ReviewTitleSubmitButton>새 영상</S.ReviewTitleSubmitButton>
-        <S.ReviewTitleSubmitButton>음성/자막</S.ReviewTitleSubmitButton>
-        <S.ReviewTitleSubmitButton>제출</S.ReviewTitleSubmitButton>
+        <S.ReviewTitleSubmitButton>영상 추가</S.ReviewTitleSubmitButton>
+        <S.ReviewTitleSubmitButton>음성 / 자막 추가</S.ReviewTitleSubmitButton>
+      </S.PreviewSection>
+      <S.PreviewSection>
+        <S.ReviewTitleSubmitButton>이대로 업로드 할래요</S.ReviewTitleSubmitButton>
       </S.PreviewSection>
     </S.VideoPreviewWrapper>
   );

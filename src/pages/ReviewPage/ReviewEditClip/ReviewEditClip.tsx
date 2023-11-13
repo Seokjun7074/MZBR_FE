@@ -4,7 +4,7 @@ import { v4 } from 'uuid';
 import { useEffect, useRef, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil';
 
 import * as S from '@/pages/ReviewPage/ReviewEditClip/ReviewEditClip.style';
 
@@ -36,6 +36,10 @@ const ReviewEditClip = () => {
   const [isLoading, setIsLoading] = useState(false);
   const croppedVideo = useRecoilValue(croppedVideoAtom);
   const navigate = useNavigate();
+  const resetStartAtom = useResetRecoilState(startAtom);
+  const resetEndAtom = useResetRecoilState(endAtom);
+  const resetVideoAtom = useResetRecoilState(videoAtom);
+  const resetCroppedVideoAtom = useResetRecoilState(croppedVideoAtom);
 
   const cutVideo = async (url: string) => {
     const ffmpeg = ffmpegRef.current;
@@ -79,8 +83,16 @@ const ReviewEditClip = () => {
 
     const videoUrl = await postUploadComplete(cuttedVideo!.outputFileName, videoUuid);
     setPreparedVideo([...preparedVideo, { videoName, videoUrl }]);
+    resetEditdata();
     setIsLoading((prev) => !prev);
     navigate(PATH.VIDEO_PREVIEW(restaurant_id!));
+  };
+
+  const resetEditdata = () => {
+    resetStartAtom();
+    resetEndAtom();
+    resetVideoAtom();
+    resetCroppedVideoAtom();
   };
 
   useEffect(() => {

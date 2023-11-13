@@ -3,7 +3,6 @@ import { atom } from 'recoil';
 interface VideoAtom {
   file: File | null;
   url: string;
-  // blob: Blob | null;
 }
 
 export const videoAtom = atom<VideoAtom>({
@@ -11,7 +10,6 @@ export const videoAtom = atom<VideoAtom>({
   default: {
     file: null,
     url: '',
-    // blob: null,
   },
 });
 
