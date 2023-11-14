@@ -1,11 +1,11 @@
 import { HttpResponse, http } from 'msw';
 
 export const restaurantDetailHandler = [
-  http.get('/restaurants/:restaurantId', ({ params }) => {
-    const { restaurantId } = params;
+  http.get('/restaurants/:storeId', ({ params }) => {
+    const { storeId } = params;
     return HttpResponse.json({
-      restaurantId: restaurantId,
-      restaurant_name: '털보네 김치찌개', // 식당 이름
+      storeId: storeId,
+      storeName: '털보네 김치찌개', // 식당 이름
       latitude: 126.3423525, // 식당 위도
       longitude: 37.5115164, // 식당 경도
       address: '서울특별시 강남구 테헤란로 12', // 식당 주소

@@ -11,10 +11,10 @@ export const useRestaurantListByKeywordQuery = (
   const { data, isSuccess } = useQuery({
     queryKey: [
       'restaurantListByKeyword',
-      paramData.bottomlat,
-      paramData.bottomlng,
-      paramData.toplat,
-      paramData.toplng,
+      paramData.bottomLat,
+      paramData.bottomLng,
+      paramData.topLat,
+      paramData.topLng,
     ],
     queryFn: () => getRestaurantListByKeyword(paramData),
     enabled: placeType === 'KEYWORD',

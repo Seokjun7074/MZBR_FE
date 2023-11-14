@@ -17,18 +17,18 @@ export const myPositionState = atom<google.maps.LatLngLiteral>({
 });
 
 interface Boundary {
-  toplat: number;
-  toplng: number;
-  bottomlat: number;
-  bottomlng: number;
+  topLat: number;
+  topLng: number;
+  bottomLat: number;
+  bottomLng: number;
 }
 
 export const mapBoundaryState = atom<Boundary>({
   key: 'mapBoundaryState',
   default: {
-    toplat: 0,
-    toplng: 0,
-    bottomlat: 0,
-    bottomlng: 0,
+    topLat: 0,
+    topLng: 0,
+    bottomLat: 0,
+    bottomLng: 0,
   },
 });

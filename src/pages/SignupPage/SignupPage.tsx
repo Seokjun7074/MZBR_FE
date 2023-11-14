@@ -14,6 +14,11 @@ const SignupPage = () => {
   const postSignupMutation = usePostSignupMutation();
 
   const checkNicknameDuplication = () => {
+    setIdDuplicated((prev) => !prev);
+    if (nickname.length < 3) {
+      alert('닉네임은 3자 이상입니다.');
+      return;
+    }
     postCheckNicknameMutation.mutate(nickname);
   };
 
@@ -38,6 +43,9 @@ const SignupPage = () => {
           <S.DuplicationButton onClick={checkNicknameDuplication}>중복 확인</S.DuplicationButton>
         </S.InputContainer>
         {isDuplicated && <S.NicknameNotification>중복된 닉네임입니다.</S.NicknameNotification>}
+        {!isDuplicated && isConfirmed && (
+          <S.ConfirmNotification>사용가능한 닉네임입니다.</S.ConfirmNotification>
+        )}
       </S.NicknameContainer>
       <S.SignupButton onClick={handleSignup}>회원가입</S.SignupButton>
     </S.SignupPageWrapper>

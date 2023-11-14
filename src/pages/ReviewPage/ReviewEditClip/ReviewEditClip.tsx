@@ -10,6 +10,7 @@ import * as S from '@/pages/ReviewPage/ReviewEditClip/ReviewEditClip.style';
 
 import Slider from '@/components/Review/Slider/Slider';
 import VideoPlayer from '@/components/Review/VideoPlayer/VideoPlayer';
+import Spinner from '@/components/common/Spinner/Spinner';
 
 import { useFFmpeg } from '@/hooks/useFFmpeg';
 
@@ -121,7 +122,7 @@ const ReviewEditClip = () => {
   return (
     <>
       {isLoading ? (
-        <h1>편집중...</h1>
+        <Spinner />
       ) : (
         <S.ReviewEditClipWrapper>
           <S.EditHeader>영상의 구간을 선택해주세요!</S.EditHeader>

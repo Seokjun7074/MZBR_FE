@@ -11,10 +11,10 @@ export const useRestaurantListByHashTagQuery = (
   const { data, isSuccess } = useQuery({
     queryKey: [
       'restaurantListByHashTag',
-      paramData.bottomlat,
-      paramData.bottomlng,
-      paramData.toplat,
-      paramData.toplng,
+      paramData.bottomLat,
+      paramData.bottomLng,
+      paramData.topLat,
+      paramData.topLng,
     ],
     queryFn: () => getRestaurantListByHashTag(paramData),
     enabled: placeType === 'HASHTAG',

@@ -10,6 +10,7 @@ export const useLoginMutation = () => {
     onSuccess: (data) => {
       console.log(data);
       localStorage.setItem('Authorization', data.ownJwtAccessToken);
+      localStorage.setItem('userId', data.social_id);
 
       if (data.user) {
         localStorage.setItem('Authorization-refresh', data.ownJwtRefreshToken!);
