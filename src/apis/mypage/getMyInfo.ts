@@ -1,41 +1,39 @@
+// hooks/useUserProfile.ts
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 import axios from 'axios';
 
-import { ApiResponse, User, Video } from '../../pages/MyPage/Video/MyVideo';
+import { ApiResponse, User } from '../../pages/MyPage/MyMain';
 import { getNewAccessToken } from '../getNewAccessToken';
 
 const BASE_URL = 'http://localhost:3000';
 
-export const useMyVideos = (user: User, setUser: React.Dispatch<React.SetStateAction<User>>) => {
-  const [videos, setVideos] = useState<Video[]>([]);
-
+export const useUserProfile = (user: User, setUser: React.Dispatch<React.SetStateAction<User>>) => {
   useEffect(() => {
-    const fetchVideos = async () => {
+    const fetchUserProfile = async () => {
       try {
-        const response = await axios.get<ApiResponse<Video[]>>(
-          `${BASE_URL}/videos/users/${user.userId}`,
-          {
-            headers: { 'access-token': user.accessToken },
-          },
-        );
+        const response = await axios.get<ApiResponse<User>>(`${BASE_URL}/user`, {
+          headers: { 'access-token': user.accessToken },
+        });
 
         if (response.data.success) {
-          setVideos(response.data.data);
+          setUser({ ...user, ...response.data.data });
         } else if (response.data.error === 'JWT_TOKEN_EXPIRED_EXCEPTION') {
           const newAccessToken = await getNewAccessToken(user.refreshToken);
           if (newAccessToken) {
             setUser((prev) => ({ ...prev, accessToken: newAccessToken }));
             // Retry the request with the new access token
           } else {
+            console.error('Failed to refresh token');
           }
         }
-      } catch (error) {}
+      } catch (error) {
+        console.error(error);
+      }
     };
 
-    fetchVideos();
+    fetchUserProfile();
   }, [user, setUser]);
 
-  return videos;
+  return user;
 };
