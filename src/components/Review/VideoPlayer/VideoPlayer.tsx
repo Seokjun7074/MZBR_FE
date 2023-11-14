@@ -18,6 +18,8 @@ interface VideoPlayerProps {
 }
 
 const VideoPlayer = ({ videoRef, setCurrentTimeCode }: VideoPlayerProps) => {
+  const DUMMY_VIDEO =
+    'https://mzbr-temp-video-bucket.s3.ap-northeast-2.amazonaws.com/crop/2ac6fe92-cb3c-4de7-b6bb-1d77ed25e524.mp4';
   const videoState = useRecoilValue(videoAtom);
   const startTime = useRecoilValue(startAtom);
   const endTime = useRecoilValue(endAtom);
@@ -93,7 +95,7 @@ const VideoPlayer = ({ videoRef, setCurrentTimeCode }: VideoPlayerProps) => {
       {/* <S.VideoContainer>
         <S.VideoOverlay>
           <S.VideoTag
-            src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/WhatCarCanYouGetForAGrand.mp4"
+            src="https://mzbr-temp-video-bucket.s3.ap-northeast-2.amazonaws.com/crop/2ac6fe92-cb3c-4de7-b6bb-1d77ed25e524.mp4"
             ref={videoRef}
             crossOrigin="anonymous"
             onTimeUpdate={handleOverEndTime}
@@ -103,18 +105,18 @@ const VideoPlayer = ({ videoRef, setCurrentTimeCode }: VideoPlayerProps) => {
             style={rndStyle}
             bounds={'parent'}
             default={{
-              x: 100,
+              x: 0,
               y: 0,
               width: 'auto',
               height: '100%',
             }}
             lockAspectRatio={true}
             onDragStop={onDragStop}
-            onResizeStop={onResizeStop}
+            onResizeStop={onDragStop}
           >
             <div
               ref={rndRef}
-              style={{ width: '100%', height: '100%', backgroundColor: 'red' }}
+              style={{ width: '100%', height: '100%', border: '1px dashed gray' }}
             ></div>
           </Rnd>
         </S.VideoOverlay>

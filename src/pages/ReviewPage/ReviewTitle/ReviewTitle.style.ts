@@ -36,9 +36,12 @@ export const ReviewTitleInput = styled.input`
   width: 100%;
 `;
 
-export const ReviewTitleTextArea = styled(ReviewTitleInput)`
-  border-radius: 4px;
+export const ReviewTitleTextArea = styled.input`
+  width: 100%;
   height: 100px;
+  padding: 0.5rem;
+  border: 1px solid gray;
+  border-radius: 4px;
 `;
 
 export const ReviewTitleSubmitButton = styled(Button)`

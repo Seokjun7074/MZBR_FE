@@ -18,6 +18,11 @@ interface PreparedVideo {
   videoUrl: string;
 }
 
+export const previewAtom = atom<string>({
+  key: 'previewAtom',
+  default: '',
+});
+
 // 편집이 완료된 비디오 정보
 export const preparedVideoAtom = atom<PreparedVideo[]>({
   key: 'preparedVideoAtom',
@@ -43,4 +48,9 @@ export const croppedVideoAtom = atom({
     height: 0,
     width: 0,
   },
+});
+
+export const editingUUIDState = atom({
+  key: 'editingUUIDState',
+  default: '',
 });

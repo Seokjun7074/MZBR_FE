@@ -13,13 +13,13 @@ import { PATH } from '@/constants/path';
 import { reviewRequestState } from '@/store/reviewRequest';
 
 const ReviewHashTag = () => {
-  const { tag, tagList, onChange, onKeydown, deleteHashTag } = useHasgTag();
+  const { tagList } = useHasgTag();
   const navigate = useNavigate();
   const { restaurant_id } = useParams<{ restaurant_id: string }>();
   const [reviewRequest, setReviewRequest] = useRecoilState(reviewRequestState);
 
   const handleSubmit = () => {
-    setReviewRequest({ videoMetadata: { ...reviewRequest.videoMetadata, tags: tagList } });
+    setReviewRequest({ ...reviewRequest, tags: tagList, storeId: Number(restaurant_id!) });
     navigate(PATH.REVIEW_UPLOAD(restaurant_id!));
   };
 
@@ -27,13 +27,7 @@ const ReviewHashTag = () => {
     <S.ReviewHashTagWrapper>
       <S.ReviewTitleHeaderText>해시태그를 입력해주세요!</S.ReviewTitleHeaderText>
       <S.ReviewHashTag>
-        <HashTagInput
-          tag={tag}
-          tagList={tagList}
-          onChange={onChange}
-          onKeydown={onKeydown}
-          deleteHashTag={deleteHashTag}
-        />
+        <HashTagInput />
       </S.ReviewHashTag>
       <S.ReviewTitleSubmitButton onClick={handleSubmit}>다음</S.ReviewTitleSubmitButton>
     </S.ReviewHashTagWrapper>

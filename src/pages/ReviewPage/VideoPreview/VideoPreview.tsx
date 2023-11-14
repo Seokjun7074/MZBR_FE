@@ -2,42 +2,51 @@ import { fetchFile } from '@ffmpeg/ffmpeg';
 import { v4 } from 'uuid';
 
 import { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 
-import { useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil';
 
 import * as S from '@/pages/ReviewPage/VideoPreview/VideoPreview.style';
 
 import { useFFmpeg } from '@/hooks/useFFmpeg';
 
+import { completeVideoEdit } from '@/apis/videoEdit/completeVideoEdit';
 import { getAudioThumbnail } from '@/apis/videoEdit/getAudioThumbnail';
 import { getPreviewVideo } from '@/apis/videoEdit/getPreviewViewo';
 import { uploadVideo } from '@/apis/videoEdit/uploadVideo';
 
-import { preparedVideoAtom } from '@/store/video';
+import { PATH } from '@/constants/path';
+
+import { reviewRequestState } from '@/store/reviewRequest';
+import { editingUUIDState, preparedVideoAtom, previewAtom } from '@/store/video';
 
 const VideoPreview = () => {
   const DUMMY_VIDEO =
     'https://mzbr-temp-video-bucket.s3.ap-northeast-2.amazonaws.com/crop/2ac6fe92-cb3c-4de7-b6bb-1d77ed25e524.mp4';
+
   const { ffmpegRef } = useFFmpeg();
-  const preparedVideoState = useRecoilValue(preparedVideoAtom);
-  const [videoPreview, setVideoPreview] = useState<string>('');
+  const navigate = useNavigate();
+  const { restaurant_id } = useParams<{ restaurant_id: string }>();
+  const [reviewRequest, setReviewRequest] = useRecoilState(reviewRequestState);
+  const [preparedVideo, setPreparedVideo] = useRecoilState(preparedVideoAtom);
+  const resetEditingUUID = useResetRecoilState(editingUUIDState);
+  const [videoPreview, setVideoPreview] = useRecoilState(previewAtom);
 
   useEffect(() => {
     const fetchPreviewUrl = async () => {
       const versionId = v4();
-      const videoNameList = preparedVideoState.map((vido) => vido.videoName);
+      const videoNameList = preparedVideo.map((vido) => vido.videoName);
       const { url } = await getPreviewVideo(versionId, videoNameList);
-      console.log(url);
       setVideoPreview(url);
     };
-    // fetchPreviewUrl();
+    fetchPreviewUrl();
   }, []);
 
   const makeThumbnail = async () => {
     const ffmpeg = ffmpegRef.current;
     if (!ffmpeg) return;
-    const url = DUMMY_VIDEO;
-    // const url = preparedVideoState[0].videoUrl;
+    // const url = preparedVideo[0] ? preparedVideo[0].videoUrl : DUMMY_VIDEO;
+    const url = preparedVideo[0]?.videoUrl;
     const thumbnailName = `${v4()}.jpeg`;
 
     ffmpeg.FS('writeFile', `inputVideo.mp4`, await fetchFile(url));
@@ -50,6 +59,7 @@ const VideoPreview = () => {
     const blob = new Blob([result.buffer], { type: 'image/jpeg' });
     return { blob, thumbnailName };
   };
+
   const uploadThumbnail = async (thumbnailUrl: string, file: Blob) => {
     const response = await uploadVideo(thumbnailUrl, file);
     console.log(response.status);
@@ -59,28 +69,36 @@ const VideoPreview = () => {
     const result = await makeThumbnail();
     if (!result?.thumbnailName) return;
     // S3 업로드 URL
-    const presignUrl = await getAudioThumbnail(result.thumbnailName, '오디오 추가');
+    const presignUrl = await getAudioThumbnail(result.thumbnailName);
     // 썸네일 S3업로드
     await uploadThumbnail(presignUrl.thumbnailUrl, result.blob);
     // 오디오 있으면 S3업로드
 
     // 최종 업로드 완료 요청
+    const completeStatus = await completeVideoEdit(reviewRequest);
+    if (completeStatus === 200) {
+      resetEditingUUID();
+      alert('영상 업로드 완료!');
+      navigate(PATH.MAP);
+    }
   };
 
   return (
     <S.VideoPreviewWrapper>
       <S.PreviewHeaderText>이대로 업로드할까요?</S.PreviewHeaderText>
       <S.PreviewVideoContainer>
-        <S.PreviewVideo
-          crossOrigin="anonymous"
-          autoPlay
-          controls
-          src="https://mzbr-temp-video-bucket.s3.ap-northeast-2.amazonaws.com/crop/1c366c63-c45a-456c-9bd6-3249c6f44b0d.mp4"
-        />
+        {videoPreview && (
+          <S.PreviewVideo crossOrigin="anonymous" autoPlay controls src={videoPreview} />
+        )}
+        {/* <S.PreviewVideo crossOrigin="anonymous" autoPlay controls src={DUMMY_VIDEO} /> */}
       </S.PreviewVideoContainer>
       <S.PreviewSection>
-        <S.ReviewTitleSubmitButton>영상 추가</S.ReviewTitleSubmitButton>
-        <S.ReviewTitleSubmitButton>음성 / 자막 추가</S.ReviewTitleSubmitButton>
+        <S.ReviewTitleSubmitButton onClick={() => navigate(PATH.REVIEW_UPLOAD(restaurant_id!))}>
+          영상 추가
+        </S.ReviewTitleSubmitButton>
+        <S.ReviewTitleSubmitButton onClick={() => navigate(PATH.VIDEO_TEXT(restaurant_id!))}>
+          음성 / 자막 추가
+        </S.ReviewTitleSubmitButton>
       </S.PreviewSection>
       <S.PreviewSection>
         <S.ReviewTitleSubmitButton onClick={handleSubmit}>
