@@ -22,7 +22,7 @@ import { Restaurant } from '@/types/restaurant';
 
 const SearchMap = () => {
   const [isKeword, setIsKeyword] = useState(true);
-  const [placeType, setPlaceType] = useState<'POSITION' | 'KEYWORD' | 'HASHTAG'>('POSITION');
+  const [placeType, setPlaceType] = useState<'POSITION' | 'KEYWORD' | 'HASHTAG' | ''>('');
   const [restaurantList, setRestaurantList] = useState<Restaurant[] | []>([]);
   const { map, mapRef } = useGoogleMap(15);
   const { value, handleInput } = useInput('');
@@ -92,7 +92,7 @@ const SearchMap = () => {
   return (
     <S.SearchMapWrapper>
       <div id="map" ref={mapRef} style={{ height: '100%', width: '100%' }}>
-        {map && (
+        {map && myPosition && (
           <>
             <MapMarker id="CENTER" lat={myPosition.lat} lng={myPosition.lng} map={map} />
             <MapMarkerList map={map} restaurantList={restaurantList} />

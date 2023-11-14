@@ -2,21 +2,21 @@ import { axiosInstance } from '@/apis';
 
 export interface VideoListRequest {
   topLat: number;
-  topLong: number;
+  topLng: number;
   bottomLat: number;
-  bottomLong: number;
+  bottomLng: number;
 }
 
 export const getVideoList = async (
-  { topLat, topLong, bottomLat, bottomLong }: VideoListRequest,
+  { topLat, topLng, bottomLat, bottomLng }: VideoListRequest,
   page: number,
 ) => {
-  const { data } = await axiosInstance.get(`/videos/${page}`, {
+  const { data } = await axiosInstance.get(`/api/b/videos/${page}`, {
     params: {
       topLat,
-      topLong,
+      topLng,
       bottomLat,
-      bottomLong,
+      bottomLng,
     },
   });
 

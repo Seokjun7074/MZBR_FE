@@ -1,3 +1,5 @@
+import { useRecoilValue } from 'recoil';
+
 import * as S from '@/pages/ShortFormPage/ShortFormPage.style';
 
 import ShotFormContainer from '@/components/ShortForm/ShotFormContainer/ShotFormContainer';
@@ -5,19 +7,13 @@ import ShotFormContainer from '@/components/ShortForm/ShotFormContainer/ShotForm
 import { useVideoListQuery } from '@/hooks/queries/useVideoListQuery';
 import { useIntersectionObserver } from '@/hooks/useIntersectionObserver';
 
-const ShortFormPage = () => {
-  const aa = {
-    topLat: 123,
-    topLong: 123,
-    bottomLat: 123,
-    bottomLong: 123,
-  };
+import { mapBoundaryState } from '@/store/map';
 
-  const { videoListData, fetchNextPage } = useVideoListQuery(aa);
+const ShortFormPage = () => {
+  const mapBoundary = useRecoilValue(mapBoundaryState);
+
+  const { videoListData, fetchNextPage } = useVideoListQuery(mapBoundary!);
   const observerRef = useIntersectionObserver(() => fetchNextPage());
-  const getNextVideoList = () => {
-    fetchNextPage();
-  };
 
   return (
     <S.ShortFormPageWrapper>
