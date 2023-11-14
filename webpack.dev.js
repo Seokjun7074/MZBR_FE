@@ -14,6 +14,10 @@ module.exports = merge(common, {
     historyApiFallback: true,
     port: 3000,
     static: path.resolve(__dirname, 'dist'),
+    headers: {
+      'Cross-Origin-Opener-Policy': 'same-origin',
+      'Cross-Origin-Embedder-Policy': 'require-corp',
+    },
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),

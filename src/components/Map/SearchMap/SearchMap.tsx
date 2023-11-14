@@ -11,6 +11,7 @@ import { useRestaurantListByHashTagQuery } from '@/hooks/queries/useRestaurantLi
 import { useRestaurantListByKeywordQuery } from '@/hooks/queries/useRestaurantListByKeywordQuery';
 import { useRestaurantListQuery } from '@/hooks/queries/useRestaurantListQuery';
 import { useGoogleMap } from '@/hooks/useGoogleMap';
+import { useHasgTag } from '@/hooks/useHashTag';
 import { useInput } from '@/hooks/useInput';
 
 import Search from '@/assets/map/search_button.svg';

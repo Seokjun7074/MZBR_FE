@@ -4,6 +4,7 @@ export const axiosInstance = axios.create({
   baseURL: process.env.SERVER_URL,
   headers: {
     'Content-Type': 'application/json',
+    ' member-id': '1',
   },
 });
 

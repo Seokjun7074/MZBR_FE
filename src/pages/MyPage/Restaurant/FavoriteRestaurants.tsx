@@ -6,11 +6,10 @@ type Restaurant = {
   phone_number: string;
   storeName: string;
   address: string;
-  thumbnail: string; // 섬네일 이미지 경로를 위한 필드
+  thumbnail: string;
 };
 
 const DUMMY_RESTAURANTS: Restaurant[] = [
-  // ... 더미 데이터 8개 (여기서는 2개만 예시로)
   {
     restaurant_id: 1,
     phone_number: '010-1234-5678',
@@ -69,7 +68,7 @@ const DUMMY_RESTAURANTS: Restaurant[] = [
   },
 ];
 
-const FavoriteRestaurants: React.FC = () => {
+const FavoriteRestaurants = () => {
   return (
     <Container>
       <Title>즐겨찾기 식당</Title>

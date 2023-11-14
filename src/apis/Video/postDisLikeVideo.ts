@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import axios from 'axios';
-
+import { axiosInstance } from '..';
 import { getNewAccessToken } from '../getNewAccessToken';
 
 type Video = {
@@ -33,18 +32,20 @@ const navigate = useNavigate();
 useEffect(() => {
   const dislikeVideo = async () => {
     try {
-      const response = await axios.post(BASE_URL + `/videos/${video.UUID}/dislike`, {
-        headers: { 'access-token': user.accessToken },
-      });
+      // const response = await axios.post(BASE_URL + `/videos/${video.UUID}/dislike`, {
+      //   headers: { 'access-token': user.accessToken },
+      // });
+      const response = await axiosInstance.post(`/videos/${video.UUID}/dislike`);
       if (response.data.success && response.data.data) {
         return response.data;
       } else if (response.data.error && response.data.error === 'JWT_TOKEN_EXPIRED_EXCEPTION') {
         const newAccessToken = await getNewAccessToken(user.refreshToken);
         if (newAccessToken) {
           setUser({ ...user, accessToken: newAccessToken });
-          const newResponse = await axios.post(BASE_URL + `/videos/${video.UUID}/dislike`, {
-            headers: { 'access-token': user.accessToken },
-          });
+          // const newResponse = await axios.post(BASE_URL + `/videos/${video.UUID}/dislike`, {
+          //   headers: { 'access-token': user.accessToken },
+          // });
+          const newResponse = await axiosInstance.post(`/videos/${video.UUID}/dislike`);
           if (newResponse.data.success) {
             setUser({
               ...user,

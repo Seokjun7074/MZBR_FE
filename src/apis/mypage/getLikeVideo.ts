@@ -1,81 +1,47 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import axios from 'axios';
-
+import { axiosInstance } from '..';
+import { ApiResponse, User, Video } from '../../pages/MyPage/Video/LikeVideo';
 import { getNewAccessToken } from '../getNewAccessToken';
 
-const BASE_URL = 'http://localhost:3000';
-const navigate = useNavigate();
-const defaultLikeVideos = [
-  {
-    id: '1',
-    thumbnail_url: 'asdasdasdas',
-  },
-  {
-    id: '2',
-    thumbnail_url: 'asdasadsdasdas',
-  },
-];
-type User = {
-  userId: number;
-  accessToken: string;
-  refreshToken: string;
-};
+export const useLikedVideos = (user: User, setUser: React.Dispatch<React.SetStateAction<User>>) => {
+  const [videos, setVideos] = useState<Video[]>([]);
+  const navigate = useNavigate();
 
-const [videos, setVideos] = useState(defaultLikeVideos);
-const [user, setUser] = useState<User>({
-  userId: 1,
-  accessToken: 'some_initial_access_token',
-  refreshToken: 'some_initial_refresh_token',
-});
-useEffect(() => {
-  const fetchVideos = async () => {
-    type videos = {
-      id: string;
-      thumbnail_url: string;
-    };
+  useEffect(() => {
+    const fetchVideos = async () => {
+      try {
+        // const response = await axios.get<ApiResponse<Video[]>>(
+        //   `${BASE_URL}/videos/${user.userId}/likes`,
+        //   {
+        //     headers: { 'access-token': user.accessToken },
+        //   },
+        // );
 
-    type ApiResponse<T> = {
-      success: boolean;
-      data: T;
-      error?: string;
-    };
+        const response = await axiosInstance.get<ApiResponse<Video[]>>(
+          `$/videos/${user.userId}/likes`,
+        );
 
-    try {
-      const response = await axios.get<ApiResponse<videos[]>>(
-        BASE_URL + `/videos/${user.userId}/likes`,
-        {
-          headers: { 'access-token': user.accessToken },
-        },
-      );
-
-      if (response.data.success) {
-        setVideos(response.data.data);
-      } else if (response.data.error && response.data.error === 'JWT_TOKEN_EXPIRED_EXCEPTION') {
-        const newAccessToken = await getNewAccessToken(user.refreshToken);
-        if (newAccessToken) {
-          setUser({ ...user, accessToken: newAccessToken });
-
-          const newResponse = await axios.get<ApiResponse<videos[]>>(BASE_URL + '/mypage/myvideo', {
-            headers: { 'access-token': newAccessToken },
-          });
-
-          if (newResponse.data.success) {
-            setVideos(newResponse.data.data);
+        if (response.data.success) {
+          setVideos(response.data.data);
+        } else if (response.data.error && response.data.error === 'JWT_TOKEN_EXPIRED_EXCEPTION') {
+          const newAccessToken = await getNewAccessToken(user.refreshToken);
+          if (newAccessToken) {
+            setUser((prev) => ({ ...prev, accessToken: newAccessToken }));
           } else {
             navigate('/error');
           }
-        } else {
-          navigate('/error');
         }
+      } catch (error) {
+        navigate('/error');
       }
-    } catch (error) {
-      navigate('/error');
-    }
-  };
+    };
 
-  if (user) {
-    fetchVideos();
-  }
-}, [user, setUser, navigate]);
+    if (user) {
+      fetchVideos();
+    }
+  }, [user, setUser, navigate]);
+
+  return videos;
+};
