@@ -6,7 +6,7 @@ import naverLogin from '@/assets/login/naver_login.png';
 import Logo from '@/assets/logo/mzbr_logo_secondary.svg';
 
 const IntroPage = () => {
-  const kakaoLink = `${process.env.SERVER_URL}/oauth2/authorization/kakao`;
+  const kakaoLink = `${process.env.SERVER_URL}/api/b/oauth2/authorization/kakao`;
 
   const handleLogin = (link: string) => {
     window.location.href = link;
@@ -17,8 +17,8 @@ const IntroPage = () => {
       <Logo />
       <S.LoginContainer>
         <S.LoginImage src={kakaoLogin} onClick={() => handleLogin(kakaoLink)} />
-        <S.LoginImage src={googleLogin} />
-        <S.LoginImage src={naverLogin} />
+        {/* <S.LoginImage src={googleLogin} /> */}
+        {/* <S.LoginImage src={naverLogin} /> */}
       </S.LoginContainer>
     </S.IntroPageWrapper>
   );

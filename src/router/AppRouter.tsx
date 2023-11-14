@@ -7,6 +7,7 @@ import MyPage from '@/pages/MyPage/MyMain';
 import FavoriteRestaurants from '@/pages/MyPage/Restaurant/FavoriteRestaurants';
 import BlockedUsers from '@/pages/MyPage/Social/BlockedUsers';
 import SubcribedUsers from '@/pages/MyPage/Social/SubscribedUsers';
+import UserPage from '@/pages/MyPage/User';
 import LikeVideo from '@/pages/MyPage/Video/LikeVideo';
 import MyVideo from '@/pages/MyPage/Video/MyVideo';
 import WatchingList from '@/pages/MyPage/Video/WatchingList';
@@ -111,6 +112,10 @@ const AppRouter = () => {
         {
           path: PATH.VIDEO_TEXT(':restaurant_id'),
           element: <VideoText />,
+        },
+        {
+          path: '/user/:user_id',
+          element: <UserPage />,
         },
       ],
     },

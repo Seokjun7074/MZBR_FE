@@ -51,9 +51,7 @@ const SearchMap = () => {
       {
         ...boundary,
         keyword: value,
-        day: '',
         star: '',
-        time: '',
       },
       placeType,
     );
@@ -63,9 +61,7 @@ const SearchMap = () => {
       {
         ...boundary,
         hashtag: hashtagList,
-        day: '',
         star: '',
-        time: '',
       },
       placeType,
     );

@@ -4,11 +4,16 @@ import { postCheckNickname } from '@/apis/auth/postCheckNickname';
 
 export const usePostCheckNicknameMutation = (
   setIdDuplicated: React.Dispatch<React.SetStateAction<boolean>>,
+  setIsConfirmed: React.Dispatch<React.SetStateAction<boolean>>,
 ) => {
   const postCheckNicknameMutation = useMutation({
     mutationFn: postCheckNickname,
-    onError: () => {
-      setIdDuplicated(true);
+    onSuccess: ({ duplicated }) => {
+      if (duplicated) {
+        setIdDuplicated(true);
+        return;
+      }
+      setIsConfirmed(true);
     },
   });
 

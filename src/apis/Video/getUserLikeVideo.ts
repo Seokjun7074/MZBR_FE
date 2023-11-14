@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 import axios from 'axios';
 
+import { axiosInstance } from '..';
 import { getNewAccessToken } from '../getNewAccessToken';
 
 const BASE_URL = 'http://localhost:3000';
@@ -47,11 +48,14 @@ useEffect(() => {
     };
 
     try {
-      const response = await axios.get<ApiResponse<videos[]>>(
-        BASE_URL + `/videos/${user.userId}/likes`,
-        {
-          headers: { 'access-token': user.accessToken },
-        },
+      // const response = await axios.get<ApiResponse<videos[]>>(
+      //   BASE_URL + `/videos/${user.userId}/likes`,
+      //   {
+      //     headers: { 'access-token': user.accessToken },
+      //   },
+      // );
+      const response = await axiosInstance.get<ApiResponse<videos[]>>(
+        `/videos/${user.userId}/likes`,
       );
 
       if (response.data.success) {
@@ -61,25 +65,24 @@ useEffect(() => {
         if (newAccessToken) {
           setUser({ ...user, accessToken: newAccessToken });
 
-          const newResponse = await axios.get<ApiResponse<videos[]>>(
-            BASE_URL + `/videos/${user.userId}/likes`,
-            {
-              headers: { 'access-token': newAccessToken },
-            },
+          // const newResponse = await axios.get<ApiResponse<videos[]>>(
+          //   BASE_URL + `/videos/${user.userId}/likes`,
+          //   {
+          //     headers: { 'access-token': newAccessToken },
+          //   },
+          // );
+          const newResponse = await axiosInstance.get<ApiResponse<videos[]>>(
+            `/videos/${user.userId}/likes`,
           );
 
           if (newResponse.data.success) {
             setVideos(newResponse.data.data);
           } else {
-            navigate('/error');
           }
         } else {
-          navigate('/error');
         }
       }
-    } catch (error) {
-      navigate('/error');
-    }
+    } catch (error) {}
   };
 
   if (user) {
