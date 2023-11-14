@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 import axios from 'axios';
 
+import { axiosInstance } from '..';
 import { getNewAccessToken } from '../getNewAccessToken';
 
 const BASE_URL = 'http://localhost:3000';
@@ -28,16 +29,17 @@ const [user, setUser] = useState<User>({
   refreshToken: 'initial_refresh_token',
 });
 
-const navigate = useNavigate();
 const videoUUID = 1;
 const [comments, setComments] = useState([]);
 
 useEffect(() => {
   const fetchComments = async () => {
     try {
-      const response = await axios.get(`${BASE_URL}/videos/${videoUUID}/comments`, {
-        headers: { Authorization: `Bearer ${user.accessToken}` },
-      });
+      // const response = await axios.get(`${BASE_URL}/videos/${videoUUID}/comments`, {
+      //   headers: { Authorization: `Bearer ${user.accessToken}` },
+      // });
+
+      const response = await axiosInstance.get(`/videos/${videoUUID}/comments`);
 
       if (response.data && response.data.commentsList) {
         setComments(response.data.commentsList);

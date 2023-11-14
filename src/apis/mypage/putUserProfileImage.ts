@@ -3,10 +3,10 @@ import { useEffect, useState } from 'react';
 
 import axios from 'axios';
 
+import { axiosInstance } from '..';
 import { User } from '../../pages/MyPage/EditProfile';
 import { getNewAccessToken } from '../getNewAccessToken';
 
-const BASE_URL = 'http://localhost:3000';
 export const useProfileImageUpdater = (
   user: User,
   setUser: React.Dispatch<React.SetStateAction<User>>,
@@ -22,13 +22,13 @@ export const useProfileImageUpdater = (
       formData.append('profileImage', profileImage);
 
       try {
-        const response = await axios.put(`${BASE_URL}/user/profile-image`, formData, {
-          headers: {
-            'access-token': user.accessToken,
-            'Content-Type': 'multipart/form-data',
-          },
-        });
-
+        // const response = await axios.put(`${BASE_URL}/user/profile-image`, formData, {
+        //   headers: {
+        //     'access-token': user.accessToken,
+        //     'Content-Type': 'multipart/form-data',
+        //   },
+        // });
+        const response = await axiosInstance.put('/users/nickname', formData);
         if (response.data.success) {
           setUser({ ...user, profileImage: response.data.data.profileImage });
           setUpdateResult({ success: true, profileImage: response.data.data.profileImage });

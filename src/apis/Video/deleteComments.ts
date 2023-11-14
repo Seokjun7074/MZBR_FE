@@ -1,11 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import axios from 'axios';
-
+import { axiosInstance } from '..';
 import { getNewAccessToken } from '../getNewAccessToken';
-
-const BASE_URL = 'http://localhost:3000';
 
 type User = {
   userId: number;
@@ -45,11 +42,14 @@ const navigate = useNavigate();
 useEffect(() => {
   const addComments = async () => {
     try {
-      const response = await axios.delete(
-        BASE_URL + `/videos/${video.videoUUID}/comments/${comments.commentId}`,
-        {
-          headers: { 'access-token': user.accessToken },
-        },
+      // const response = await axios.delete(
+      //   BASE_URL + `/videos/${video.videoUUID}/comments/${comments.commentId}`,
+      //   {
+      //     headers: { 'access-token': user.accessToken },
+      //   },
+      // );
+      const response = await axiosInstance.delete(
+        `/videos/${video.videoUUID}/comments/${comments.commentId}`,
       );
       if (response.data.success && response.data.data) {
         return response.data;
@@ -57,12 +57,15 @@ useEffect(() => {
         const newAccessToken = await getNewAccessToken(user.refreshToken);
         if (newAccessToken) {
           setUser({ ...user, accessToken: newAccessToken });
-          const newResponse = await axios.post(
-            BASE_URL + `/videos/${video.videoUUID}/comments`,
-            { content: comments.content },
-            {
-              headers: { 'access-token': user.accessToken },
-            },
+          // const newResponse = await axios.post(
+          //   BASE_URL + `/videos/${video.videoUUID}/comments`,
+          //   { content: comments.content },
+          //   {
+          //     headers: { 'access-token': user.accessToken },
+          //   },
+          // );
+          const newResponse = await axiosInstance.delete(
+            `/videos/${video.videoUUID}/comments/${comments.commentId}`,
           );
           if (newResponse.data.success) {
             setUser({

@@ -1,12 +1,8 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 
-import axios from 'axios';
-
+import { axiosInstance } from '..';
 import { ApiResponse, User, Video } from '../../pages/MyPage/Video/MyVideo';
 import { getNewAccessToken } from '../getNewAccessToken';
-
-const BASE_URL = 'http://localhost:3000';
 
 export const useMyVideos = (user: User, setUser: React.Dispatch<React.SetStateAction<User>>) => {
   const [videos, setVideos] = useState<Video[]>([]);
@@ -14,11 +10,15 @@ export const useMyVideos = (user: User, setUser: React.Dispatch<React.SetStateAc
   useEffect(() => {
     const fetchVideos = async () => {
       try {
-        const response = await axios.get<ApiResponse<Video[]>>(
-          `${BASE_URL}/videos/users/${user.userId}`,
-          {
-            headers: { 'access-token': user.accessToken },
-          },
+        // const response = await axios.get<ApiResponse<Video[]>>(
+        //   `${BASE_URL}/videos/users/${user.userId}`,
+        //   {
+        //     headers: { 'access-token': user.accessToken },
+        //   },
+        // );
+
+        const response = await axiosInstance.get<ApiResponse<Video[]>>(
+          `/videos/users/${user.userId}`,
         );
 
         if (response.data.success) {
@@ -27,7 +27,6 @@ export const useMyVideos = (user: User, setUser: React.Dispatch<React.SetStateAc
           const newAccessToken = await getNewAccessToken(user.refreshToken);
           if (newAccessToken) {
             setUser((prev) => ({ ...prev, accessToken: newAccessToken }));
-            // Retry the request with the new access token
           } else {
           }
         }

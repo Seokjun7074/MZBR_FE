@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import axios from 'axios';
-
+import { axiosInstance } from '..';
 import { getNewAccessToken } from '../getNewAccessToken';
 
 type User = {
@@ -31,24 +30,25 @@ type Subscribes = {
 
 const [subscribes, setSubscribes] = useState<Subscribes>(defaultSubscribes);
 
-const BASE_URL = 'http://localhost:3000';
 const navigate = useNavigate();
 
 useEffect(() => {
   const subscribesUser = async () => {
     try {
-      const response = await axios.post(BASE_URL + `/users/subscribe/${subscribes.userId}`, {
-        headers: { 'acces-token': user.accessToken },
-      });
+      // const response = await axios.post(BASE_URL + `/users/subscribe/${subscribes.userId}`, {
+      //   headers: { 'acces-token': user.accessToken },
+      // });
+      const response = await axiosInstance.post(`/users/subscribe/${subscribes.userId}`);
       if (response.data.success && response.data.data) {
         return response.data;
       } else if (response.data.error && response.data.error === 'JWT_TOKEN_EXPIRED_EXCEPTION') {
         const newAccessToken = await getNewAccessToken(user.refreshToken);
         if (newAccessToken) {
           setUser({ ...user, accessToken: newAccessToken });
-          const newResponse = await axios.post(BASE_URL + `/users/subscribe/${subscribes.userId}`, {
-            headers: { 'access-token': user.accessToken },
-          });
+          // const newResponse = await axios.post(BASE_URL + `/users/subscribe/${subscribes.userId}`, {
+          //   headers: { 'access-token': user.accessToken },
+          // });
+          const newResponse = await axiosInstance.post(`/users/subscribe/${subscribes.userId}`);
           if (newResponse.data.success) {
             setUser({
               ...user,

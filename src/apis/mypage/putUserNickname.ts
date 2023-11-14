@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import axios from 'axios';
-
+import { axiosInstance } from '..';
 import { getNewAccessToken } from '../getNewAccessToken';
 
 type User = {
@@ -18,19 +17,19 @@ const [user, setUser] = useState<User>({
   accessToken: 'some_initial_access_token',
   refreshToken: 'some_initial_refresh_token',
 });
-const BASE_URL = 'http://localhost:3000';
+
 const newNickname = 'haha';
 const navigate = useNavigate();
 
 useEffect(() => {
   const changeAndHandleNickname = async () => {
     try {
-      const response = await axios.put(
-        BASE_URL + '/users/nickname',
-        { nickname: newNickname },
-        { headers: { 'access-token': user.accessToken } },
-      );
-
+      // const response = await axios.put(
+      //   BASE_URL + '/users/nickname',
+      //   { nickname: newNickname },
+      //   { headers: { 'access-token': user.accessToken } },
+      // );
+      const response = await axiosInstance.put('/users/nickname', { nickname: newNickname });
       if (response.data.success && response.data.data) {
         setUser({
           ...user,
@@ -40,11 +39,8 @@ useEffect(() => {
         const newAccessToken = await getNewAccessToken(user.refreshToken);
         if (newAccessToken) {
           setUser({ ...user, accessToken: newAccessToken });
-          const newResponse = await axios.put(
-            '/users/nickname',
-            { nickname: newNickname },
-            { headers: { 'access-token': user.accessToken } },
-          );
+          //
+          const newResponse = await axiosInstance.put('/users/nickname', { nickname: newNickname });
           if (newResponse.data.success) {
             setUser({
               ...user,
