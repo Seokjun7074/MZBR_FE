@@ -16,6 +16,7 @@ import { uploadVideo } from '@/apis/videoEdit/uploadVideo';
 
 import { PATH } from '@/constants/path';
 
+import { reviewRequestState } from '@/store/reviewRequest';
 import { editingUUIDState, preparedVideoAtom } from '@/store/video';
 
 const VideoPreview = () => {
@@ -25,6 +26,7 @@ const VideoPreview = () => {
   const { ffmpegRef } = useFFmpeg();
   const navigate = useNavigate();
   const { restaurant_id } = useParams<{ restaurant_id: string }>();
+  const [reviewRequest, setReviewRequest] = useRecoilState(reviewRequestState);
   const [preparedVideo, setPreparedVideo] = useRecoilState(preparedVideoAtom);
   const resetEditingUUID = useResetRecoilState(editingUUIDState);
   const [videoPreviewUrl, setVideoPreviewUrl] = useState<string>('');
@@ -33,6 +35,11 @@ const VideoPreview = () => {
     const fetchPreviewUrl = async () => {
       const versionId = v4();
       const videoNameList = preparedVideo.map((vido) => vido.videoName);
+      const clips = preparedVideo.map((video) => {
+        return { fileName: video.videoName, volume: 1.0 };
+      });
+      setReviewRequest({ ...reviewRequest, clips });
+
       console.log(videoNameList);
       // 현재 편집된 영상 미리보기 요청
       const { url } = await getPreviewVideo(versionId, videoNameList);
