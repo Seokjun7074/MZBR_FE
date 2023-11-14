@@ -36,7 +36,6 @@ const MyPage = () => {
 
   return (
     <PageWrapper>
-      {/* 로그인 구현되면 바꾸기 */}
       <ProfileItem>
         <img src={user.profileImage || Profile} alt={user.nickname || 'Profile'} />
         <span>{user.nickname || '사용자'}</span>

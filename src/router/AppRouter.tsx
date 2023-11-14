@@ -7,7 +7,7 @@ import MyPage from '@/pages/MyPage/MyMain';
 import FavoriteRestaurants from '@/pages/MyPage/Restaurant/FavoriteRestaurants';
 import BlockedUsers from '@/pages/MyPage/Social/BlockedUsers';
 import SubcribedUsers from '@/pages/MyPage/Social/SubscribedUsers';
-import MyUser from '@/pages/MyPage/User';
+import UserPage from '@/pages/MyPage/User';
 import LikeVideo from '@/pages/MyPage/Video/LikeVideo';
 import MyVideo from '@/pages/MyPage/Video/MyVideo';
 import WatchingList from '@/pages/MyPage/Video/WatchingList';
@@ -101,14 +101,16 @@ const AppRouter = () => {
           element: <UpLoad />,
         },
         {
-          path: '/user/:user_id',
-          element: <Review />,
           path: PATH.REVIEW_EDIT_CLIP(':restaurant_id'),
           element: <ReviewEditClip />,
         },
         {
           path: PATH.VIDEO_PREVIEW(':restaurant_id'),
-          element: <MyUser />,
+          element: <VideoPreview />,
+        },
+        {
+          path: '/user/:user_id',
+          element: <UserPage />,
         },
       ],
     },

@@ -71,15 +71,11 @@ useEffect(() => {
           if (newResponse.data.success) {
             setVideos(newResponse.data.data);
           } else {
-            navigate('/error');
           }
         } else {
-          navigate('/error');
         }
       }
-    } catch (error) {
-      navigate('/error');
-    }
+    } catch (error) {}
   };
 
   if (user) {

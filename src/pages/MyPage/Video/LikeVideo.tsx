@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 
 import { useLikedVideos } from '@/apis/mypage/getLikeVideo';
 
-import Profile from '../../../assets/Profile.png';
 import * as S from './MyVideo.style';
 
 export interface User {
@@ -22,25 +21,6 @@ export interface ApiResponse<T> {
   data: T;
   error?: string;
 }
-
-// const dummyData: Video[] = [
-//   {
-//     thumbnail_url: Profile,
-//     id: 'uuid',
-//   },
-//   {
-//     thumbnail_url: Profile,
-//     id: 'uuid',
-//   },
-//   {
-//     thumbnail_url: Profile,
-//     id: 'uuid',
-//   },
-//   {
-//     thumbnail_url: Profile,
-//     id: 'uuid',
-//   },
-// ];
 
 const LikeVideo = () => {
   const navigate = useNavigate();
