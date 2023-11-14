@@ -52,5 +52,10 @@ export const NicknameNotification = styled.span`
   font-weight: bold;
   color: ${({ theme }) => theme.color.red};
 `;
+export const ConfirmNotification = styled.span`
+  font-size: ${({ theme }) => theme.fontSize.m};
+  font-weight: bold;
+  color: ${({ theme }) => theme.color.green};
+`;
 
 export const SignupButton = styled(Button)``;
