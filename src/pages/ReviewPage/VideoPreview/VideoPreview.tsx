@@ -10,6 +10,7 @@ import * as S from '@/pages/ReviewPage/VideoPreview/VideoPreview.style';
 
 import { useFFmpeg } from '@/hooks/useFFmpeg';
 
+import { completeVideoEdit } from '@/apis/videoEdit/completeVideoEdit';
 import { getAudioThumbnail } from '@/apis/videoEdit/getAudioThumbnail';
 import { getPreviewVideo } from '@/apis/videoEdit/getPreviewViewo';
 import { uploadVideo } from '@/apis/videoEdit/uploadVideo';
@@ -74,9 +75,12 @@ const VideoPreview = () => {
     // 오디오 있으면 S3업로드
 
     // 최종 업로드 완료 요청
-
-    // 편집중인 표시 삭제
-    resetEditingUUID();
+    const completeStatus = await completeVideoEdit(reviewRequest);
+    if (completeStatus === 200) {
+      resetEditingUUID();
+      alert('영상 업로드 완료!');
+      navigate(PATH.MAP);
+    }
   };
 
   return (
