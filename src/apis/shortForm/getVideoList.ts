@@ -7,11 +7,8 @@ export interface VideoListRequest {
   bottomLng: number;
 }
 
-export const getVideoList = async (
-  { topLat, topLng, bottomLat, bottomLng }: VideoListRequest,
-  page: number,
-) => {
-  const { data } = await axiosInstance.get(`/api/b/videos/${page}`, {
+export const getVideoList = async ({ topLat, topLng, bottomLat, bottomLng }: VideoListRequest) => {
+  const { data } = await axiosInstance.get(`/api/b/videos`, {
     params: {
       topLat,
       topLng,
@@ -19,6 +16,15 @@ export const getVideoList = async (
       bottomLng,
     },
   });
+  // 무한스크롤 버전
+  // const { data } = await axiosInstance.get(`/api/b/videos/${page}`, {
+  //   params: {
+  //     topLat,
+  //     topLng,
+  //     bottomLat,
+  //     bottomLng,
+  //   },
+  // });
 
   return data;
 };

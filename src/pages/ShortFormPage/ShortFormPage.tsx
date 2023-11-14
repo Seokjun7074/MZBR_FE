@@ -8,19 +8,21 @@ import { useVideoListQuery } from '@/hooks/queries/useVideoListQuery';
 import { useIntersectionObserver } from '@/hooks/useIntersectionObserver';
 
 import { mapBoundaryState } from '@/store/map';
+import { VideoInfo } from '@/types/shortForm';
 
 const ShortFormPage = () => {
   const mapBoundary = useRecoilValue(mapBoundaryState);
 
-  const { videoListData, fetchNextPage } = useVideoListQuery(mapBoundary!);
-  const observerRef = useIntersectionObserver(() => fetchNextPage());
+  const { videoListData } = useVideoListQuery(mapBoundary!);
+  console.log(videoListData);
+  // const observerRef = useIntersectionObserver(() => fetchNextPage());
 
   return (
     <S.ShortFormPageWrapper>
-      {videoListData?.pages.map((item) => (
-        <ShotFormContainer key={item.videoUUID} videoPath={item.videoPath} />
+      {videoListData?.videos.map((item: VideoInfo) => (
+        <ShotFormContainer key={item.id} videoInfo={item} />
       ))}
-      <div ref={observerRef} />
+      {/* <div ref={observerRef} /> */}
     </S.ShortFormPageWrapper>
   );
 };
