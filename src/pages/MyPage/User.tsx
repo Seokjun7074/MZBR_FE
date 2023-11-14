@@ -10,7 +10,10 @@ import {
   PageWrapper,
   ProfileImage,
   ProfileSection,
+  SubscribeButton,
   UserInfo,
+  UserInfoText,
+  UserStats,
   VideoThumbnail,
   VideosGrid,
 } from './User.style';
@@ -52,7 +55,7 @@ const UserPage = () => {
   });
 
   const [userProfile, setUserProfile] = useState<UserProfile>({
-    nickname: '',
+    nickname: 'coco',
     profileImage: '',
     subscribeNum: 0,
     postNum: 0,
@@ -90,15 +93,17 @@ const UserPage = () => {
   return (
     <PageWrapper>
       <ProfileSection>
-        <ProfileImage
-          src={userProfile.profileImage || ProfilePlaceholder}
-          alt={userProfile.nickname || 'Profile'}
-        />
         <UserInfo>
+          <ProfileImage
+            src={userProfile.profileImage || ProfilePlaceholder}
+            alt={userProfile.nickname || 'Profile'}
+          />
           <h3>{userProfile.nickname}</h3>
-          <p>구독자: {userProfile.subscribeNum}</p>
-          <p>게시물: {userProfile.postNum}</p>
-          <button onClick={handleSubscribe}>구독하기</button>
+          <UserStats>
+            <UserInfoText>구독자: {userProfile.subscribeNum}</UserInfoText>
+            <UserInfoText>게시물: {userProfile.postNum}</UserInfoText>
+          </UserStats>
+          <SubscribeButton onClick={handleSubscribe}>구독</SubscribeButton>
         </UserInfo>
       </ProfileSection>
 
@@ -110,5 +115,4 @@ const UserPage = () => {
     </PageWrapper>
   );
 };
-
 export default UserPage;

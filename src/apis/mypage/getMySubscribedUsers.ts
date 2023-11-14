@@ -1,12 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import axios from 'axios';
-
+import { axiosInstance } from '..';
 import { ApiResponse, SubscribedUser, User } from '../../pages/MyPage/Social/SubscribedUsers';
 import { getNewAccessToken } from '../getNewAccessToken';
-
-const BASE_URL = 'http://localhost:3000';
 
 export const useSubscribedUsers = (
   user: User,
@@ -18,12 +15,14 @@ export const useSubscribedUsers = (
   useEffect(() => {
     const fetchSubscribe = async () => {
       try {
-        const response = await axios.get<ApiResponse<SubscribedUser[]>>(
-          `${BASE_URL}/users/subscriber`,
-          {
-            headers: { 'access-token': user.accessToken },
-          },
-        );
+        // const response = await axios.get<ApiResponse<SubscribedUser[]>>(
+        //   `${BASE_URL}/users/subscriber`,
+        //   {
+        //     headers: { 'access-token': user.accessToken },
+        //   },
+        // );
+        const response =
+          await axiosInstance.get<ApiResponse<SubscribedUser[]>>('/users/subscriber');
 
         if (response.data.success) {
           setSubscribes(response.data.data);

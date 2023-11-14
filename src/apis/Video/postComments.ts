@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 import axios from 'axios';
 
+import { axiosInstance } from '..';
 import { getNewAccessToken } from '../getNewAccessToken';
 
 const BASE_URL = 'http://localhost:3000';
@@ -45,26 +46,29 @@ const navigate = useNavigate();
 useEffect(() => {
   const addComments = async () => {
     try {
-      const response = await axios.post(
-        BASE_URL + `/videos/${video.videoUUID}/comments`,
-        { content: comments.content },
-        {
-          headers: { 'access-token': user.accessToken },
-        },
-      );
+      // const response = await axios.post(
+      //   BASE_URL + `/videos/${video.videoUUID}/comments`,
+      //   { content: comments.content },
+      //   {
+      //     headers: { 'access-token': user.accessToken },
+      //   },
+      // );
+      const response = await axiosInstance.post(`/videos/${video.videoUUID}/comments`);
+
       if (response.data.success && response.data.data) {
         return response.data;
       } else if (response.data.error && response.data.error === 'JWT_TOKEN_EXPIRED_EXCEPTION') {
         const newAccessToken = await getNewAccessToken(user.refreshToken);
         if (newAccessToken) {
           setUser({ ...user, accessToken: newAccessToken });
-          const newResponse = await axios.post(
-            BASE_URL + `/videos/${video.videoUUID}/comments`,
-            { content: comments.content },
-            {
-              headers: { 'access-token': user.accessToken },
-            },
-          );
+          // const newResponse = await axios.post(
+          //   BASE_URL + `/videos/${video.videoUUID}/comments`,
+          //   { content: comments.content },
+          //   {
+          //     headers: { 'access-token': user.accessToken },
+          //   },
+          // );
+          const newResponse = await axiosInstance.post(`/videos/${video.videoUUID}/comments`);
           if (newResponse.data.success) {
             setUser({
               ...user,
