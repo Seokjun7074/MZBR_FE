@@ -35,11 +35,11 @@ const VideoText = () => {
         x: cropStartX,
         y: cropStartY,
       };
-      setTextPosition(croppedData);
+      setTextPosition({ ...croppedData });
     }
   };
 
-  const addSubtitle = useCallback(() => {
+  const addSubtitle = () => {
     const newSubtitle = [
       ...reviewRequest.subtitles,
       {
@@ -55,14 +55,16 @@ const VideoText = () => {
       },
     ];
     setReviewRequest({ ...reviewRequest, subtitles: newSubtitle });
-  }, []);
-
+  };
+  console.log('FINAL', reviewRequest);
   return (
     <S.VideoTextWrapper>
       <S.VideoContainer>
         <S.VideoTextOverlay>
           {/* <S.VideoTag ref={videoRef} src={DUMMY_VIDEO} crossOrigin="anonymous" autoPlay controls /> */}
-          {videoPreview && <S.VideoTag ref={videoRef} src={videoPreview} controls />}
+          {videoPreview && (
+            <S.VideoTag ref={videoRef} src={videoPreview} controls crossOrigin="anonymous" />
+          )}
           <Rnd
             bounds={'parent'}
             default={{

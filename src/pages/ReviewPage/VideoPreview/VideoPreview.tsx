@@ -35,10 +35,7 @@ const VideoPreview = () => {
     const fetchPreviewUrl = async () => {
       const versionId = v4();
       const videoNameList = preparedVideo.map((vido) => vido.videoName);
-      console.log(videoNameList);
-      // 현재 편집된 영상 미리보기 요청
       const { url } = await getPreviewVideo(versionId, videoNameList);
-      console.log(url);
       setVideoPreview(url);
     };
     fetchPreviewUrl();
@@ -47,8 +44,8 @@ const VideoPreview = () => {
   const makeThumbnail = async () => {
     const ffmpeg = ffmpegRef.current;
     if (!ffmpeg) return;
-    const url = preparedVideo[0] ? preparedVideo[0].videoUrl : DUMMY_VIDEO;
-    // const url = preparedVideo[0].videoUrl;
+    // const url = preparedVideo[0] ? preparedVideo[0].videoUrl : DUMMY_VIDEO;
+    const url = preparedVideo[0]?.videoUrl;
     const thumbnailName = `${v4()}.jpeg`;
 
     ffmpeg.FS('writeFile', `inputVideo.mp4`, await fetchFile(url));
