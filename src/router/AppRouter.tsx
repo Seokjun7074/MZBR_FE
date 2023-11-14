@@ -21,6 +21,7 @@ import VideoPreview from '@/pages/ReviewPage/VideoPreview/VideoPreview';
 import VideoText from '@/pages/ReviewPage/VideoText/VideoText';
 import ShortFormPage from '@/pages/ShortFormPage/ShortFormPage';
 import SignupPage from '@/pages/SignupPage/SignupPage';
+import StoreShrotFormPage from '@/pages/StoreShrotFormPage/StoreShrotFormPage';
 
 import { PATH } from '@/constants/path';
 
@@ -76,6 +77,10 @@ const AppRouter = () => {
         {
           path: PATH.SHORT_FORM,
           element: <ShortFormPage />,
+        },
+        {
+          path: PATH.SHORT_FORM_STORE(':storeId'),
+          element: <StoreShrotFormPage />,
         },
         {
           path: PATH.MAP,
