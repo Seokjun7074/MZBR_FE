@@ -1,5 +1,7 @@
 import { useEffect } from 'react';
 
+import Spinner from '@/components/common/Spinner/Spinner';
+
 import { useLoginMutation } from '@/hooks/mutations/useLoginMutation';
 
 import { PATH } from '@/constants/path';
@@ -18,7 +20,7 @@ const KakaoRedirectPage = () => {
     if (code) loginMutation.mutate(code);
   }, []);
 
-  return <div>카카오 로그인중...</div>;
+  return <Spinner />;
 };
 
 export default KakaoRedirectPage;
