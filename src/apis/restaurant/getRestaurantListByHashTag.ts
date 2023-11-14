@@ -5,10 +5,10 @@ import { RestaurantListByHashTagRequest, RestaurantResponse } from '@/types/rest
 
 export const getRestaurantListByHashTag = async ({
   hashtag,
-  toplat,
-  toplng,
-  bottomlat,
-  bottomlng,
+  topLat,
+  topLng,
+  bottomLat,
+  bottomLng,
   star,
 }: RestaurantListByHashTagRequest) => {
   const { data } = await axiosInstance.get<RestaurantResponse>(
@@ -16,10 +16,10 @@ export const getRestaurantListByHashTag = async ({
     {
       params: {
         hashtag,
-        toplat,
-        toplng,
-        bottomlat,
-        bottomlng,
+        topLat,
+        topLng,
+        bottomLat,
+        bottomLng,
         star,
       },
       paramsSerializer: (params) => {

@@ -32,10 +32,10 @@ const SearchMap = () => {
   const myPosition = useRecoilValue(myPositionState);
 
   const boundary = {
-    toplat: mapBoundary.toplat,
-    toplng: mapBoundary.toplng,
-    bottomlat: mapBoundary.bottomlat,
-    bottomlng: mapBoundary.bottomlng,
+    topLat: mapBoundary.topLat,
+    topLng: mapBoundary.topLng,
+    bottomLat: mapBoundary.bottomLat,
+    bottomLng: mapBoundary.bottomLng,
   };
 
   // 식당 리스트 fetch
@@ -81,12 +81,11 @@ const SearchMap = () => {
   };
 
   useEffect(() => {
-    if (placeType === 'POSITION' && isSuccessPosition)
-      setRestaurantList(restaurantListData.restaurants);
+    if (placeType === 'POSITION' && isSuccessPosition) setRestaurantList(restaurantListData.stores);
     if (placeType === 'KEYWORD' && isSuccessKeyword)
-      setRestaurantList(restaurantListByKeywordData.restaurants);
+      setRestaurantList(restaurantListByKeywordData.stores);
     if (placeType === 'HASHTAG' && isSuccessHashTag)
-      setRestaurantList(restaurantListByHashTagData.restaurants);
+      setRestaurantList(restaurantListByHashTagData.stores);
   }, [placeType, restaurantListData, restaurantListByKeywordData, restaurantListByHashTagData]);
 
   return (

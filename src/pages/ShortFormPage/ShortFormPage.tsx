@@ -7,10 +7,10 @@ import { useIntersectionObserver } from '@/hooks/useIntersectionObserver';
 
 const ShortFormPage = () => {
   const aa = {
-    toplat: 123,
-    toplong: 123,
-    bottomlat: 123,
-    bottomlong: 123,
+    topLat: 123,
+    topLong: 123,
+    bottomLat: 123,
+    bottomLong: 123,
   };
 
   const { videoListData, fetchNextPage } = useVideoListQuery(aa);

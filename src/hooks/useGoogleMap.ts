@@ -34,10 +34,10 @@ export const useGoogleMap = (zoom: number) => {
       const sw = bounds.getSouthWest();
 
       setMapBoundary({
-        toplat: ne.lat(),
-        toplng: ne.lng(),
-        bottomlat: sw.lat(),
-        bottomlng: sw.lng(),
+        topLat: ne.lat(),
+        topLng: ne.lng(),
+        bottomLat: sw.lat(),
+        bottomLng: sw.lng(),
       });
     }
   }, [center]);

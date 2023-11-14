@@ -36,8 +36,8 @@ const MapMarkerList = ({ map, restaurantList }: MapMarkerListProps) => {
     }
 
     const newMarkers = restaurantList.map((item: Restaurant) => ({
-      key: item.restaurantId,
-      id: item.restaurantId,
+      key: item.storeId,
+      id: item.storeId,
       lat: item.latitude,
       lng: item.longitude,
     }));

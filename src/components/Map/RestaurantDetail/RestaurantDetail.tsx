@@ -11,7 +11,7 @@ const RestaurantDetail = ({ id }: { id: string }) => {
   return (
     <S.RestaurantDetailWrapper>
       <S.RestaurantDetailHeader>
-        <span>{restaurantDetailData?.restaurant_name}</span>
+        <span>{restaurantDetailData?.storeName}</span>
         <span>{restaurantDetailData?.star_count}</span>
       </S.RestaurantDetailHeader>
       <S.RestaurantDetailBody>

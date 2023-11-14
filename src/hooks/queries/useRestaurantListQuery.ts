@@ -8,10 +8,10 @@ export const useRestaurantListQuery = (paramData: RestaurantListRequest, placeTy
   const { data, isSuccess } = useQuery({
     queryKey: [
       'restaurantList',
-      paramData.bottomlat,
-      paramData.bottomlng,
-      paramData.toplat,
-      paramData.toplng,
+      paramData.bottomLat,
+      paramData.bottomLng,
+      paramData.topLat,
+      paramData.topLng,
     ],
     queryFn: () => getRestaurantList(paramData),
     enabled: placeType === 'POSITION',

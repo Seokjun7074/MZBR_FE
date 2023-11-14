@@ -1,22 +1,21 @@
 export interface Restaurant {
-  restaurantId: string;
-  restaurant_name: string;
+  storeId: string;
+  storeName: string;
   latitude: number;
   longitude: number;
   address: string;
   star_count: number; // 별점
-  operation_times: number[];
 }
 
 export interface RestaurantResponse {
-  restaurants: Restaurant[];
+  stores: Restaurant[];
 }
 
 export interface RestaurantListRequest {
-  toplat: number;
-  toplng: number;
-  bottomlat: number;
-  bottomlng: number;
+  topLat: number;
+  topLng: number;
+  bottomLat: number;
+  bottomLng: number;
 }
 
 export interface RestaurantListByKeywordRequest extends RestaurantListRequest {
@@ -29,8 +28,8 @@ export interface RestaurantListByHashTagRequest extends RestaurantListRequest {
 }
 
 export interface RestaurantDetailResponse {
-  restaurantId: string;
-  restaurant_name: string; // 식당 이름
+  storeId: string;
+  storeName: string; // 식당 이름
   latitude: number; // 식당 위도
   longitude: number; // 식당 경도
   address: string; // 식당 주소
