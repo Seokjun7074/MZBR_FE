@@ -50,7 +50,7 @@ const VideoText = () => {
         y: textPosition.y,
         scale: 1.0, //자막의 크기. 20폰트를 기본으로 함
         rotation: 0.0, // 자막의 회전 정도
-        color: 16777215, //자막의 RGB값을 int 형태로 변환한 값
+        color: 8421504, //자막의 RGB값을 int 형태로 변환한 값
         zIndex: 1,
       },
     ];
@@ -76,7 +76,16 @@ const VideoText = () => {
             enableResizing={false}
             onDragStop={onDragStop}
           >
-            <div ref={rndRef} style={{ width: '100%', height: '100%' }}>
+            <div
+              ref={rndRef}
+              style={{
+                width: '100%',
+                height: '100%',
+                color: 'gray',
+                fontWeight: 'bold',
+                fontSize: '2.2rem',
+              }}
+            >
               {value}
             </div>
           </Rnd>

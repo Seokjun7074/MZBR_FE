@@ -68,7 +68,7 @@ const VideoPreview = () => {
     const result = await makeThumbnail();
     if (!result?.thumbnailName) return;
     // S3 업로드 URL
-    const presignUrl = await getAudioThumbnail(result.thumbnailName, '오디오 추가');
+    const presignUrl = await getAudioThumbnail(result.thumbnailName);
     // 썸네일 S3업로드
     await uploadThumbnail(presignUrl.thumbnailUrl, result.blob);
     // 오디오 있으면 S3업로드
