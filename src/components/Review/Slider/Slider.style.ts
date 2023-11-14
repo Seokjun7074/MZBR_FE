@@ -20,18 +20,17 @@ interface InnerSliderProps {
 }
 
 export const FilterPriceSlideInner = styled.div<InnerSliderProps>`
-  /* width: 100%; */
   position: absolute;
   left: ${(props) => props.$rangeMinPercent}%;
   right: ${(props) => props.$rangeMaxPercent}%;
   height: 40px;
-  border-radius: 10px;
+  border-radius: 3px;
   background-color: #f99468;
 `;
 
 export const FilterPriceRangeWrap = styled.div`
   position: relative;
-  width: 100%;
+  width: 98%;
 `;
 
 export const FilterPriceRangeMin = styled.input`
@@ -43,18 +42,15 @@ export const FilterPriceRangeMin = styled.input`
   -webkit-appearance: none;
   background: none;
   &::-webkit-slider-thumb {
-    height: 50px;
-    width: 20px;
+    height: 40px;
+    width: 10px;
     border-radius: 5px;
     background-color: gray;
     -webkit-appearance: none;
+    pointer-events: auto;
   }
   pointer-events: none;
   cursor: grabbing;
-
-  &::-webkit-slider-thumb {
-    pointer-events: auto;
-  }
 `;
 
 export const FilterPriceRangeMax = styled(FilterPriceRangeMin)`
@@ -62,7 +58,6 @@ export const FilterPriceRangeMax = styled(FilterPriceRangeMin)`
 `;
 
 export const CurrentRange = styled(FilterPriceRangeMin)`
-  left: 5px;
   &::-webkit-slider-thumb {
     height: 70px;
     width: 5px;

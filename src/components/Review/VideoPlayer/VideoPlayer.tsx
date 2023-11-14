@@ -18,6 +18,8 @@ interface VideoPlayerProps {
 }
 
 const VideoPlayer = ({ videoRef, setCurrentTimeCode }: VideoPlayerProps) => {
+  const DUMMY_VIDEO =
+    'https://mzbr-temp-video-bucket.s3.ap-northeast-2.amazonaws.com/crop/2ac6fe92-cb3c-4de7-b6bb-1d77ed25e524.mp4';
   const videoState = useRecoilValue(videoAtom);
   const startTime = useRecoilValue(startAtom);
   const endTime = useRecoilValue(endAtom);
@@ -90,7 +92,45 @@ const VideoPlayer = ({ videoRef, setCurrentTimeCode }: VideoPlayerProps) => {
 
   return (
     <>
-      {videoState.url && (
+      <S.VideoContainer>
+        <S.VideoOverlay>
+          <S.VideoTag
+            src="https://mzbr-temp-video-bucket.s3.ap-northeast-2.amazonaws.com/crop/2ac6fe92-cb3c-4de7-b6bb-1d77ed25e524.mp4"
+            ref={videoRef}
+            crossOrigin="anonymous"
+            onTimeUpdate={handleOverEndTime}
+            onClick={handlePlayVideo}
+          />
+          <Rnd
+            style={rndStyle}
+            bounds={'parent'}
+            default={{
+              x: 0,
+              y: 0,
+              width: 'auto',
+              height: '100%',
+            }}
+            lockAspectRatio={true}
+            onDragStop={onDragStop}
+            onResizeStop={onDragStop}
+          >
+            <div
+              ref={rndRef}
+              style={{ width: '100%', height: '100%', border: '1px dashed gray' }}
+            ></div>
+          </Rnd>
+        </S.VideoOverlay>
+        <S.VideoController>
+          <SkipBack style={{ cursor: 'pointer' }} onClick={handelSkipBack} />
+          {isPlaying ? (
+            <Pause style={{ cursor: 'pointer' }} onClick={handlePlayVideo} />
+          ) : (
+            <Play style={{ cursor: 'pointer' }} onClick={handlePlayVideo} />
+          )}
+          <SkipForward style={{ cursor: 'pointer' }} onClick={handelSkipForward} />
+        </S.VideoController>
+      </S.VideoContainer>
+      {/* {videoState.url && (
         <S.VideoContainer>
           <S.VideoOverlay>
             <S.VideoTag
@@ -129,7 +169,7 @@ const VideoPlayer = ({ videoRef, setCurrentTimeCode }: VideoPlayerProps) => {
             <SkipForward style={{ cursor: 'pointer' }} onClick={handelSkipForward} />
           </S.VideoController>
         </S.VideoContainer>
-      )}
+      )} */}
     </>
   );
 };
