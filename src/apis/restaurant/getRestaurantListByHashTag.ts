@@ -10,24 +10,23 @@ export const getRestaurantListByHashTag = async ({
   bottomlat,
   bottomlng,
   star,
-  day,
-  time,
 }: RestaurantListByHashTagRequest) => {
-  const { data } = await axiosInstance.get<RestaurantResponse>('/restaurants/search/hashtag', {
-    params: {
-      hashtag,
-      toplat,
-      toplng,
-      bottomlat,
-      bottomlng,
-      star,
-      day,
-      time,
+  const { data } = await axiosInstance.get<RestaurantResponse>(
+    '/api/b/restaurants/search/hashtag',
+    {
+      params: {
+        hashtag,
+        toplat,
+        toplng,
+        bottomlat,
+        bottomlng,
+        star,
+      },
+      paramsSerializer: (params) => {
+        return qs.stringify(params, { arrayFormat: 'repeat' });
+      },
     },
-    paramsSerializer: (params) => {
-      return qs.stringify(params, { arrayFormat: 'repeat' });
-    },
-  });
+  );
 
   return data;
 };

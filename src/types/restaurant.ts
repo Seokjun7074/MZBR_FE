@@ -22,14 +22,10 @@ export interface RestaurantListRequest {
 export interface RestaurantListByKeywordRequest extends RestaurantListRequest {
   keyword: string;
   star: string;
-  day: string;
-  time: string;
 }
 export interface RestaurantListByHashTagRequest extends RestaurantListRequest {
   hashtag: string[];
   star: string;
-  day: string;
-  time: string;
 }
 
 export interface RestaurantDetailResponse {

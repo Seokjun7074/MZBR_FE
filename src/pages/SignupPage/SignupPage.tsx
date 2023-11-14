@@ -9,7 +9,8 @@ import { useInput } from '@/hooks/useInput';
 const SignupPage = () => {
   const { value: nickname, handleInput } = useInput('');
   const [isDuplicated, setIdDuplicated] = useState(false);
-  const postCheckNicknameMutation = usePostCheckNicknameMutation(setIdDuplicated);
+  const [isConfirmed, setIsConfirmed] = useState(false);
+  const postCheckNicknameMutation = usePostCheckNicknameMutation(setIdDuplicated, setIsConfirmed);
   const postSignupMutation = usePostSignupMutation();
 
   const checkNicknameDuplication = () => {
@@ -17,7 +18,7 @@ const SignupPage = () => {
   };
 
   const handleSignup = () => {
-    if (isDuplicated || nickname === '') return;
+    if (!isConfirmed || isDuplicated || nickname === '') return;
     postSignupMutation.mutate(nickname);
   };
 

@@ -7,7 +7,7 @@ export const getRestaurantList = async ({
   bottomlat,
   bottomlng,
 }: RestaurantListRequest) => {
-  const { data } = await axiosInstance.get<RestaurantResponse>('/restaurants', {
+  const { data } = await axiosInstance.get<RestaurantResponse>('/api/b/restaurants', {
     params: {
       toplat,
       toplng,

@@ -11,12 +11,11 @@ export const IntroPageWrapper = styled(Flex)`
   box-shadow: 0px 0px 5px 2px gray;
   background-color: ${({ theme }) => theme.color.primary};
   justify-content: space-around;
-  padding: 10rem 0;
 `;
 
 export const LoginContainer = styled(Flex)`
   flex-direction: column;
-  width: 60%;
+  width: 70%;
 `;
 
 export const LoginImage = styled.img`
