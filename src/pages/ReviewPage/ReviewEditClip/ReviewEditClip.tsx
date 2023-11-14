@@ -24,7 +24,7 @@ import { reviewRequestState } from '@/store/reviewRequest';
 import { croppedVideoAtom, endAtom, preparedVideoAtom, startAtom, videoAtom } from '@/store/video';
 
 const ReviewEditClip = () => {
-  const { restaurant_id } = useParams<{ restaurant_id: string }>();
+  const { storeId } = useParams<{ storeId: string }>();
   const location = useLocation();
   const navigate = useNavigate();
   const videoRef = useRef<HTMLVideoElement | null>(null);
@@ -101,7 +101,7 @@ const ReviewEditClip = () => {
     setReviewRequest({ ...reviewRequest, clips: newClip });
     resetEditdata();
     setIsLoading((prev) => !prev);
-    navigate(PATH.VIDEO_PREVIEW(restaurant_id!));
+    navigate(PATH.VIDEO_PREVIEW(storeId!));
   };
 
   const resetEditdata = () => {

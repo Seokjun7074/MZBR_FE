@@ -17,7 +17,7 @@ import { editingUUIDState, videoAtom } from '@/store/video';
 import * as S from './ReviewUpLoad.style';
 
 const ReviewUpLoad = () => {
-  const { restaurant_id } = useParams<{ restaurant_id: string }>();
+  const { storeId } = useParams<{ storeId: string }>();
   const navigate = useNavigate();
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [videoState, setVideoState] = useRecoilState(videoAtom);
@@ -39,10 +39,10 @@ const ReviewUpLoad = () => {
       setReviewRequest({ ...reviewRequest, videoUuid });
       const status = await startEditVideo(videoUuid);
       if (status.status === 201)
-        navigate(PATH.REVIEW_EDIT_CLIP(restaurant_id!), { state: { videoUuid } });
+        navigate(PATH.REVIEW_EDIT_CLIP(storeId!), { state: { videoUuid } });
     } else {
       videoUuid = editingUUID;
-      navigate(PATH.REVIEW_EDIT_CLIP(restaurant_id!), { state: { videoUuid } });
+      navigate(PATH.REVIEW_EDIT_CLIP(storeId!), { state: { videoUuid } });
     }
   };
 

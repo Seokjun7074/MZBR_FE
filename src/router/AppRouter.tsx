@@ -21,6 +21,7 @@ import VideoPreview from '@/pages/ReviewPage/VideoPreview/VideoPreview';
 import VideoText from '@/pages/ReviewPage/VideoText/VideoText';
 import ShortFormPage from '@/pages/ShortFormPage/ShortFormPage';
 import SignupPage from '@/pages/SignupPage/SignupPage';
+import StoreShrotFormPage from '@/pages/StoreShrotFormPage/StoreShrotFormPage';
 
 import { PATH } from '@/constants/path';
 
@@ -78,6 +79,10 @@ const AppRouter = () => {
           element: <ShortFormPage />,
         },
         {
+          path: PATH.SHORT_FORM_STORE(':storeId'),
+          element: <StoreShrotFormPage />,
+        },
+        {
           path: PATH.MAP,
           element: <MapPage />,
         },
@@ -90,27 +95,27 @@ const AppRouter = () => {
           element: <Withdrawal />,
         },
         {
-          path: PATH.REVIEW(':restaurant_id'),
+          path: PATH.REVIEW(':storeId'),
           element: <ReviewTitle />,
         },
         {
-          path: PATH.REVIEW_HASHTAG(':restaurant_id'),
+          path: PATH.REVIEW_HASHTAG(':storeId'),
           element: <Hashtag />,
         },
         {
-          path: PATH.REVIEW_UPLOAD(':restaurant_id'),
+          path: PATH.REVIEW_UPLOAD(':storeId'),
           element: <UpLoad />,
         },
         {
-          path: PATH.REVIEW_EDIT_CLIP(':restaurant_id'),
+          path: PATH.REVIEW_EDIT_CLIP(':storeId'),
           element: <ReviewEditClip />,
         },
         {
-          path: PATH.VIDEO_PREVIEW(':restaurant_id'),
+          path: PATH.VIDEO_PREVIEW(':storeId'),
           element: <VideoPreview />,
         },
         {
-          path: PATH.VIDEO_TEXT(':restaurant_id'),
+          path: PATH.VIDEO_TEXT(':storeId'),
           element: <VideoText />,
         },
         {

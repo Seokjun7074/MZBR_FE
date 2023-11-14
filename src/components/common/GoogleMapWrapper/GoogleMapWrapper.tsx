@@ -1,19 +1,11 @@
 import { Status, Wrapper } from '@googlemaps/react-wrapper';
 
 import { Flex } from '@/components/common/Flex/Flex';
+import Spinner from '@/components/common/Spinner/Spinner';
 
 const render = (status: Status) => {
   if (status === Status.FAILURE) throw new Error('오류가 발생했습니다.');
-  return (
-    <Flex
-      style={{
-        width: '100%',
-        height: '100%',
-      }}
-    >
-      Loading..
-    </Flex>
-  );
+  return <Spinner />;
 };
 
 const GoogleMapWrapper = ({ children }: { children: React.ReactNode }) => {

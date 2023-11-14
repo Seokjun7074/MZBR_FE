@@ -5,7 +5,7 @@ import { Flex } from '@/components/common/Flex/Flex';
 
 export const SearchMapWrapper = styled(Flex)`
   width: 100%;
-  height: 100%;
+  height: calc(100% - 7rem);
   flex-direction: column;
 `;
 
@@ -40,7 +40,7 @@ export const SearchInput = styled.input`
 export const SearchCurrentPosition = styled(Button)`
   position: fixed;
   box-shadow: 0px -5px 5px rgba(0, 0, 0, 0.1);
-  bottom: 7.5rem;
+  bottom: 9rem;
   width: 16rem;
   border-radius: 20px;
   font-size: ${({ theme }) => theme.fontSize.s};

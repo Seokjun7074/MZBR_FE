@@ -1,21 +1,15 @@
-export interface VideoResponse {
-  restaurantName: string;
-  memberName: string;
-  memberId: number;
-  videoPath: string;
+export interface VideoInfo {
+  id: number;
+  videoUuid: string;
+  thumbnailUrl: string;
+  masterUrl: string;
+  storeName: string;
+  writer: string;
+  star: number;
   description: string;
-  hashtags: string[];
-  commentsCount: number;
-  status: string; //like, dislike, none
-}
-
-interface VideoInfo {
-  videoUUID: string;
-  videoPath: string;
+  views: number;
 }
 
 export interface VideoInfoListResponse {
   videoList: VideoInfo[];
-  index: number;
-  finished: boolean;
 }

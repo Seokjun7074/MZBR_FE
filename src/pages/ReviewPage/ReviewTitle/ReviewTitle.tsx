@@ -16,7 +16,7 @@ import { reviewRequestState } from '@/store/reviewRequest';
 
 const ReviewTitle = () => {
   const navigate = useNavigate();
-  const { restaurant_id } = useParams<{ restaurant_id: string }>();
+  const { storeId } = useParams<{ storeId: string }>();
 
   const [description, setDescription] = useState('');
   const [star, setStar] = useState(0); // 별점
@@ -24,7 +24,7 @@ const ReviewTitle = () => {
 
   const handleSubmit = () => {
     setReviewRequest({ ...reviewRequest, description, star });
-    navigate(PATH.REVIEW_HASHTAG(restaurant_id!));
+    navigate(PATH.REVIEW_HASHTAG(storeId!));
   };
   return (
     <S.ReviewTitleWrapper>
