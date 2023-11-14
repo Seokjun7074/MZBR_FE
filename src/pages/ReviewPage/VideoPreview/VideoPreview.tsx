@@ -26,7 +26,7 @@ const VideoPreview = () => {
 
   const { ffmpegRef } = useFFmpeg();
   const navigate = useNavigate();
-  const { restaurant_id } = useParams<{ restaurant_id: string }>();
+  const { storeId } = useParams<{ storeId: string }>();
   const [reviewRequest, setReviewRequest] = useRecoilState(reviewRequestState);
   const [preparedVideo, setPreparedVideo] = useRecoilState(preparedVideoAtom);
   const resetEditingUUID = useResetRecoilState(editingUUIDState);
@@ -93,10 +93,10 @@ const VideoPreview = () => {
         {/* <S.PreviewVideo crossOrigin="anonymous" autoPlay controls src={DUMMY_VIDEO} /> */}
       </S.PreviewVideoContainer>
       <S.PreviewSection>
-        <S.ReviewTitleSubmitButton onClick={() => navigate(PATH.REVIEW_UPLOAD(restaurant_id!))}>
+        <S.ReviewTitleSubmitButton onClick={() => navigate(PATH.REVIEW_UPLOAD(storeId!))}>
           영상 추가
         </S.ReviewTitleSubmitButton>
-        <S.ReviewTitleSubmitButton onClick={() => navigate(PATH.VIDEO_TEXT(restaurant_id!))}>
+        <S.ReviewTitleSubmitButton onClick={() => navigate(PATH.VIDEO_TEXT(storeId!))}>
           음성 / 자막 추가
         </S.ReviewTitleSubmitButton>
       </S.PreviewSection>

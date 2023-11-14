@@ -15,12 +15,12 @@ import { reviewRequestState } from '@/store/reviewRequest';
 const ReviewHashTag = () => {
   const { tagList } = useHasgTag();
   const navigate = useNavigate();
-  const { restaurant_id } = useParams<{ restaurant_id: string }>();
+  const { storeId } = useParams<{ storeId: string }>();
   const [reviewRequest, setReviewRequest] = useRecoilState(reviewRequestState);
 
   const handleSubmit = () => {
-    setReviewRequest({ ...reviewRequest, tags: tagList, storeId: Number(restaurant_id!) });
-    navigate(PATH.REVIEW_UPLOAD(restaurant_id!));
+    setReviewRequest({ ...reviewRequest, tags: tagList, storeId: Number(storeId!) });
+    navigate(PATH.REVIEW_UPLOAD(storeId!));
   };
 
   return (

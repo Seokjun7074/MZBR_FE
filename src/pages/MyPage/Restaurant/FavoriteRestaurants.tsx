@@ -2,7 +2,7 @@ import Profile from '../../../assets/Profile.png';
 import { Container, RestaurantItem, Title, UnfavoriteButton } from './FavoriteRestaurant.style';
 
 type Restaurant = {
-  restaurant_id: number;
+  storeId: number;
   phone_number: string;
   storeName: string;
   address: string;
@@ -11,56 +11,56 @@ type Restaurant = {
 
 const DUMMY_RESTAURANTS: Restaurant[] = [
   {
-    restaurant_id: 1,
+    storeId: 1,
     phone_number: '010-1234-5678',
     storeName: 'Restaurant A',
     address: '123 Main St, City A',
     thumbnail: Profile,
   },
   {
-    restaurant_id: 2,
+    storeId: 2,
     phone_number: '010-8765-4321',
     storeName: 'Restaurant B',
     address: '456 Elm St, City B',
     thumbnail: Profile,
   },
   {
-    restaurant_id: 3,
+    storeId: 3,
     phone_number: '010-8765-4321',
     storeName: 'Restaurant B',
     address: '456 Elm St, City B',
     thumbnail: Profile,
   },
   {
-    restaurant_id: 4,
+    storeId: 4,
     phone_number: '010-8765-4321',
     storeName: 'Restaurant B',
     address: '456 Elm St, City B',
     thumbnail: Profile,
   },
   {
-    restaurant_id: 5,
+    storeId: 5,
     phone_number: '010-8765-4321',
     storeName: 'Restaurant B',
     address: '456 Elm St, City B',
     thumbnail: Profile,
   },
   {
-    restaurant_id: 6,
+    storeId: 6,
     phone_number: '010-8765-4321',
     storeName: 'Restaurant B',
     address: '456 Elm St, City B',
     thumbnail: Profile,
   },
   {
-    restaurant_id: 7,
+    storeId: 7,
     phone_number: '010-8765-4321',
     storeName: 'Restaurant B',
     address: '456 Elm St, City B',
     thumbnail: Profile,
   },
   {
-    restaurant_id: 8,
+    storeId: 8,
     phone_number: '010-8765-4321',
     storeName: 'Restaurant B',
     address: '456 Elm St, City B',
@@ -73,7 +73,7 @@ const FavoriteRestaurants = () => {
     <Container>
       <Title>즐겨찾기 식당</Title>
       {DUMMY_RESTAURANTS.map((restaurant) => (
-        <RestaurantItem key={restaurant.restaurant_id}>
+        <RestaurantItem key={restaurant.storeId}>
           <img src={restaurant.thumbnail} alt={restaurant.storeName} />
           <div>
             <h4>{restaurant.storeName}</h4>
