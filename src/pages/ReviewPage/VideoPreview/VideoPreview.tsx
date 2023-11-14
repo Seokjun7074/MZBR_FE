@@ -17,7 +17,7 @@ import { uploadVideo } from '@/apis/videoEdit/uploadVideo';
 import { PATH } from '@/constants/path';
 
 import { reviewRequestState } from '@/store/reviewRequest';
-import { editingUUIDState, preparedVideoAtom } from '@/store/video';
+import { editingUUIDState, preparedVideoAtom, previewAtom } from '@/store/video';
 
 const VideoPreview = () => {
   const DUMMY_VIDEO =
@@ -29,32 +29,19 @@ const VideoPreview = () => {
   const [reviewRequest, setReviewRequest] = useRecoilState(reviewRequestState);
   const [preparedVideo, setPreparedVideo] = useRecoilState(preparedVideoAtom);
   const resetEditingUUID = useResetRecoilState(editingUUIDState);
-  const [videoPreviewUrl, setVideoPreviewUrl] = useState<string>('');
+  const [videoPreview, setVideoPreview] = useRecoilState(previewAtom);
 
   useEffect(() => {
     const fetchPreviewUrl = async () => {
       const versionId = v4();
       const videoNameList = preparedVideo.map((vido) => vido.videoName);
-      const clips = preparedVideo.map((video) => {
-        return { fileName: video.videoName, volume: 1.0 };
-      });
-      setReviewRequest({ ...reviewRequest, clips });
-
       console.log(videoNameList);
       // 현재 편집된 영상 미리보기 요청
       const { url } = await getPreviewVideo(versionId, videoNameList);
       console.log(url);
-
-      const mergedVideoName = v4();
-      setVideoPreviewUrl(url);
-      setPreparedVideo([
-        {
-          videoName: mergedVideoName,
-          videoUrl: url,
-        },
-      ]);
+      setVideoPreview(url);
     };
-    // fetchPreviewUrl();
+    fetchPreviewUrl();
   }, []);
 
   const makeThumbnail = async () => {
@@ -99,10 +86,10 @@ const VideoPreview = () => {
     <S.VideoPreviewWrapper>
       <S.PreviewHeaderText>이대로 업로드할까요?</S.PreviewHeaderText>
       <S.PreviewVideoContainer>
-        {/* {videoPreviewUrl && (
-          <S.PreviewVideo crossOrigin="anonymous" autoPlay controls src={videoPreviewUrl} />
-        )} */}
-        <S.PreviewVideo crossOrigin="anonymous" autoPlay controls src={DUMMY_VIDEO} />
+        {videoPreview && (
+          <S.PreviewVideo crossOrigin="anonymous" autoPlay controls src={videoPreview} />
+        )}
+        {/* <S.PreviewVideo crossOrigin="anonymous" autoPlay controls src={DUMMY_VIDEO} /> */}
       </S.PreviewVideoContainer>
       <S.PreviewSection>
         <S.ReviewTitleSubmitButton onClick={() => navigate(PATH.REVIEW_UPLOAD(restaurant_id!))}>

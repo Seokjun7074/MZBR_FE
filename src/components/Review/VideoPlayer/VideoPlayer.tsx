@@ -92,7 +92,7 @@ const VideoPlayer = ({ videoRef, setCurrentTimeCode }: VideoPlayerProps) => {
 
   return (
     <>
-      <S.VideoContainer>
+      {/* <S.VideoContainer>
         <S.VideoOverlay>
           <S.VideoTag
             src="https://mzbr-temp-video-bucket.s3.ap-northeast-2.amazonaws.com/crop/2ac6fe92-cb3c-4de7-b6bb-1d77ed25e524.mp4"
@@ -129,8 +129,8 @@ const VideoPlayer = ({ videoRef, setCurrentTimeCode }: VideoPlayerProps) => {
           )}
           <SkipForward style={{ cursor: 'pointer' }} onClick={handelSkipForward} />
         </S.VideoController>
-      </S.VideoContainer>
-      {/* {videoState.url && (
+      </S.VideoContainer> */}
+      {videoState.url && (
         <S.VideoContainer>
           <S.VideoOverlay>
             <S.VideoTag
@@ -169,7 +169,7 @@ const VideoPlayer = ({ videoRef, setCurrentTimeCode }: VideoPlayerProps) => {
             <SkipForward style={{ cursor: 'pointer' }} onClick={handelSkipForward} />
           </S.VideoController>
         </S.VideoContainer>
-      )} */}
+      )}
     </>
   );
 };

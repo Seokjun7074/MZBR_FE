@@ -8,13 +8,14 @@ import * as S from '@/pages/ReviewPage/VideoText/VideoText.style';
 import { useInput } from '@/hooks/useInput';
 
 import { reviewRequestState } from '@/store/reviewRequest';
-import { preparedVideoAtom } from '@/store/video';
+import { previewAtom } from '@/store/video';
 
 const VideoText = () => {
   const DUMMY_VIDEO =
     'https://mzbr-temp-video-bucket.s3.ap-northeast-2.amazonaws.com/crop/2ac6fe92-cb3c-4de7-b6bb-1d77ed25e524.mp4';
   const [reviewRequest, setReviewRequest] = useRecoilState(reviewRequestState);
-  const [preparedVideo, setPreparedVideo] = useRecoilState(preparedVideoAtom);
+  const [videoPreview, setVideoPreview] = useRecoilState(previewAtom);
+
   const rndRef = useRef<HTMLDivElement | null>(null);
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const { value, handleInput } = useInput('');
@@ -60,8 +61,8 @@ const VideoText = () => {
     <S.VideoTextWrapper>
       <S.VideoContainer>
         <S.VideoTextOverlay>
-          <S.VideoTag ref={videoRef} src={DUMMY_VIDEO} crossOrigin="anonymous" autoPlay controls />
-          {/* <S.VideoTag ref={videoRef} src={preparedVideo[0].videoUrl} /> */}
+          {/* <S.VideoTag ref={videoRef} src={DUMMY_VIDEO} crossOrigin="anonymous" autoPlay controls /> */}
+          {videoPreview && <S.VideoTag ref={videoRef} src={videoPreview} controls />}
           <Rnd
             bounds={'parent'}
             default={{
