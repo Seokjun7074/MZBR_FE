@@ -2,6 +2,9 @@ import { useEffect, useState } from 'react';
 
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 
+import MapMarkerList from '@/components/Map/MapMarkerList/MapMarkerList';
+import MapMarker from '@/components/common/MapMarker/MapMarker';
+
 import { useRestaurantListByKeywordQuery } from '@/hooks/queries/useRestaurantListByKeywordQuery';
 import { useRestaurantListQuery } from '@/hooks/queries/useRestaurantListQuery';
 import { useGoogleMap } from '@/hooks/useGoogleMap';
@@ -44,6 +47,21 @@ const RestaurantMap = () => {
       placeType,
     );
 
+  const handleSearchType = (placeType: 'POSITION' | 'KEYWORD') => {
+    setCurrentCenter();
+    setPlaceType(placeType);
+  };
+
+  const setCurrentCenter = () => {
+    if (map) {
+      const mapCenter = map.getCenter();
+      setCenter({
+        lat: mapCenter!.lat(),
+        lng: mapCenter!.lng(),
+      });
+    }
+  };
+
   useEffect(() => {
     if (placeType === 'POSITION' && isSuccessPosition) setRestaurantList(restaurantListData.stores);
     if (placeType === 'KEYWORD' && isSuccessKeyword)
@@ -52,8 +70,16 @@ const RestaurantMap = () => {
 
   return (
     <>
-      <div id="map" ref={mapRef} style={{ height: '60%', width: '100%' }}></div>
+      <span>리뷰를 작성할 장소를 찾아주세요!</span>
+      <div id="map" ref={mapRef} style={{ height: '60%', width: '100%' }}>
+        {map && (
+          <>
+            <MapMarkerList map={map} restaurantList={restaurantList} />
+          </>
+        )}
+      </div>
       <input type="text" value={value} onChange={handleInput} />
+      <button onClick={() => handleSearchType('KEYWORD')}>검색</button>
     </>
   );
 };
