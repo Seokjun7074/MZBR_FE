@@ -11,7 +11,6 @@ import { useRestaurantListByHashTagQuery } from '@/hooks/queries/useRestaurantLi
 import { useRestaurantListByKeywordQuery } from '@/hooks/queries/useRestaurantListByKeywordQuery';
 import { useRestaurantListQuery } from '@/hooks/queries/useRestaurantListQuery';
 import { useGoogleMap } from '@/hooks/useGoogleMap';
-import { useHasgTag } from '@/hooks/useHashTag';
 import { useInput } from '@/hooks/useInput';
 
 import Search from '@/assets/map/search_button.svg';
@@ -77,6 +76,10 @@ const SearchMap = () => {
   };
 
   const handleSearchType = (placeType: 'POSITION' | 'KEYWORD' | 'HASHTAG') => {
+    if (placeType === 'KEYWORD' && value.length < 1) {
+      alert('1글자 이상 입력해주세요!');
+      return;
+    }
     setCurrentCenter();
     setPlaceType(placeType);
   };

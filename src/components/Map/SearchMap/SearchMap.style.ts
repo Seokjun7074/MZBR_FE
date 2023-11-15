@@ -5,7 +5,8 @@ import { Flex } from '@/components/common/Flex/Flex';
 
 export const SearchMapWrapper = styled(Flex)`
   width: 100%;
-  height: calc(100% - 7rem);
+  height: 100%;
+  /* height: calc(100% - 7rem); */
   flex-direction: column;
 `;
 
@@ -38,12 +39,13 @@ export const SearchInput = styled.input`
 `;
 
 export const SearchCurrentPosition = styled(Button)`
+  padding: 1rem;
   position: fixed;
-  box-shadow: 0px -5px 5px rgba(0, 0, 0, 0.1);
-  bottom: 9rem;
-  width: 16rem;
+  box-shadow: 0px -2px 5px rgba(0, 0, 0, 0.1);
+  bottom: 5rem;
+  width: 20rem;
   border-radius: 20px;
-  font-size: ${({ theme }) => theme.fontSize.s};
+  font-size: ${({ theme }) => theme.fontSize.m};
   font-weight: bold;
   background-color: ${({ theme }) => theme.color.primary};
   color: ${({ theme }) => theme.color.white};
