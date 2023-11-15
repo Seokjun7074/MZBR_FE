@@ -66,7 +66,7 @@ const VideoPreview = () => {
           </S.PreviewSection>
         </S.VideoPreviewWrapper>
       ) : (
-        <Spinner />
+        <Spinner message="열심히 영상을 편집하고 있어요!" />
       )}
     </>
   );

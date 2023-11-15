@@ -122,7 +122,7 @@ const ReviewEditClip = () => {
   return (
     <>
       {isLoading ? (
-        <Spinner />
+        <Spinner message="영상을 불러오고 있어요!" />
       ) : (
         <S.ReviewEditClipWrapper>
           <S.EditHeader>영상의 구간을 선택해주세요!</S.EditHeader>
