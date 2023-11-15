@@ -25,6 +25,7 @@ export const VideoTextOverlay = styled(Flex)`
 
 export const VideoTag = styled.video`
   width: auto;
+  max-width: 100%;
   height: 40rem;
   background-color: black;
 `;

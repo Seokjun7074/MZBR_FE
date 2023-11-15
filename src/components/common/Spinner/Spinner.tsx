@@ -20,39 +20,55 @@ const LoadingBlock = styled(Flex)`
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.1);
+  background-color: rgba(255, 255, 255, 0.3);
   backdrop-filter: blur(5px);
+  flex-direction: column;
+  gap: 3rem;
+  color: ${({ theme }) => `${theme.color.darkgray};`};
 
-  div {
-    width: 0.625rem;
-    height: 2.5rem;
-    background-color: ${({ theme }) => `${theme.color.gray};`};
-  }
-
-  div:not(:last-child) {
-    margin-right: 0.625rem;
+  p {
+    font-size: 1.7rem;
+    font-weight: bold;
   }
 `;
 
 const Left = styled.div`
+  border-radius: 2px;
   animation: ${loadingAnimation} 1s infinite ease-in-out;
   animation-delay: -0.16s;
 `;
 
 const Center = styled.div`
+  border-radius: 2px;
   animation: ${loadingAnimation} 1s infinite ease-in-out;
 `;
 
 const Right = styled.div`
+  border-radius: 2px;
   animation: ${loadingAnimation} 1s infinite ease-in-out;
   animation-delay: 0.16s;
 `;
 
-const Spinner = () => (
+const SpinnerContainer = styled(Flex)`
+  div {
+    width: 0.8rem;
+    height: 3rem;
+    background-color: ${({ theme }) => `${theme.color.primary};`};
+  }
+
+  div:not(:last-child) {
+    margin-right: 1rem;
+  }
+`;
+
+const Spinner = ({ message }: { message?: string }) => (
   <LoadingBlock role="alert" aria-label="로딩중입니다.">
-    <Left />
-    <Center />
-    <Right />
+    <SpinnerContainer>
+      <Left />
+      <Center />
+      <Right />
+    </SpinnerContainer>
+    <p>{message}</p>
   </LoadingBlock>
 );
 

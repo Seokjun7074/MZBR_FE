@@ -12,4 +12,5 @@ export const PATH = {
   REVIEW_EDIT_CLIP: (storeId: string) => `/review/${storeId}/clip`,
   VIDEO_PREVIEW: (storeId: string) => `/review/${storeId}/video-preview`,
   VIDEO_TEXT: (storeId: string) => `/review/${storeId}/video-text`,
+  VIDEO_UPLOADING: (storeId: string) => `/review/${storeId}/server-uploading`,
 };

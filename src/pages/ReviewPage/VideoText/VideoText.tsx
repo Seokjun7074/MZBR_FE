@@ -1,5 +1,6 @@
-import { useCallback, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Rnd } from 'react-rnd';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import { useRecoilState } from 'recoil';
 
@@ -7,12 +8,16 @@ import * as S from '@/pages/ReviewPage/VideoText/VideoText.style';
 
 import { useInput } from '@/hooks/useInput';
 
+import { PATH } from '@/constants/path';
+
 import { reviewRequestState } from '@/store/reviewRequest';
 import { previewAtom } from '@/store/video';
 
 const VideoText = () => {
   const DUMMY_VIDEO =
     'https://mzbr-temp-video-bucket.s3.ap-northeast-2.amazonaws.com/crop/2ac6fe92-cb3c-4de7-b6bb-1d77ed25e524.mp4';
+  const { storeId } = useParams<{ storeId: string }>();
+  const navigate = useNavigate();
   const [reviewRequest, setReviewRequest] = useRecoilState(reviewRequestState);
   const [videoPreview, setVideoPreview] = useRecoilState(previewAtom);
 
@@ -31,9 +36,11 @@ const VideoText = () => {
       const cropRatio = videoRect.width / videoRef.current.videoWidth;
       const cropStartX = Math.round((rndRect.x - videoRect.x + window.scrollX) / cropRatio);
       const cropStartY = Math.round((rndRect.y - videoRect.y + window.scrollY) / cropRatio);
+      const reaX = 720 * (cropStartX / videoRef.current.videoWidth);
+      const reaY = 1280 * (cropStartY / videoRef.current.videoHeight);
       const croppedData = {
-        x: cropStartX,
-        y: cropStartY,
+        x: reaX,
+        y: reaY,
       };
       setTextPosition({ ...croppedData });
     }
@@ -48,15 +55,20 @@ const VideoText = () => {
         endDuration: videoRef.current?.duration!, //자막의 종료 시간
         x: textPosition.x,
         y: textPosition.y,
-        scale: 1.0, //자막의 크기. 20폰트를 기본으로 함
+        scale: 5.6,
         rotation: 0.0, // 자막의 회전 정도
         color: 8421504, //자막의 RGB값을 int 형태로 변환한 값
         zIndex: 1,
       },
     ];
     setReviewRequest({ ...reviewRequest, subtitles: newSubtitle });
+    navigateToUpload();
   };
-  console.log('FINAL', reviewRequest);
+
+  const navigateToUpload = () => {
+    navigate(PATH.VIDEO_UPLOADING(storeId!));
+  };
+
   return (
     <S.VideoTextWrapper>
       <S.VideoContainer>
@@ -83,7 +95,7 @@ const VideoText = () => {
                 height: '100%',
                 color: 'gray',
                 fontWeight: 'bold',
-                fontSize: '2.2rem',
+                fontSize: '20pt',
               }}
             >
               {value}
@@ -92,7 +104,7 @@ const VideoText = () => {
         </S.VideoTextOverlay>
       </S.VideoContainer>
       <S.TextInput type="text" placeholder="자막을 추가해주세요" onChange={handleInput} />
-      <S.VideoTextButton onClick={addSubtitle}>자막 추가하기</S.VideoTextButton>
+      <S.VideoTextButton onClick={addSubtitle}>자막 추가완료</S.VideoTextButton>
     </S.VideoTextWrapper>
   );
 };

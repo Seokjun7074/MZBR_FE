@@ -20,7 +20,7 @@ const KakaoRedirectPage = () => {
     if (code) loginMutation.mutate(code);
   }, []);
 
-  return <Spinner />;
+  return <Spinner message="로그인중.." />;
 };
 
 export default KakaoRedirectPage;

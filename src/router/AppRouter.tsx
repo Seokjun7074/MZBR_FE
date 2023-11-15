@@ -17,6 +17,7 @@ import ReviewEditClip from '@/pages/ReviewPage/ReviewEditClip/ReviewEditClip';
 import Hashtag from '@/pages/ReviewPage/ReviewHashTag/ReviewHashtag';
 import ReviewTitle from '@/pages/ReviewPage/ReviewTitle/ReviewTitle';
 import UpLoad from '@/pages/ReviewPage/ReviewUpload/ReviewUpLoad';
+import ReviewUploading from '@/pages/ReviewPage/ReviewUploading/ReviewUploading';
 import VideoPreview from '@/pages/ReviewPage/VideoPreview/VideoPreview';
 import VideoText from '@/pages/ReviewPage/VideoText/VideoText';
 import ShortFormPage from '@/pages/ShortFormPage/ShortFormPage';
@@ -117,6 +118,10 @@ const AppRouter = () => {
         {
           path: PATH.VIDEO_TEXT(':storeId'),
           element: <VideoText />,
+        },
+        {
+          path: PATH.VIDEO_UPLOADING(':storeId'),
+          element: <ReviewUploading />,
         },
         {
           path: '/user/:user_id',

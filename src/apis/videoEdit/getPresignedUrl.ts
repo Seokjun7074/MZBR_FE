@@ -7,6 +7,6 @@ interface PresignedUrlRequest {
 }
 
 export const getPresignedUrl = async (request: PresignedUrlRequest) => {
-  const { data } = await axiosInstance.post('/api/v/video/temp/upload', request);
+  const { data } = await axiosInstance.post('/v/video/temp/upload', request);
   return data?.url;
 };
