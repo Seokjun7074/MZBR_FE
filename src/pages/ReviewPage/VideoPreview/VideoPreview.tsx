@@ -1,6 +1,6 @@
 import { v4 } from 'uuid';
 
-import { useEffect } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { useRecoilState, useRecoilValue } from 'recoil';
@@ -21,6 +21,7 @@ const VideoPreview = () => {
   const { storeId } = useParams<{ storeId: string }>();
   const preparedVideo = useRecoilValue(preparedVideoAtom);
   const [videoPreview, setVideoPreview] = useRecoilState(previewAtom);
+  const [isFetchedUrl, setIdFetchedUrl] = useState(false);
 
   useEffect(() => {
     const fetchPreviewUrl = async () => {
@@ -28,6 +29,7 @@ const VideoPreview = () => {
       const videoNameList = preparedVideo.map((vido) => vido.videoName);
       const { url } = await getPreviewVideo(versionId, videoNameList);
       setVideoPreview(url);
+      setIdFetchedUrl(true);
     };
     fetchPreviewUrl();
   }, []);
@@ -36,10 +38,10 @@ const VideoPreview = () => {
     <S.VideoPreviewWrapper>
       <S.PreviewHeaderText>이대로 업로드할까요?</S.PreviewHeaderText>
       <S.PreviewVideoContainer>
-        {videoPreview && (
-          <S.PreviewVideo crossOrigin="anonymous" autoPlay controls src={videoPreview} />
-        )}
-        {/* <S.PreviewVideo crossOrigin="anonymous" autoPlay controls src={DUMMY_VIDEO} /> */}
+        <S.PreviewVideo crossOrigin="anonymous" autoPlay controls>
+          {isFetchedUrl && <source src={videoPreview} />}
+          {/* <source src={DUMMY_VIDEO} /> */}
+        </S.PreviewVideo>
       </S.PreviewVideoContainer>
       <S.PreviewSection>
         <S.ReviewTitleSubmitButton onClick={() => navigate(PATH.REVIEW_UPLOAD(storeId!))}>

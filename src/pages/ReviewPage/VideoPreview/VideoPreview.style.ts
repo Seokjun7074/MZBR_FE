@@ -32,7 +32,8 @@ export const PreviewVideoContainer = styled(Flex)`
 
 export const PreviewVideo = styled.video`
   width: auto;
-  height: 100%;
+  max-width: 48rem;
+  height: 38rem;
   border-radius: 8px;
 `;
 
