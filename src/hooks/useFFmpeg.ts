@@ -1,13 +1,14 @@
 import { FFmpeg, createFFmpeg } from '@ffmpeg/ffmpeg';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 export const useFFmpeg = () => {
   const ffmpegRef = useRef<FFmpeg | null>(null);
-
+  const [ffmpegLoaded, setFfmpegLoaded] = useState(false);
   const init = async () => {
     try {
       await ffmpegRef.current!.load();
+      setFfmpegLoaded(true);
     } catch (error) {
       console.log('[init FFMPEG]', error);
     }
@@ -22,5 +23,5 @@ export const useFFmpeg = () => {
     init();
   }, []);
 
-  return { ffmpegRef };
+  return { ffmpegRef, ffmpegLoaded };
 };

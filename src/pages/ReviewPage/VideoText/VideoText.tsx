@@ -1,5 +1,6 @@
-import { useCallback, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { Rnd } from 'react-rnd';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import { useRecoilState } from 'recoil';
 
@@ -7,12 +8,16 @@ import * as S from '@/pages/ReviewPage/VideoText/VideoText.style';
 
 import { useInput } from '@/hooks/useInput';
 
+import { PATH } from '@/constants/path';
+
 import { reviewRequestState } from '@/store/reviewRequest';
 import { previewAtom } from '@/store/video';
 
 const VideoText = () => {
   const DUMMY_VIDEO =
     'https://mzbr-temp-video-bucket.s3.ap-northeast-2.amazonaws.com/crop/2ac6fe92-cb3c-4de7-b6bb-1d77ed25e524.mp4';
+  const { storeId } = useParams<{ storeId: string }>();
+  const navigate = useNavigate();
   const [reviewRequest, setReviewRequest] = useRecoilState(reviewRequestState);
   const [videoPreview, setVideoPreview] = useRecoilState(previewAtom);
 
@@ -55,8 +60,13 @@ const VideoText = () => {
       },
     ];
     setReviewRequest({ ...reviewRequest, subtitles: newSubtitle });
+    navigateToUpload();
   };
-  console.log('FINAL', reviewRequest);
+
+  const navigateToUpload = () => {
+    navigate(PATH.VIDEO_UPLOADING(storeId!));
+  };
+
   return (
     <S.VideoTextWrapper>
       <S.VideoContainer>
@@ -92,7 +102,7 @@ const VideoText = () => {
         </S.VideoTextOverlay>
       </S.VideoContainer>
       <S.TextInput type="text" placeholder="자막을 추가해주세요" onChange={handleInput} />
-      <S.VideoTextButton onClick={addSubtitle}>자막 추가하기</S.VideoTextButton>
+      <S.VideoTextButton onClick={addSubtitle}>자막 추가완료</S.VideoTextButton>
     </S.VideoTextWrapper>
   );
 };
