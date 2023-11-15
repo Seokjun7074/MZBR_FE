@@ -1,9 +1,7 @@
-// useProfileImageUpdater.ts
 import { useEffect, useState } from 'react';
 
 import axios from 'axios';
 
-import { axiosInstance } from '..';
 import { User } from '../../pages/MyPage/EditProfile';
 import { getNewAccessToken } from '../getNewAccessToken';
 
@@ -20,15 +18,16 @@ export const useProfileImageUpdater = (
 
       const formData = new FormData();
       formData.append('profileImage', profileImage);
+      const BASE_URL = 'https://api.mzbr.co.kr';
 
       try {
-        // const response = await axios.put(`${BASE_URL}/user/profile-image`, formData, {
-        //   headers: {
-        //     'access-token': user.accessToken,
-        //     'Content-Type': 'multipart/form-data',
-        //   },
-        // });
-        const response = await axiosInstance.put('/users/nickname', formData);
+        const response = await axios.put(`${BASE_URL}/user/profile-image`, formData, {
+          headers: {
+            'access-token': user.accessToken,
+            'Content-Type': 'multipart/form-data',
+          },
+        });
+
         if (response.data.success) {
           setUser({ ...user, profileImage: response.data.data.profileImage });
           setUpdateResult({ success: true, profileImage: response.data.data.profileImage });
