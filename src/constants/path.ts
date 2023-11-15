@@ -4,6 +4,7 @@ export const PATH = {
   KAKAO_REDIRECT: '/kakao/code',
   SHORT_FORM: '/shorts',
   MAP: '/map',
+  SELECT_RESTAURNAT: '/review/select-restaurant',
   MYPAGE: '/mypage',
   SHORT_FORM_STORE: (storeId: string) => `/shorts/store/${storeId}`,
   REVIEW: (storeId: string) => `/review/${storeId}`,

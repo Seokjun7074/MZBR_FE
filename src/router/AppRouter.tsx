@@ -18,6 +18,7 @@ import Hashtag from '@/pages/ReviewPage/ReviewHashTag/ReviewHashtag';
 import ReviewTitle from '@/pages/ReviewPage/ReviewTitle/ReviewTitle';
 import UpLoad from '@/pages/ReviewPage/ReviewUpload/ReviewUpLoad';
 import ReviewUploading from '@/pages/ReviewPage/ReviewUploading/ReviewUploading';
+import SelectRestaurant from '@/pages/ReviewPage/SelectRestaurant/SelectRestaurant';
 import VideoPreview from '@/pages/ReviewPage/VideoPreview/VideoPreview';
 import VideoText from '@/pages/ReviewPage/VideoText/VideoText';
 import ShortFormPage from '@/pages/ShortFormPage/ShortFormPage';
@@ -94,6 +95,10 @@ const AppRouter = () => {
         {
           path: '/mypage/withdrawal',
           element: <Withdrawal />,
+        },
+        {
+          path: PATH.SELECT_RESTAURNAT,
+          element: <SelectRestaurant />,
         },
         {
           path: PATH.REVIEW(':storeId'),
