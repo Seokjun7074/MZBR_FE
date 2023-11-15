@@ -42,12 +42,6 @@ const navigate = useNavigate();
 useEffect(() => {
   const addComments = async () => {
     try {
-      // const response = await axios.delete(
-      //   BASE_URL + `/videos/${video.videoUUID}/comments/${comments.commentId}`,
-      //   {
-      //     headers: { 'access-token': user.accessToken },
-      //   },
-      // );
       const response = await axiosInstance.delete(
         `/videos/${video.videoUUID}/comments/${comments.commentId}`,
       );
@@ -57,13 +51,7 @@ useEffect(() => {
         const newAccessToken = await getNewAccessToken(user.refreshToken);
         if (newAccessToken) {
           setUser({ ...user, accessToken: newAccessToken });
-          // const newResponse = await axios.post(
-          //   BASE_URL + `/videos/${video.videoUUID}/comments`,
-          //   { content: comments.content },
-          //   {
-          //     headers: { 'access-token': user.accessToken },
-          //   },
-          // );
+
           const newResponse = await axiosInstance.delete(
             `/videos/${video.videoUUID}/comments/${comments.commentId}`,
           );

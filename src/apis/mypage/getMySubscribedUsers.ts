@@ -15,12 +15,6 @@ export const useSubscribedUsers = (
   useEffect(() => {
     const fetchSubscribe = async () => {
       try {
-        // const response = await axios.get<ApiResponse<SubscribedUser[]>>(
-        //   `${BASE_URL}/users/subscriber`,
-        //   {
-        //     headers: { 'access-token': user.accessToken },
-        //   },
-        // );
         const response =
           await axiosInstance.get<ApiResponse<SubscribedUser[]>>('/users/subscriber');
 

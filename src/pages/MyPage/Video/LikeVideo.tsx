@@ -24,14 +24,10 @@ export interface ApiResponse<T> {
 
 const LikeVideo = () => {
   const navigate = useNavigate();
+  const storedUserId = localStorage.getItem('userId');
+  const userId = storedUserId ? parseInt(storedUserId, 10) : 1;
 
-  const [user, setUser] = useState<User>({
-    userId: 1,
-    accessToken: 'some_initial_access_token',
-    refreshToken: 'some_initial_refresh_token',
-  });
-
-  const videos = useLikedVideos(user, setUser);
+  const videos = useLikedVideos(userId);
 
   const handleThumbnailClick = (id: string) => {
     navigate(`/video/${id}`);
@@ -44,7 +40,6 @@ const LikeVideo = () => {
         <S.Button active onClick={() => {}}>
           좋아요한 영상
         </S.Button>
-        <S.Button onClick={() => navigate('/mypage/watchinglist')}>시청기록</S.Button>
       </S.ButtonContainer>
       <S.VideoGrid>
         {videos.map((video) => (

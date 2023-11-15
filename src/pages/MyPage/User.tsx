@@ -1,9 +1,10 @@
+import { parse } from 'dotenv';
+
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import axios from 'axios';
-
-import { useMyVideos } from '../../apis/Video/getUserVideo';
+import { axiosInstance } from '../../apis/index';
+import { useMyVideos } from '../../apis/mypage/getMyVideo';
 import { useUserProfile } from '../../apis/mypage/getUserInfo';
 import ProfilePlaceholder from '../../assets/Profile.png';
 import {
@@ -42,43 +43,16 @@ export interface ApiResponse<T> {
   error?: string;
 }
 
-const BASE_URL = 'http://localhost:3000';
-
 const UserPage = () => {
   const { userId } = useParams<{ userId?: string }>();
   const parsedUserId = userId ? parseInt(userId, 10) : null;
 
-  const [user, setUser] = useState<User>({
-    userId: 123,
-    accessToken: 'some_initial_access_token',
-    refreshToken: 'some_initial_refresh_token',
-  });
-
-  const [userProfile, setUserProfile] = useState<UserProfile>({
-    nickname: 'coco',
-    profileImage: '',
-    subscribeNum: 0,
-    postNum: 0,
-  });
-
-  const navigate = useNavigate();
-
-  const [videos, setVideos] = useState<Video[]>([]);
-
-  useEffect(() => {
-    if (parsedUserId !== null && !isNaN(parsedUserId)) {
-      useUserProfile(parsedUserId, user, setUser, setUserProfile);
-      useMyVideos(parsedUserId, user, setUser, navigate);
-    }
-  }, [parsedUserId, user.accessToken]);
+  const userProfile = parsedUserId !== null ? useUserProfile(parsedUserId) : null;
+  const videos = parsedUserId !== null ? useMyVideos(parsedUserId) : [];
 
   const handleSubscribe = async () => {
     try {
-      const response = await axios.post(
-        `${BASE_URL}/users/subscribe/${parsedUserId}`,
-        {},
-        { headers: { 'access-token': user.accessToken } },
-      );
+      const response = await axiosInstance.post(`/users/subscribe/${parsedUserId}`);
 
       if (response.data.success) {
         console.log('구독 성공');
@@ -93,18 +67,20 @@ const UserPage = () => {
   return (
     <PageWrapper>
       <ProfileSection>
-        <UserInfo>
-          <ProfileImage
-            src={userProfile.profileImage || ProfilePlaceholder}
-            alt={userProfile.nickname || 'Profile'}
-          />
-          <h3>{userProfile.nickname}</h3>
-          <UserStats>
-            <UserInfoText>구독자: {userProfile.subscribeNum}</UserInfoText>
-            <UserInfoText>게시물: {userProfile.postNum}</UserInfoText>
-          </UserStats>
-          <SubscribeButton onClick={handleSubscribe}>구독</SubscribeButton>
-        </UserInfo>
+        {userProfile && (
+          <UserInfo>
+            <ProfileImage
+              src={userProfile.profileImage || ProfilePlaceholder}
+              alt={userProfile.nickname || 'Profile'}
+            />
+            <h3>{userProfile.nickname}</h3>
+            <UserStats>
+              <UserInfoText>구독자: {userProfile.subscribeNum}</UserInfoText>
+              <UserInfoText>게시물: {userProfile.postNum}</UserInfoText>
+            </UserStats>
+            <SubscribeButton onClick={handleSubscribe}>구독</SubscribeButton>
+          </UserInfo>
+        )}
       </ProfileSection>
 
       <VideosGrid>

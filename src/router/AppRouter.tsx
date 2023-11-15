@@ -10,7 +10,6 @@ import SubcribedUsers from '@/pages/MyPage/Social/SubscribedUsers';
 import UserPage from '@/pages/MyPage/User';
 import LikeVideo from '@/pages/MyPage/Video/LikeVideo';
 import MyVideo from '@/pages/MyPage/Video/MyVideo';
-import WatchingList from '@/pages/MyPage/Video/WatchingList';
 import Withdrawal from '@/pages/MyPage/Withdrawal';
 import KakaoRedirectPage from '@/pages/RedirectPage/KakaoRedirectPage';
 import ReviewEditClip from '@/pages/ReviewPage/ReviewEditClip/ReviewEditClip';
@@ -66,10 +65,7 @@ const AppRouter = () => {
           path: '/mypage/myvideo',
           element: <MyVideo />,
         },
-        {
-          path: '/mypage/watchinglist',
-          element: <WatchingList />,
-        },
+
         {
           path: PATH.KAKAO_REDIRECT,
           element: <KakaoRedirectPage />,
