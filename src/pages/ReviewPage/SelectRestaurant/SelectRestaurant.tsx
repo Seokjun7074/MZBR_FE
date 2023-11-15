@@ -5,6 +5,7 @@ import { useSetRecoilState } from 'recoil';
 
 import * as S from '@/pages/ReviewPage/SelectRestaurant/SelectRestaurant.style';
 
+import RestaurantMap from '@/components/Review/RestaurantMap/RestaurantMap';
 import GoogleMapWrapper from '@/components/common/GoogleMapWrapper/GoogleMapWrapper';
 
 import { useMyLocation } from '@/hooks/useMyLocation';
@@ -26,7 +27,9 @@ const SelectRestaurant = () => {
 
   return (
     <S.SelectRestaurantWrapper>
-      <GoogleMapWrapper></GoogleMapWrapper>
+      <GoogleMapWrapper>
+        <RestaurantMap />
+      </GoogleMapWrapper>
     </S.SelectRestaurantWrapper>
   );
 };

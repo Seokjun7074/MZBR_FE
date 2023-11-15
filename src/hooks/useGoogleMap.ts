@@ -32,7 +32,7 @@ export const useGoogleMap = (zoom: number) => {
     if (bounds) {
       const ne = bounds.getNorthEast();
       const sw = bounds.getSouthWest();
-
+      console.log(bounds);
       setMapBoundary({
         topLat: ne.lat(),
         topLng: ne.lng(),
