@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Rnd } from 'react-rnd';
 import { useNavigate, useParams } from 'react-router-dom';
 
@@ -42,9 +42,6 @@ const VideoText = () => {
         x: reaX,
         y: reaY,
       };
-      // console.log('영상 해상도', videoRef.current.videoWidth, videoRef.current.videoHeight);
-      // console.log('현재위치', cropStartX, cropStartY);
-      // console.log('실제위치', croppedData.x, croppedData.y);
       setTextPosition({ ...croppedData });
     }
   };
@@ -58,7 +55,7 @@ const VideoText = () => {
         endDuration: videoRef.current?.duration!, //자막의 종료 시간
         x: textPosition.x,
         y: textPosition.y,
-        scale: 1.0, //자막의 크기. 20폰트를 기본으로 함
+        scale: 5.6,
         rotation: 0.0, // 자막의 회전 정도
         color: 8421504, //자막의 RGB값을 int 형태로 변환한 값
         zIndex: 1,
@@ -76,10 +73,10 @@ const VideoText = () => {
     <S.VideoTextWrapper>
       <S.VideoContainer>
         <S.VideoTextOverlay>
-          <S.VideoTag ref={videoRef} src={DUMMY_VIDEO} crossOrigin="anonymous" autoPlay controls />
-          {/* {videoPreview && (
+          {/* <S.VideoTag ref={videoRef} src={DUMMY_VIDEO} crossOrigin="anonymous" autoPlay controls /> */}
+          {videoPreview && (
             <S.VideoTag ref={videoRef} src={videoPreview} controls crossOrigin="anonymous" />
-          )} */}
+          )}
           <Rnd
             bounds={'parent'}
             default={{
@@ -98,7 +95,7 @@ const VideoText = () => {
                 height: '100%',
                 color: 'gray',
                 fontWeight: 'bold',
-                fontSize: '2.2rem',
+                fontSize: '20pt',
               }}
             >
               {value}
