@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { useMyVideos } from '@/apis/mypage/getMyVideo';
@@ -24,13 +23,10 @@ export interface ApiResponse<T> {
 
 const MyVideo = () => {
   const navigate = useNavigate();
-  const [user, setUser] = useState<User>({
-    userId: 1,
-    accessToken: 'some_initial_access_token',
-    refreshToken: 'some_initdsial_refresh_token',
-  });
+  const storedUserId = localStorage.getItem('userId');
+  const userId = storedUserId ? parseInt(storedUserId, 10) : 1;
 
-  const videos = useMyVideos(user, setUser);
+  const videos = useMyVideos(userId);
 
   const handleThumbnailClick = (id: string) => {
     navigate(`/video/${id}`);
@@ -38,8 +34,12 @@ const MyVideo = () => {
 
   return (
     <div>
-      <S.ButtonContainer></S.ButtonContainer>
-
+      <S.ButtonContainer>
+        <S.Button active onClick={() => {}}>
+          내영상
+        </S.Button>
+        <S.Button onClick={() => navigate('/mypage/likevideo')}>좋아요한 영상</S.Button>
+      </S.ButtonContainer>
       <S.VideoGrid>
         {videos.map((video) => (
           <S.Thumbnail

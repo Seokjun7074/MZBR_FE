@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 
 import { useProfileImageUpdater } from '@/apis/mypage/putUserProfileImage';
 

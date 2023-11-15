@@ -46,13 +46,6 @@ const navigate = useNavigate();
 useEffect(() => {
   const addComments = async () => {
     try {
-      // const response = await axios.post(
-      //   BASE_URL + `/videos/${video.videoUUID}/comments`,
-      //   { content: comments.content },
-      //   {
-      //     headers: { 'access-token': user.accessToken },
-      //   },
-      // );
       const response = await axiosInstance.post(`/videos/${video.videoUUID}/comments`);
 
       if (response.data.success && response.data.data) {
@@ -61,13 +54,7 @@ useEffect(() => {
         const newAccessToken = await getNewAccessToken(user.refreshToken);
         if (newAccessToken) {
           setUser({ ...user, accessToken: newAccessToken });
-          // const newResponse = await axios.post(
-          //   BASE_URL + `/videos/${video.videoUUID}/comments`,
-          //   { content: comments.content },
-          //   {
-          //     headers: { 'access-token': user.accessToken },
-          //   },
-          // );
+
           const newResponse = await axiosInstance.post(`/videos/${video.videoUUID}/comments`);
           if (newResponse.data.success) {
             setUser({

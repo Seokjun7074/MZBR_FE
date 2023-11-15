@@ -32,9 +32,6 @@ const navigate = useNavigate();
 useEffect(() => {
   const dislikeVideo = async () => {
     try {
-      // const response = await axios.post(BASE_URL + `/videos/${video.UUID}/dislike`, {
-      //   headers: { 'access-token': user.accessToken },
-      // });
       const response = await axiosInstance.post(`/videos/${video.UUID}/dislike`);
       if (response.data.success && response.data.data) {
         return response.data;
@@ -42,9 +39,7 @@ useEffect(() => {
         const newAccessToken = await getNewAccessToken(user.refreshToken);
         if (newAccessToken) {
           setUser({ ...user, accessToken: newAccessToken });
-          // const newResponse = await axios.post(BASE_URL + `/videos/${video.UUID}/dislike`, {
-          //   headers: { 'access-token': user.accessToken },
-          // });
+
           const newResponse = await axiosInstance.post(`/videos/${video.UUID}/dislike`);
           if (newResponse.data.success) {
             setUser({
