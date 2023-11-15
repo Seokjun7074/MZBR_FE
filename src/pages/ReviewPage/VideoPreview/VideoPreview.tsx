@@ -7,6 +7,8 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 
 import * as S from '@/pages/ReviewPage/VideoPreview/VideoPreview.style';
 
+import Spinner from '@/components/common/Spinner/Spinner';
+
 import { getPreviewVideo } from '@/apis/videoEdit/getPreviewViewo';
 
 import { PATH } from '@/constants/path';
@@ -35,32 +37,38 @@ const VideoPreview = () => {
   }, []);
 
   return (
-    <S.VideoPreviewWrapper>
-      <S.PreviewHeaderText>이대로 업로드할까요?</S.PreviewHeaderText>
-      <S.PreviewVideoContainer>
-        <S.PreviewVideo crossOrigin="anonymous" autoPlay controls>
-          {isFetchedUrl && <source src={videoPreview} />}
-          {/* <source src={DUMMY_VIDEO} /> */}
-        </S.PreviewVideo>
-      </S.PreviewVideoContainer>
-      <S.PreviewSection>
-        <S.ReviewTitleSubmitButton onClick={() => navigate(PATH.REVIEW_UPLOAD(storeId!))}>
-          영상 추가
-        </S.ReviewTitleSubmitButton>
-        <S.ReviewTitleSubmitButton onClick={() => navigate(PATH.VIDEO_TEXT(storeId!))}>
-          음성 / 자막 추가
-        </S.ReviewTitleSubmitButton>
-      </S.PreviewSection>
-      <S.PreviewSection>
-        <S.ReviewTitleSubmitButton
-          onClick={() => {
-            navigate(PATH.VIDEO_UPLOADING(storeId!));
-          }}
-        >
-          이대로 업로드 할래요
-        </S.ReviewTitleSubmitButton>
-      </S.PreviewSection>
-    </S.VideoPreviewWrapper>
+    <>
+      {isFetchedUrl ? (
+        <S.VideoPreviewWrapper>
+          <S.PreviewHeaderText>이대로 업로드할까요?</S.PreviewHeaderText>
+          <S.PreviewVideoContainer>
+            <S.PreviewVideo crossOrigin="anonymous" autoPlay controls>
+              <source src={videoPreview} />
+              {/* <source src={DUMMY_VIDEO} /> */}
+            </S.PreviewVideo>
+          </S.PreviewVideoContainer>
+          <S.PreviewSection>
+            <S.ReviewTitleSubmitButton onClick={() => navigate(PATH.REVIEW_UPLOAD(storeId!))}>
+              영상 추가
+            </S.ReviewTitleSubmitButton>
+            <S.ReviewTitleSubmitButton onClick={() => navigate(PATH.VIDEO_TEXT(storeId!))}>
+              음성 / 자막 추가
+            </S.ReviewTitleSubmitButton>
+          </S.PreviewSection>
+          <S.PreviewSection>
+            <S.ReviewTitleSubmitButton
+              onClick={() => {
+                navigate(PATH.VIDEO_UPLOADING(storeId!));
+              }}
+            >
+              이대로 업로드 할래요
+            </S.ReviewTitleSubmitButton>
+          </S.PreviewSection>
+        </S.VideoPreviewWrapper>
+      ) : (
+        <Spinner />
+      )}
+    </>
   );
 };
 

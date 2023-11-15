@@ -26,7 +26,7 @@ const LoadingBlock = styled(Flex)`
   div {
     width: 0.625rem;
     height: 2.5rem;
-    background-color: ${({ theme }) => `${theme.color.gray};`};
+    background-color: ${({ theme }) => `${theme.color.primary};`};
   }
 
   div:not(:last-child) {

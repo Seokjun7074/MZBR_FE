@@ -36,10 +36,15 @@ const VideoText = () => {
       const cropRatio = videoRect.width / videoRef.current.videoWidth;
       const cropStartX = Math.round((rndRect.x - videoRect.x + window.scrollX) / cropRatio);
       const cropStartY = Math.round((rndRect.y - videoRect.y + window.scrollY) / cropRatio);
+      const reaX = 720 * (cropStartX / videoRef.current.videoWidth);
+      const reaY = 1280 * (cropStartY / videoRef.current.videoHeight);
       const croppedData = {
-        x: cropStartX,
-        y: cropStartY,
+        x: reaX,
+        y: reaY,
       };
+      // console.log('영상 해상도', videoRef.current.videoWidth, videoRef.current.videoHeight);
+      // console.log('현재위치', cropStartX, cropStartY);
+      // console.log('실제위치', croppedData.x, croppedData.y);
       setTextPosition({ ...croppedData });
     }
   };
@@ -71,10 +76,10 @@ const VideoText = () => {
     <S.VideoTextWrapper>
       <S.VideoContainer>
         <S.VideoTextOverlay>
-          {/* <S.VideoTag ref={videoRef} src={DUMMY_VIDEO} crossOrigin="anonymous" autoPlay controls /> */}
-          {videoPreview && (
+          <S.VideoTag ref={videoRef} src={DUMMY_VIDEO} crossOrigin="anonymous" autoPlay controls />
+          {/* {videoPreview && (
             <S.VideoTag ref={videoRef} src={videoPreview} controls crossOrigin="anonymous" />
-          )}
+          )} */}
           <Rnd
             bounds={'parent'}
             default={{
