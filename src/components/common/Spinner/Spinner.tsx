@@ -30,6 +30,7 @@ const LoadingBlock = styled(Flex)`
     font-size: 1.7rem;
     font-weight: bold;
   }
+  z-index: 100;
 `;
 
 const Left = styled.div`

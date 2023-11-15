@@ -42,10 +42,17 @@ export const RestaurantDetailBody = styled(Flex)`
   }
 `;
 
+export const ReviewButtonContainer = styled(Flex)`
+  width: 100%;
+  gap: 2rem;
+  justify-content: space-between;
+`;
+
 export const ReviewButton = styled(Button)`
   width: 100%;
   border: 1px solid ${({ theme }) => theme.color.primary};
   font-weight: bold;
   padding: 0.6rem;
-  font-size: ${({ theme }) => theme.fontSize.m};
+  font-size: ${({ theme }) => theme.fontSize.s};
+  border-radius: 4px;
 `;

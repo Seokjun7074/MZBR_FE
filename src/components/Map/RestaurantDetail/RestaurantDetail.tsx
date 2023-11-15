@@ -27,9 +27,14 @@ const RestaurantDetail = ({ id, selectedRestaurant }: RestaurantDetailProps) => 
       <S.RestaurantDetailBody>
         <span>{replaceColon(selectedRestaurant?.address)}</span>
       </S.RestaurantDetailBody>
-      <S.ReviewButton onClick={() => navigate(PATH.REVIEW(id))}>
-        ✏️ 맛집 후기 작성하기
-      </S.ReviewButton>
+      <S.ReviewButtonContainer>
+        <S.ReviewButton onClick={() => navigate(PATH.REVIEW(id))}>
+          ✏️ 맛집 후기 작성하기
+        </S.ReviewButton>
+        <S.ReviewButton onClick={() => navigate(PATH.SHORT_FORM_STORE(id))}>
+          🙋🏻 리뷰 보기
+        </S.ReviewButton>
+      </S.ReviewButtonContainer>
     </S.RestaurantDetailWrapper>
   );
 };
