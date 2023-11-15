@@ -12,63 +12,49 @@ interface MapMarkerListProps {
   map: google.maps.Map;
   restaurantList: Restaurant[] | [];
 }
-interface MarkerType {
-  key: string;
-  id: string;
-  lat: number;
-  lng: number;
-}
 
 const MapMarkerList = ({ map, restaurantList }: MapMarkerListProps) => {
-  const [markers, setMarkers] = useState<MarkerType[] | undefined>([]);
   const [selectedMarker, setSelectedMarker] = useState('');
-  const { openModal } = useModal();
+  const [selectedRestaurant, setSelectedRestaurant] = useState<Restaurant | null>(null);
+  const { openModal, closeModal } = useModal();
 
   useEffect(() => {
-    if (restaurantList?.length! > 0) {
-      const bounds = new google.maps.LatLngBounds();
-      restaurantList.forEach((item: Restaurant) =>
-        bounds.extend(new google.maps.LatLng(item.latitude, item.longitude)),
-      );
-      const boundCenter = bounds.getCenter();
-      map.panTo(boundCenter);
-      map.fitBounds(bounds);
-    }
+    if (restaurantList?.length! <= 0) return;
 
-    const newMarkers = restaurantList.map((item: Restaurant) => ({
-      key: item.storeId,
-      id: item.storeId,
-      lat: item.latitude,
-      lng: item.longitude,
-    }));
+    const bounds = new google.maps.LatLngBounds();
+    restaurantList.forEach((item: Restaurant) =>
+      bounds.extend(new google.maps.LatLng(item.latitude, item.longitude)),
+    );
+    const boundCenter = bounds.getCenter();
+    map.panTo(boundCenter);
+    map.fitBounds(bounds);
 
-    setMarkers(newMarkers);
+    return () => {
+      closeModal();
+    };
   }, [restaurantList]);
 
   const selectMarker = (id: string) => {
     setSelectedMarker(id);
+    const selectedData = restaurantList.find((store) => store.storeId === id);
+    setSelectedRestaurant(selectedData!);
     openModal();
   };
 
   return (
     <>
-      {markers?.map((item: MarkerType) => (
-        <div
-          key={item.id}
-          style={{ zIndex: '100', width: '100px', height: '100px', backgroundColor: 'red' }}
-        >
-          <MapMarker
-            key={item.id}
-            id={item.id}
-            lat={item.lat}
-            lng={item.lng}
-            map={map}
-            openModal={selectMarker}
-          />
-        </div>
+      {restaurantList?.map((item: Restaurant) => (
+        <MapMarker
+          key={item.storeId}
+          id={item.storeId}
+          lat={item.latitude}
+          lng={item.longitude}
+          map={map}
+          openModal={selectMarker}
+        />
       ))}
       <Modal>
-        <RestaurantDetail id={selectedMarker} />
+        <RestaurantDetail id={selectedMarker} selectedRestaurant={selectedRestaurant!} />
       </Modal>
     </>
   );

@@ -1,26 +1,35 @@
-import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import * as S from '@/components/Map/RestaurantDetail/RestaurantDetail.style';
 
-import { useRestaurantDetailQuery } from '@/hooks/queries/useRestaurantDetailQuery';
+import { PATH } from '@/constants/path';
 
-const RestaurantDetail = ({ id }: { id: string }) => {
-  const { restaurantDetailData } = useRestaurantDetailQuery(id);
-  console.log(restaurantDetailData);
+import { Restaurant } from '@/types/restaurant';
+
+interface RestaurantDetailProps {
+  id: string;
+  selectedRestaurant: Restaurant;
+}
+
+const RestaurantDetail = ({ id, selectedRestaurant }: RestaurantDetailProps) => {
+  const navigate = useNavigate();
+
+  const replaceColon = (text: string) => {
+    return text.replaceAll('"', '');
+  };
 
   return (
     <S.RestaurantDetailWrapper>
       <S.RestaurantDetailHeader>
-        <span>{restaurantDetailData?.storeName}</span>
-        <span>{restaurantDetailData?.star_count}</span>
+        <span>🍴 {selectedRestaurant?.storeName}</span>
+        {selectedRestaurant?.star_count ? <span>★{selectedRestaurant?.star_count}</span> : <></>}
       </S.RestaurantDetailHeader>
       <S.RestaurantDetailBody>
-        <span>주소</span>
-        <span>{restaurantDetailData?.address}</span>
+        <span>{replaceColon(selectedRestaurant?.address)}</span>
       </S.RestaurantDetailBody>
-      <S.RestaurantDetailBody>
-        {restaurantDetailData?.hashTagList.map((item) => <span key={item}>{item}</span>)}
-      </S.RestaurantDetailBody>
+      <S.ReviewButton onClick={() => navigate(PATH.REVIEW(id))}>
+        ✏️ 맛집 후기 작성하기
+      </S.ReviewButton>
     </S.RestaurantDetailWrapper>
   );
 };

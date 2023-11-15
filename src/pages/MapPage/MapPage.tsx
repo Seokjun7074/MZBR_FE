@@ -36,11 +36,9 @@ const MapPage = () => {
       <GoogleMapWrapper>
         <SearchMap />
       </GoogleMapWrapper>
-      <S.MapPageNavigationBar>
+      <S.FloatingButton>
         <ShortFormButton style={{ cursor: 'pointer' }} onClick={() => navigate(PATH.SHORT_FORM)} />
-        <AddButton style={{ cursor: 'pointer' }} />
-        <MypageButton style={{ cursor: 'pointer' }} />
-      </S.MapPageNavigationBar>
+      </S.FloatingButton>
     </S.MapPageWrapper>
   );
 };
