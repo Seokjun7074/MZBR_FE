@@ -19,8 +19,6 @@ import { PATH } from '@/constants/path';
 import Search from '@/assets/map/search_button.svg';
 import ShortFormButton from '@/assets/navigationBar/shortform_button.svg';
 
-import { queryClient } from '@/index';
-import { hashtagState } from '@/store/hashtag';
 import { centerState, mapBoundaryState, myPositionState } from '@/store/map';
 import { Restaurant } from '@/types/restaurant';
 
@@ -50,55 +48,56 @@ const SearchMap = () => {
   const {
     restaurantListData,
     isSuccess: isSuccessPosition,
-    isLoading: isLoadingPosition,
+    restaurantListRefetch,
   } = useRestaurantListQuery(boundary, placeType);
 
   // 키워드 검색
   const {
     restaurantListByKeywordData,
     isSuccess: isSuccessKeyword,
-    isLoading: isLoadingKeyword,
+    restaurantListByKeywordRefetch,
   } = useRestaurantListByKeywordQuery(
     {
       ...boundary,
       keyword: value,
-      star: '',
     },
     placeType,
   );
 
-  const setCurrentCenter = () => {
-    if (map) {
-      const mapCenter = map.getCenter();
-      setCenter({
-        lat: mapCenter!.lat(),
-        lng: mapCenter!.lng(),
-      });
-    }
-  };
-
-  const handleSearchType = (placeType: 'POSITION' | 'KEYWORD' | 'HASHTAG') => {
-    if (placeType === 'KEYWORD' && value.length < 1) {
-      alert('1글자 이상 입력해주세요!');
-      return;
-    }
-    setCurrentCenter();
-    setPlaceType(placeType);
-  };
+  // const setCurrentCenter = () => {
+  //   if (map) {
+  //     const mapCenter = map.getCenter();
+  //     setCenter({
+  //       lat: mapCenter!.lat(),
+  //       lng: mapCenter!.lng(),
+  //     });
+  //   }
+  // };
 
   const onKeydown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key !== 'Enter') return;
-    handleSearchType('KEYWORD');
+    searchKeyword();
   };
 
   useEffect(() => {
-    if (placeType === 'POSITION' && isSuccessPosition) {
-      setRestaurantList(restaurantListData.stores);
+    if (isSuccessPosition) {
+      setRestaurantList(restaurantListData?.stores);
     }
-    if (placeType === 'KEYWORD' && isSuccessKeyword) {
-      setRestaurantList(restaurantListByKeywordData.stores);
+    if (isSuccessKeyword) {
+      setRestaurantList(restaurantListByKeywordData?.stores);
     }
-  }, [placeType, restaurantListData, restaurantListByKeywordData]);
+  }, [restaurantListData, restaurantListByKeywordData, isSuccessPosition, isSuccessKeyword]);
+
+  const searchPosition = () => {
+    restaurantListRefetch();
+  };
+  const searchKeyword = () => {
+    if (value.length < 1) {
+      alert('1글자 이상 입력해주세요!');
+      return;
+    }
+    restaurantListByKeywordRefetch();
+  };
 
   return (
     <S.SearchMapWrapper>
@@ -117,11 +116,10 @@ const SearchMap = () => {
           onChange={handleInput}
           onKeyDown={onKeydown}
         />
-        <Search style={{ cursor: 'pointer' }} onClick={() => handleSearchType('KEYWORD')} />
+        <Search style={{ cursor: 'pointer' }} onClick={searchKeyword} />
       </S.SearchInputContainer>
-      <S.SearchCurrentPosition onClick={() => handleSearchType('POSITION')}>
-        현재 위치에서 검색
-      </S.SearchCurrentPosition>
+      {/* <S.SearchCurrentPosition onClick={() => handleSearchType('POSITION')}> */}
+      <S.SearchCurrentPosition onClick={searchPosition}>현재 위치에서 검색</S.SearchCurrentPosition>
       <S.FloatingButton>
         <ShortFormButton style={{ cursor: 'pointer' }} onClick={() => navigate(PATH.SHORT_FORM)} />
       </S.FloatingButton>

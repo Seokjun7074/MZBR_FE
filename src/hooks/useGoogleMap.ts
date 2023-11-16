@@ -29,7 +29,6 @@ export const useGoogleMap = (zoom: number, center: Center) => {
 
   const getMapBoundary = () => {
     if (!map) return;
-    map.setCenter(center);
     const bounds = map.getBounds();
     if (bounds) {
       const ne = bounds.getNorthEast();
@@ -49,8 +48,8 @@ export const useGoogleMap = (zoom: number, center: Center) => {
   }, [center]);
 
   useEffect(() => {
-    map?.addListener('projection_changed', getMapBoundary);
-  }, [map, mapBoundary]);
+    map?.addListener('bounds_changed', getMapBoundary);
+  }, [map]);
 
   return { map, mapRef };
 };
