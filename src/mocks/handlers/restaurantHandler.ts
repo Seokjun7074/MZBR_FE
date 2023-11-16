@@ -9,15 +9,6 @@ const restaurantDummy1 = {
       longitude: 127.0317466, // 식당 경도
       address: '서울특별시 강남구 테헤란로 112', // 식당 주소
       star_count: 4.73, // 별점
-      operation_times: [
-        0, // 휴무
-        1241,
-        315,
-        121,
-        111,
-        111,
-        111,
-      ],
     },
     {
       storeId: '2',
@@ -26,15 +17,6 @@ const restaurantDummy1 = {
       longitude: 127.0217466, // 식당 경도
       address: '서울특별시 강남구 테헤란로 123', // 식당 주소
       star_count: 4.13, // 별점
-      operation_times: [
-        0, // 휴무
-        1241,
-        315,
-        121,
-        111,
-        111,
-        111,
-      ],
     },
   ],
 };
@@ -47,15 +29,6 @@ const restaurantDummy2 = {
       longitude: 127.0317466, // 식당 경도
       address: '서울특별시 강남구 테헤란로 112', // 식당 주소
       star_count: 4.73, // 별점
-      operation_times: [
-        0, // 휴무
-        1241,
-        315,
-        121,
-        111,
-        111,
-        111,
-      ],
     },
     {
       storeId: '4',
@@ -64,15 +37,6 @@ const restaurantDummy2 = {
       longitude: 127.0217466, // 식당 경도
       address: '서울특별시 강남구 테헤란로 123', // 식당 주소
       star_count: 4.13, // 별점
-      operation_times: [
-        0, // 휴무
-        1241,
-        315,
-        121,
-        111,
-        111,
-        111,
-      ],
     },
   ],
 };
@@ -85,15 +49,6 @@ const restaurantDummy3 = {
       longitude: 127.0317466, // 식당 경도
       address: '서울특별시 강남구 테헤란로 112', // 식당 주소
       star_count: 4.73, // 별점
-      operation_times: [
-        0, // 휴무
-        1241,
-        315,
-        121,
-        111,
-        111,
-        111,
-      ],
     },
     {
       storeId: '6',
@@ -102,27 +57,18 @@ const restaurantDummy3 = {
       longitude: 127.0237466, // 식당 경도
       address: '서울특별시 강남구 테헤란로 123', // 식당 주소
       star_count: 4.13, // 별점
-      operation_times: [
-        0, // 휴무
-        1241,
-        315,
-        121,
-        111,
-        111,
-        111,
-      ],
     },
   ],
 };
 
 export const restaurantHandler = [
-  http.get('/restaurants', () => {
+  http.get('/api/b/restaurants', () => {
     return HttpResponse.json(restaurantDummy1);
   }),
-  http.get('/restaurants/search', () => {
+  http.get('/api/b/restaurants/search', () => {
     return HttpResponse.json(restaurantDummy2);
   }),
-  http.get('/restaurants/search/hashtag', () => {
+  http.get('/api/b/restaurants/search/hashtag', () => {
     return HttpResponse.json(restaurantDummy3);
   }),
 ];

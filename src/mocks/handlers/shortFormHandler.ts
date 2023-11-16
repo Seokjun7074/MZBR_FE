@@ -65,13 +65,13 @@ const videoListDummy3 = {
 };
 
 export const shortFormHandler = [
-  http.get('/videos/1', () => {
+  http.get('/api/b/videos/1', () => {
     return HttpResponse.json(videoListDummy1);
   }),
-  http.get('/videos/2', () => {
+  http.get('/api/b/videos/2', () => {
     return HttpResponse.json(videoListDummy2);
   }),
-  http.get('/videos/3', () => {
+  http.get('/api/b/videos/3', () => {
     return HttpResponse.json(videoListDummy3);
   }),
 ];
