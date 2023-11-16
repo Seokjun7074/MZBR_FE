@@ -37,6 +37,7 @@ module.exports = {
     filename: '[name].[chunkhash].bundle.js',
     publicPath: '/',
     clean: true,
+    crossOriginLoading: 'anonymous',
   },
 
   resolve: {

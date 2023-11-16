@@ -1,6 +1,6 @@
 import { v4 } from 'uuid';
 
-import { Suspense, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { useRecoilState, useRecoilValue } from 'recoil';

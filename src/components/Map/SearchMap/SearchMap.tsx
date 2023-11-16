@@ -20,7 +20,7 @@ import { centerState, mapBoundaryState, myPositionState } from '@/store/map';
 import { Restaurant } from '@/types/restaurant';
 
 const SearchMap = () => {
-  const [isKeword, setIsKeyword] = useState(true);
+  // const [isKeword, setIsKeyword] = useState(true);
   const [placeType, setPlaceType] = useState<'POSITION' | 'KEYWORD' | 'HASHTAG' | ''>('');
   const [restaurantList, setRestaurantList] = useState<Restaurant[] | []>([]);
   const { map, mapRef } = useGoogleMap(15);
@@ -28,7 +28,7 @@ const SearchMap = () => {
 
   const setCenter = useSetRecoilState(centerState);
   const mapBoundary = useRecoilValue(mapBoundaryState);
-  const hashtagList = useRecoilValue(hashtagState);
+  // const hashtagList = useRecoilValue(hashtagState);
   const myPosition = useRecoilValue(myPositionState);
 
   const boundary = {
@@ -39,31 +39,25 @@ const SearchMap = () => {
   };
 
   // 식당 리스트 fetch
-  const { restaurantListData, isSuccess: isSuccessPosition } = useRestaurantListQuery(
-    boundary,
-    placeType,
-  );
+  const {
+    restaurantListData,
+    isSuccess: isSuccessPosition,
+    isLoading: isLoadingPosition,
+  } = useRestaurantListQuery(boundary, placeType);
 
   // 키워드 검색
-  const { restaurantListByKeywordData, isSuccess: isSuccessKeyword } =
-    useRestaurantListByKeywordQuery(
-      {
-        ...boundary,
-        keyword: value,
-        star: '',
-      },
-      placeType,
-    );
-  // 해시태그 검색
-  const { restaurantListByHashTagData, isSuccess: isSuccessHashTag } =
-    useRestaurantListByHashTagQuery(
-      {
-        ...boundary,
-        hashtag: hashtagList,
-        star: '',
-      },
-      placeType,
-    );
+  const {
+    restaurantListByKeywordData,
+    isSuccess: isSuccessKeyword,
+    isLoading: isLoadingKeyword,
+  } = useRestaurantListByKeywordQuery(
+    {
+      ...boundary,
+      keyword: value,
+      star: '',
+    },
+    placeType,
+  );
 
   const setCurrentCenter = () => {
     if (map) {
@@ -84,13 +78,19 @@ const SearchMap = () => {
     setPlaceType(placeType);
   };
 
+  const onKeydown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key !== 'Enter') return;
+    handleSearchType('KEYWORD');
+  };
+
   useEffect(() => {
-    if (placeType === 'POSITION' && isSuccessPosition) setRestaurantList(restaurantListData.stores);
-    if (placeType === 'KEYWORD' && isSuccessKeyword)
+    if (placeType === 'POSITION' && isSuccessPosition) {
+      setRestaurantList(restaurantListData.stores);
+    }
+    if (placeType === 'KEYWORD' && isSuccessKeyword) {
       setRestaurantList(restaurantListByKeywordData.stores);
-    if (placeType === 'HASHTAG' && isSuccessHashTag)
-      setRestaurantList(restaurantListByHashTagData.stores);
-  }, [placeType, restaurantListData, restaurantListByKeywordData, restaurantListByHashTagData]);
+    }
+  }, [placeType, restaurantListData, restaurantListByKeywordData]);
 
   return (
     <S.SearchMapWrapper>
@@ -102,22 +102,15 @@ const SearchMap = () => {
           </>
         )}
       </div>
-      {isKeword ? (
-        <S.SearchInputContainer>
-          <S.SearchChangeButton onClick={() => setIsKeyword(false)}>해시태그</S.SearchChangeButton>
-          <S.SearchInput placeholder="검색어를 입력하세요" value={value} onChange={handleInput} />
-          <Search style={{ cursor: 'pointer' }} onClick={() => handleSearchType('KEYWORD')} />
-        </S.SearchInputContainer>
-      ) : (
-        <S.HashTagInputContainer>
-          <S.SearchChangeButton onClick={() => setIsKeyword(true)}>키워드</S.SearchChangeButton>
-          <HashTagInput />
-          <Search
-            style={{ cursor: 'pointer', position: 'relative' }}
-            onClick={() => handleSearchType('HASHTAG')}
-          />
-        </S.HashTagInputContainer>
-      )}
+      <S.SearchInputContainer>
+        <S.SearchInput
+          placeholder="검색어를 입력하세요"
+          value={value}
+          onChange={handleInput}
+          onKeyDown={onKeydown}
+        />
+        <Search style={{ cursor: 'pointer' }} onClick={() => handleSearchType('KEYWORD')} />
+      </S.SearchInputContainer>
       <S.SearchCurrentPosition onClick={() => handleSearchType('POSITION')}>
         현재 위치에서 검색
       </S.SearchCurrentPosition>

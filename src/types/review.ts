@@ -5,7 +5,6 @@ export interface ReviewRequest {
   tags: string[]; //영상의 해시태그
   star: number; // 영상의 별점
   thumbnailName: string;
-  audio: Audio;
   clips: Clip[];
   subtitles: Subtitle[];
 }

@@ -50,9 +50,9 @@ export const ReviewButtonContainer = styled(Flex)`
 
 export const ReviewButton = styled(Button)`
   width: 100%;
-  border: 1px solid ${({ theme }) => theme.color.primary};
   font-weight: bold;
   padding: 0.6rem;
   font-size: ${({ theme }) => theme.fontSize.s};
   border-radius: 4px;
+  white-space: nowrap;
 `;

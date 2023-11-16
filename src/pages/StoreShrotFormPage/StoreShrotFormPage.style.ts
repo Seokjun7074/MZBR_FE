@@ -3,10 +3,11 @@ import styled from 'styled-components';
 import { Button } from '@/components/common/Button/Button';
 import { Flex } from '@/components/common/Flex/Flex';
 
-export const StoreShrotFormPageWrapper = styled(Flex)`
+export const StoreShrotFormPageWrapper = styled.div`
   width: 100%;
   height: 100%;
   background-color: #0f0f0f;
+  flex-direction: column;
   overflow: auto;
   scroll-snap-type: y mandatory;
   &::-webkit-scrollbar {
