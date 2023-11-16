@@ -19,7 +19,7 @@ const [comments, setComments] = useState([]);
 useEffect(() => {
   const fetchComments = async () => {
     try {
-      const response = await axiosInstance.get(`/videos/${videoUUID}/comments`);
+      const response = await axiosInstance.get(`/api/b/videos/${videoUUID}/comments`);
 
       if (response.data && response.data.commentsList) {
         setComments(response.data.commentsList);
