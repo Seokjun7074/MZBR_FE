@@ -8,7 +8,7 @@ export const useRestaurantListByKeywordQuery = (
   paramData: RestaurantListByKeywordRequest,
   placeType: string,
 ) => {
-  const { data, isSuccess } = useQuery({
+  const { data, isSuccess, isLoading } = useQuery({
     queryKey: [
       'restaurantListByKeyword',
       paramData.bottomLat,
@@ -22,5 +22,6 @@ export const useRestaurantListByKeywordQuery = (
   return {
     restaurantListByKeywordData: data!,
     isSuccess,
+    isLoading,
   };
 };

@@ -13,17 +13,17 @@ export const SearchMapWrapper = styled(Flex)`
 export const SearchInputContainer = styled(Flex)`
   position: fixed;
   top: 9rem;
-  width: 35rem;
+  width: 30rem;
   justify-content: space-around;
   background-color: white;
-  border-radius: 16px;
+  border-radius: 8px;
   box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.1);
   padding: 1rem;
   gap: 1rem;
 `;
 
 export const HashTagInputContainer = styled(SearchInputContainer)`
-  width: 35rem;
+  width: 30rem;
 `;
 
 export const SearchChangeButton = styled.span`
@@ -36,6 +36,7 @@ export const SearchChangeButton = styled.span`
 export const SearchInput = styled.input`
   padding: 1rem;
   background-color: ${({ theme }) => theme.color.background};
+  border-radius: 8px;
 `;
 
 export const SearchCurrentPosition = styled(Button)`

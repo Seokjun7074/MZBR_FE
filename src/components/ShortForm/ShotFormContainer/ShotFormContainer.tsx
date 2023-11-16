@@ -37,9 +37,16 @@ const ShotFormContainer = ({ videoInfo }: ShortFormContainer) => {
         muted={true}
         controls={false}
         pip={true}
+        onEnded={() => setPlaying(true)}
       />
       <S.ShotFormInfoContainer>
-        <h2>{videoInfo.storeName}</h2>
+        <S.ShotFormInfoHeader>
+          <h2>🍴 {videoInfo.storeName}</h2>
+          <span>★ {videoInfo.star}</span>
+        </S.ShotFormInfoHeader>
+        <S.ShotFormInfoHeader>
+          <p>✏️ {videoInfo.description}</p>
+        </S.ShotFormInfoHeader>
       </S.ShotFormInfoContainer>
     </S.ShotFormContainerWrapper>
   );

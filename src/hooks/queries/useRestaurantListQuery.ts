@@ -5,7 +5,7 @@ import { getRestaurantList } from '@/apis/restaurant/getRestaurantList';
 import { RestaurantListRequest } from '@/types/restaurant';
 
 export const useRestaurantListQuery = (paramData: RestaurantListRequest, placeType: string) => {
-  const { data, isSuccess } = useQuery({
+  const { data, isSuccess, isLoading } = useQuery({
     queryKey: [
       'restaurantList',
       paramData.bottomLat,
@@ -16,5 +16,5 @@ export const useRestaurantListQuery = (paramData: RestaurantListRequest, placeTy
     queryFn: () => getRestaurantList(paramData),
     enabled: placeType === 'POSITION',
   });
-  return { restaurantListData: data!, isSuccess };
+  return { restaurantListData: data!, isSuccess, isLoading };
 };
