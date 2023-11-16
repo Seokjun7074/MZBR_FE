@@ -2,6 +2,7 @@ import axios, { InternalAxiosRequestConfig } from 'axios';
 
 export const axiosInstance = axios.create({
   baseURL: process.env.SERVER_URL,
+  timeout: 60000,
   headers: {
     'Content-Type': 'application/json',
   },

@@ -34,9 +34,9 @@ const MapPage = () => {
       <GoogleMapWrapper>
         <SearchMap />
       </GoogleMapWrapper>
-      <S.FloatingButton>
+      {/* <S.FloatingButton>
         <ShortFormButton style={{ cursor: 'pointer' }} onClick={() => navigate(PATH.SHORT_FORM)} />
-      </S.FloatingButton>
+      </S.FloatingButton> */}
     </S.MapPageWrapper>
   );
 };

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 
 import MapMarkerList from '@/components/Map/MapMarkerList/MapMarkerList';
 import * as S from '@/components/Map/SearchMap/SearchMap.style';
@@ -13,23 +14,30 @@ import { useRestaurantListQuery } from '@/hooks/queries/useRestaurantListQuery';
 import { useGoogleMap } from '@/hooks/useGoogleMap';
 import { useInput } from '@/hooks/useInput';
 
-import Search from '@/assets/map/search_button.svg';
+import { PATH } from '@/constants/path';
 
+import Search from '@/assets/map/search_button.svg';
+import ShortFormButton from '@/assets/navigationBar/shortform_button.svg';
+
+import { queryClient } from '@/index';
 import { hashtagState } from '@/store/hashtag';
 import { centerState, mapBoundaryState, myPositionState } from '@/store/map';
 import { Restaurant } from '@/types/restaurant';
 
 const SearchMap = () => {
+  const navigate = useNavigate();
+
   // const [isKeword, setIsKeyword] = useState(true);
   const [placeType, setPlaceType] = useState<'POSITION' | 'KEYWORD' | 'HASHTAG' | ''>('');
   const [restaurantList, setRestaurantList] = useState<Restaurant[] | []>([]);
-  const { map, mapRef } = useGoogleMap(15);
   const { value, handleInput } = useInput('');
 
-  const setCenter = useSetRecoilState(centerState);
+  const [center, setCenter] = useRecoilState(centerState);
   const mapBoundary = useRecoilValue(mapBoundaryState);
   // const hashtagList = useRecoilValue(hashtagState);
   const myPosition = useRecoilValue(myPositionState);
+
+  const { map, mapRef } = useGoogleMap(15, center);
 
   const boundary = {
     topLat: mapBoundary.topLat,
@@ -114,6 +122,9 @@ const SearchMap = () => {
       <S.SearchCurrentPosition onClick={() => handleSearchType('POSITION')}>
         현재 위치에서 검색
       </S.SearchCurrentPosition>
+      <S.FloatingButton>
+        <ShortFormButton style={{ cursor: 'pointer' }} onClick={() => navigate(PATH.SHORT_FORM)} />
+      </S.FloatingButton>
     </S.SearchMapWrapper>
   );
 };

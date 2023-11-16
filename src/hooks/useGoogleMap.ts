@@ -4,10 +4,13 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 
 import { centerState, mapBoundaryState } from '@/store/map';
 
-export const useGoogleMap = (zoom: number) => {
+interface Center {
+  lat: number;
+  lng: number;
+}
+export const useGoogleMap = (zoom: number, center: Center) => {
   const [map, setMap] = useState<google.maps.Map | null>(null);
   const mapRef = useRef<HTMLDivElement | null>(null);
-  const center = useRecoilValue(centerState);
   const [mapBoundary, setMapBoundary] = useRecoilState(mapBoundaryState);
 
   useEffect(() => {
@@ -24,9 +27,8 @@ export const useGoogleMap = (zoom: number) => {
     }
   }, []);
 
-  useEffect(() => {
+  const getMapBoundary = () => {
     if (!map) return;
-
     map.setCenter(center);
     const bounds = map.getBounds();
     if (bounds) {
@@ -40,7 +42,15 @@ export const useGoogleMap = (zoom: number) => {
         bottomLng: sw.lng(),
       });
     }
+  };
+
+  useEffect(() => {
+    getMapBoundary();
   }, [center]);
+
+  useEffect(() => {
+    map?.addListener('projection_changed', getMapBoundary);
+  }, [map, mapBoundary]);
 
   return { map, mapRef };
 };

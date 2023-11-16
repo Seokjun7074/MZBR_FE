@@ -51,3 +51,14 @@ export const SearchCurrentPosition = styled(Button)`
   background-color: ${({ theme }) => theme.color.primary};
   color: ${({ theme }) => theme.color.white};
 `;
+
+export const FloatingButton = styled(Flex)`
+  position: absolute;
+  bottom: 5rem;
+  right: 2.5rem;
+  flex-direction: column;
+  border-radius: 50%;
+  background-color: white;
+  padding: 1rem;
+  box-shadow: 0px -2px 5px rgba(0, 0, 0, 0.1);
+`;

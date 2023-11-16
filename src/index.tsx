@@ -30,6 +30,7 @@ export const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       retry: 0,
+      refetchOnWindowFocus: false,
       // suspense: true,
       // useErrorBoundary: true,
     },
@@ -37,7 +38,7 @@ export const queryClient = new QueryClient({
 });
 
 root.render(
-  // <StrictMode>
+  //<StrictMode>
   <QueryClientProvider client={queryClient}>
     <ThemeProvider theme={theme}>
       <RecoilRoot>
@@ -46,5 +47,5 @@ root.render(
       </RecoilRoot>
     </ThemeProvider>
   </QueryClientProvider>,
-  // </StrictMode>,
+  //</StrictMode>
 );
