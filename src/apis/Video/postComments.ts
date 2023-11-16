@@ -46,7 +46,7 @@ const navigate = useNavigate();
 useEffect(() => {
   const addComments = async () => {
     try {
-      const response = await axiosInstance.post(`/videos/${video.videoUUID}/comments`);
+      const response = await axiosInstance.post(`/api/b/videos/${video.videoUUID}/comments`);
 
       if (response.data.success && response.data.data) {
         return response.data;

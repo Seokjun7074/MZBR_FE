@@ -27,12 +27,11 @@ const [user, setUser] = useState<User>({
   refreshToken: 'some_initial_refresh_token',
 });
 
-const BASE_URL = 'http://localhost:3000';
 const navigate = useNavigate();
 useEffect(() => {
   const likeVideo = async () => {
     try {
-      const response = await axiosInstance.post(`/videos/${video.UUID}/like`);
+      const response = await axiosInstance.post(`/api/b/videos/${video.UUID}/like`);
       if (response.data.success && response.data.data) {
         return response.data;
       } else if (response.data.error && response.data.error === 'JWT_TOKEN_EXPIRED_EXCEPTION') {

@@ -1,4 +1,3 @@
-// hooks/useUserProfile.ts
 import { useEffect, useState } from 'react';
 
 import { axiosInstance } from '..';
@@ -10,7 +9,7 @@ export const useUserProfile = (userId: number) => {
   useEffect(() => {
     const fetchUserProfile = async () => {
       try {
-        const response = await axiosInstance.get<ApiResponse<UserProfile>>(`/user/${userId}`);
+        const response = await axiosInstance.get<ApiResponse<UserProfile>>(`/api/b/user/${userId}`);
         if (response.data.success) {
           setUserProfile(response.data.data);
         }

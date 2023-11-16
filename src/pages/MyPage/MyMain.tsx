@@ -47,9 +47,7 @@ const MyPage = () => {
       <NavigationItem onClick={() => navigate('/mypage/likevideo')}>
         <span>좋아요한 영상</span>
       </NavigationItem>
-      <NavigationItem onClick={() => navigate('/mypage/watchinglist')}>
-        <span>시청 기록</span>
-      </NavigationItem>
+
       <VideoHeader>소셜</VideoHeader>
       <NavigationItem onClick={() => navigate('/mypage/subscribedusers')}>
         <span>구독한 사용자</span>

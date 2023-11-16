@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { useSubscribedUsers } from '@/apis/mypage/getMySubscribedUsers';
 
+import { axiosInstance } from '../../../apis/index';
 import { Button, Container, Header, UserItem } from './SubscribedUsers.style';
 
 export interface User {
@@ -24,13 +25,9 @@ export interface ApiResponse<T> {
 }
 
 const SubscribedUsers = () => {
-  const [user, setUser] = useState<User>({
-    userId: 1,
-    accessToken: 'some_initial_access_token',
-    refreshToken: 'some_initial_refresh_token',
-  });
-  const navigate = useNavigate();
-  const subscribes = useSubscribedUsers(user, setUser, navigate);
+  const storedUserId = localStorage.getItem('userId');
+  const userId = storedUserId ? parseInt(storedUserId, 10) : 1;
+  const subscribes = useSubscribedUsers(userId);
 
   return (
     <Container>

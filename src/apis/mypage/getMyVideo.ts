@@ -8,7 +8,9 @@ export const useMyVideos = (userId: number) => {
   useEffect(() => {
     const fetchVideos = async () => {
       try {
-        const response = await axiosInstance.get<ApiResponse<Video[]>>(`/videos/users/${userId}`);
+        const response = await axiosInstance.get<ApiResponse<Video[]>>(
+          `/api/b/videos/users/${userId}`,
+        );
 
         if (response.data.success) {
           setVideos(response.data.data);

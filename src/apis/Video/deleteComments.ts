@@ -43,7 +43,7 @@ useEffect(() => {
   const addComments = async () => {
     try {
       const response = await axiosInstance.delete(
-        `/videos/${video.videoUUID}/comments/${comments.commentId}`,
+        `/api/b/videos/${video.videoUUID}/comments/${comments.commentId}`,
       );
       if (response.data.success && response.data.data) {
         return response.data;
