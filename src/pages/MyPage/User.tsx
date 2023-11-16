@@ -1,7 +1,4 @@
-import { parse } from 'dotenv';
-
-import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 import { axiosInstance } from '../../apis/index';
 import { useMyVideos } from '../../apis/mypage/getMyVideo';
@@ -52,7 +49,7 @@ const UserPage = () => {
 
   const handleSubscribe = async () => {
     try {
-      const response = await axiosInstance.post(`/users/subscribe/${parsedUserId}`);
+      const response = await axiosInstance.post(`/api/b/users/subscribe/${parsedUserId}`);
 
       if (response.data.success) {
         console.log('구독 성공');

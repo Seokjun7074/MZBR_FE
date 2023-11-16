@@ -5,29 +5,25 @@ import { useProfileImageUpdater } from '@/apis/mypage/putUserProfileImage';
 import Profile from '../../assets/Profile.png';
 import * as S from './EditProfile.style';
 
-export type Member = {
+export type user = {
   id: number;
   nickname: string;
-  profile_image: string;
+  profileImage: string;
 };
 
 export type User = {
   userId: number;
   profileImage: string;
+  nickname: string;
   accessToken: string;
   refreshToken: string;
 };
 
 const EditProfile = () => {
-  const [member, setMember] = useState<Member>({
-    id: 1,
-    nickname: 'JohnDoe',
-    profile_image: Profile,
-  });
-
   const [user, setUser] = useState<User>({
     userId: 1,
     profileImage: Profile,
+    nickname: '',
     accessToken: 'some_initial_access_token',
     refreshToken: 'some_initial_refresh_token',
   });
@@ -44,9 +40,9 @@ const EditProfile = () => {
   return (
     <S.Container>
       <S.TopSection>
-        <S.ProfileImage src={member.profile_image} alt="Profile" />
+        <S.ProfileImage src={user.profileImage} alt="Profile" />
         <S.RightSection>
-          <S.Nickname>{member.nickname}</S.Nickname>
+          <S.Nickname>{user.nickname}</S.Nickname>
           <input type="file" onChange={handleFileChange} />
           <S.ChangeImageButton>프로필 이미지 변경</S.ChangeImageButton>
         </S.RightSection>

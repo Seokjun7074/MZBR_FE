@@ -1,4 +1,3 @@
-// hooks/useUserProfile.ts
 import { useEffect } from 'react';
 
 import { axiosInstance } from '..';
@@ -9,7 +8,7 @@ export const useUserProfile = (user: User, setUser: React.Dispatch<React.SetStat
   useEffect(() => {
     const fetchUserProfile = async () => {
       try {
-        const response = await axiosInstance.get<ApiResponse<User>>(`/user`);
+        const response = await axiosInstance.get<ApiResponse<User>>(`/api/b/user`);
 
         if (response.data.success) {
           setUser({ ...user, ...response.data.data });
@@ -17,7 +16,6 @@ export const useUserProfile = (user: User, setUser: React.Dispatch<React.SetStat
           const newAccessToken = await getNewAccessToken(user.refreshToken);
           if (newAccessToken) {
             setUser((prev) => ({ ...prev, accessToken: newAccessToken }));
-            // Retry the request with the new access token
           } else {
             console.error('Failed to refresh token');
           }

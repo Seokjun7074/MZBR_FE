@@ -24,7 +24,7 @@ const navigate = useNavigate();
 useEffect(() => {
   const changeAndHandleNickname = async () => {
     try {
-      const response = await axiosInstance.put('/users/nickname', { nickname: newNickname });
+      const response = await axiosInstance.put('/api/b/users/nickname', { nickname: newNickname });
       if (response.data.success && response.data.data) {
         setUser({
           ...user,

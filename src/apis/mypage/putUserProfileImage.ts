@@ -21,7 +21,7 @@ export const useProfileImageUpdater = (
       const BASE_URL = 'https://api.mzbr.co.kr';
 
       try {
-        const response = await axios.put(`${BASE_URL}/user/profile-image`, formData, {
+        const response = await axios.put(`${BASE_URL}/api/b/user/profile-image`, formData, {
           headers: {
             'access-token': user.accessToken,
             'Content-Type': 'multipart/form-data',

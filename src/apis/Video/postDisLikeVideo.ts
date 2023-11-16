@@ -32,7 +32,7 @@ const navigate = useNavigate();
 useEffect(() => {
   const dislikeVideo = async () => {
     try {
-      const response = await axiosInstance.post(`/videos/${video.UUID}/dislike`);
+      const response = await axiosInstance.post(`/api/b/videos/${video.UUID}/dislike`);
       if (response.data.success && response.data.data) {
         return response.data;
       } else if (response.data.error && response.data.error === 'JWT_TOKEN_EXPIRED_EXCEPTION') {
