@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react';
 import ReactPlayer from 'react-player';
 
-import { ShotFormContainerWrapper } from '@/components/ShortForm/ShotFormContainer/ShotFormContainer.style';
+import * as S from '@/components/ShortForm/ShotFormContainer/ShotFormContainer.style';
 
 import { useIntersectionObserver } from '@/hooks/useIntersectionObserver';
 
@@ -13,6 +13,7 @@ interface ShortFormContainer {
 
 const ShotFormContainer = ({ videoInfo }: ShortFormContainer) => {
   const [playing, setPlaying] = useState(false);
+  const S3_URL = 'https://mzbr-temp-video-bucket.s3.ap-northeast-2.amazonaws.com/';
   const videoRef = useRef<ReactPlayer | null>(null);
   const observerRef = useIntersectionObserver(
     () => setPlaying(true),
@@ -21,14 +22,15 @@ const ShotFormContainer = ({ videoInfo }: ShortFormContainer) => {
   const handlePlay = () => {
     setPlaying((prev) => !prev);
   };
+  console.log(`${S3_URL}${videoInfo.masterUrl}`);
 
   return (
-    <ShotFormContainerWrapper ref={observerRef}>
+    <S.ShotFormContainerWrapper ref={observerRef}>
       <ReactPlayer
         ref={videoRef}
         onClick={handlePlay}
         className="react-player"
-        url={videoInfo.masterUrl}
+        url={`${S3_URL}${videoInfo.masterUrl}`}
         width="100%"
         height="100%"
         playing={playing}
@@ -36,7 +38,10 @@ const ShotFormContainer = ({ videoInfo }: ShortFormContainer) => {
         controls={false}
         pip={true}
       />
-    </ShotFormContainerWrapper>
+      <S.ShotFormInfoContainer>
+        <h2>{videoInfo.storeName}</h2>
+      </S.ShotFormInfoContainer>
+    </S.ShotFormContainerWrapper>
   );
 };
 
