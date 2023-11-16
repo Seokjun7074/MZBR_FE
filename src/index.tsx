@@ -24,7 +24,7 @@ const startMockWorker = async () => {
     });
   }
 };
-startMockWorker();
+// startMockWorker();
 
 export const queryClient = new QueryClient({
   defaultOptions: {

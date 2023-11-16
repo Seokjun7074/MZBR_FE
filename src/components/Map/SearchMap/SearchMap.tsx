@@ -22,7 +22,11 @@ import ShortFormButton from '@/assets/navigationBar/shortform_button.svg';
 import { centerState, mapBoundaryState, myPositionState } from '@/store/map';
 import { Restaurant } from '@/types/restaurant';
 
-const SearchMap = () => {
+interface SearchMapProps {
+  center: google.maps.LatLngLiteral;
+}
+
+const SearchMap = ({ center }: SearchMapProps) => {
   const navigate = useNavigate();
 
   // const [isKeword, setIsKeyword] = useState(true);
@@ -30,7 +34,6 @@ const SearchMap = () => {
   const [restaurantList, setRestaurantList] = useState<Restaurant[] | []>([]);
   const { value, handleInput } = useInput('');
 
-  const [center, setCenter] = useRecoilState(centerState);
   const mapBoundary = useRecoilValue(mapBoundaryState);
   // const hashtagList = useRecoilValue(hashtagState);
   const myPosition = useRecoilValue(myPositionState);
@@ -64,16 +67,6 @@ const SearchMap = () => {
     placeType,
   );
 
-  // const setCurrentCenter = () => {
-  //   if (map) {
-  //     const mapCenter = map.getCenter();
-  //     setCenter({
-  //       lat: mapCenter!.lat(),
-  //       lng: mapCenter!.lng(),
-  //     });
-  //   }
-  // };
-
   const onKeydown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key !== 'Enter') return;
     searchKeyword();
@@ -91,6 +84,7 @@ const SearchMap = () => {
   const searchPosition = () => {
     restaurantListRefetch();
   };
+
   const searchKeyword = () => {
     if (value.length < 1) {
       alert('1글자 이상 입력해주세요!');

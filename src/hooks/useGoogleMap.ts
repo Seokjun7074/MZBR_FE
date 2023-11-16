@@ -44,6 +44,7 @@ export const useGoogleMap = (zoom: number, center: Center) => {
   };
 
   useEffect(() => {
+    map?.setCenter(center);
     getMapBoundary();
   }, [center]);
 
