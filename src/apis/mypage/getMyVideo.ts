@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import { axiosInstance } from '..';
-import { ApiResponse, User, Video } from '../../pages/MyPage/Video/MyVideo';
+import { ApiResponse, Video } from '../../pages/MyPage/Video/MyVideo';
 
 export const useMyVideos = (userId: number) => {
   const [videos, setVideos] = useState<Video[]>([]);
