@@ -27,7 +27,7 @@ const MapMarkerList = ({ map, restaurantList }: MapMarkerListProps) => {
     );
     const boundCenter = bounds.getCenter();
     map.panTo(boundCenter);
-    map.fitBounds(bounds);
+    // map.fitBounds(bounds);
 
     return () => {
       closeModal();

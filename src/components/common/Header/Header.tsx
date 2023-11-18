@@ -14,7 +14,7 @@ const Header = () => {
   if (pathname === PATH.MAP) {
     return (
       <S.HeaderWrapper $isMap={true}>
-        <MypageButton />
+        <MypageButton onClick={() => navigate(PATH.MYPAGE)} />
       </S.HeaderWrapper>
     );
   }

@@ -1,11 +1,8 @@
 import { atom } from 'recoil';
 
-export const centerState = atom<google.maps.LatLngLiteral>({
+export const centerState = atom<google.maps.LatLngLiteral | null>({
   key: 'centerState',
-  default: {
-    lat: 37.4994561,
-    lng: 127.0359577,
-  },
+  default: null,
 });
 
 export const myPositionState = atom<google.maps.LatLngLiteral>({

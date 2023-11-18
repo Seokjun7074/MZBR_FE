@@ -53,10 +53,6 @@ const ReviewUpLoad = () => {
   return (
     <S.ReviewUpLoadContainer>
       <S.Heading>리뷰 영상을 업로드 해주세요!</S.Heading>
-      <S.UpLoadBox>
-        <S.Image src={Vector} alt="Vector Image" />
-        <S.ImageCaption>동영상 찍기</S.ImageCaption>
-      </S.UpLoadBox>
       <S.UpLoadBox onClick={handleClickInput}>
         <S.Image src={ArchiveBox} alt="Archive Box Image" />
         <S.ImageCaption>동영상 업로드하기</S.ImageCaption>

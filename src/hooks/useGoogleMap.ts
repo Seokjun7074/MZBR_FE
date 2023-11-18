@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState } from 'recoil';
 
-import { centerState, mapBoundaryState } from '@/store/map';
+import { mapBoundaryState } from '@/store/map';
 
 interface Center {
   lat: number;
@@ -22,14 +22,12 @@ export const useGoogleMap = (zoom: number, center: Center) => {
         disableDefaultUI: true,
         mapId: 'MAIN_PAGE_MAP',
       });
-
       setMap(mapInfo);
     }
   }, []);
 
   const getMapBoundary = () => {
     if (!map) return;
-    map.setCenter(center);
     const bounds = map.getBounds();
     if (bounds) {
       const ne = bounds.getNorthEast();
@@ -45,12 +43,13 @@ export const useGoogleMap = (zoom: number, center: Center) => {
   };
 
   useEffect(() => {
+    map?.setCenter(center);
     getMapBoundary();
   }, [center]);
 
   useEffect(() => {
-    map?.addListener('projection_changed', getMapBoundary);
-  }, [map, mapBoundary]);
+    map?.addListener('bounds_changed', getMapBoundary);
+  }, [map]);
 
   return { map, mapRef };
 };
