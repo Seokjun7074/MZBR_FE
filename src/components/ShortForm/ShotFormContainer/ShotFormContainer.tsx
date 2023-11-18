@@ -22,7 +22,6 @@ const ShotFormContainer = ({ videoInfo }: ShortFormContainer) => {
   const handlePlay = () => {
     setPlaying((prev) => !prev);
   };
-  console.log(`${S3_URL}${videoInfo.masterUrl}`);
 
   return (
     <S.ShotFormContainerWrapper ref={observerRef}>
@@ -37,7 +36,7 @@ const ShotFormContainer = ({ videoInfo }: ShortFormContainer) => {
         muted={false}
         controls={true}
         pip={true}
-        onEnded={() => setPlaying(true)}
+        loop={true}
       />
       <S.ShotFormInfoContainer>
         <S.ShotFormInfoHeader>

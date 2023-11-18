@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState } from 'recoil';
 
-import { centerState, mapBoundaryState } from '@/store/map';
+import { mapBoundaryState } from '@/store/map';
 
 interface Center {
   lat: number;
@@ -22,7 +22,6 @@ export const useGoogleMap = (zoom: number, center: Center) => {
         disableDefaultUI: true,
         mapId: 'MAIN_PAGE_MAP',
       });
-
       setMap(mapInfo);
     }
   }, []);
