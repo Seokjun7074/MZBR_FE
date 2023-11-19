@@ -5,6 +5,7 @@ export const PATH = {
   SHORT_FORM: '/shorts',
   MAP: '/map',
   MYPAGE: '/mypage',
+  USER_VIDEO: (userId: string) => `/user/video/${userId}`,
   SHORT_FORM_STORE: (storeId: string) => `/shorts/store/${storeId}`,
   REVIEW: (storeId: string) => `/review/${storeId}`,
   REVIEW_HASHTAG: (storeId: string) => `/review/${storeId}/hashtag`,

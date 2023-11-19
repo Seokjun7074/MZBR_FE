@@ -22,6 +22,7 @@ import VideoText from '@/pages/ReviewPage/VideoText/VideoText';
 import ShortFormPage from '@/pages/ShortFormPage/ShortFormPage';
 import SignupPage from '@/pages/SignupPage/SignupPage';
 import StoreShrotFormPage from '@/pages/StoreShrotFormPage/StoreShrotFormPage';
+import UserVideoPage from '@/pages/UserVideoPage/UserVideoPage';
 
 import { PATH } from '@/constants/path';
 
@@ -122,6 +123,10 @@ const AppRouter = () => {
         {
           path: '/user/:user_id',
           element: <UserPage />,
+        },
+        {
+          path: PATH.USER_VIDEO(':userId'),
+          element: <UserVideoPage />,
         },
       ],
     },
