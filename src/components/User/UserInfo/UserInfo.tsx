@@ -2,31 +2,31 @@ import styled from 'styled-components';
 
 import { Flex } from '@/components/common/Flex/Flex';
 
-import { useMyInfoQuery } from '@/hooks/queries/useMyInfoQuery';
+import { useUserInfoQuery } from '@/hooks/queries/useUserInfoQuery';
 
-const MyInfo = () => {
-  const { myInfoData } = useMyInfoQuery();
+const UserInfo = ({ userId }: { userId: string }) => {
+  const { userInfoData } = useUserInfoQuery(userId);
 
   return (
-    <MyInfoWrapper>
-      <UserNickNameSpan>{myInfoData?.nickname}</UserNickNameSpan>
+    <UserInfoWrapper>
+      <UserNickNameSpan>{userInfoData?.nickname}</UserNickNameSpan>
       <InfoContainer>
         <div>
           <span>게시글</span>
-          {myInfoData?.postCount}개
+          {userInfoData?.postCount}개
         </div>
         <div>
           <span>팔로우</span>
-          {myInfoData?.subscribeCount}명
+          {userInfoData?.subscribeCount}명
         </div>
       </InfoContainer>
-    </MyInfoWrapper>
+    </UserInfoWrapper>
   );
 };
 
-export default MyInfo;
+export default UserInfo;
 
-const MyInfoWrapper = styled(Flex)`
+const UserInfoWrapper = styled(Flex)`
   width: 100%;
   height: 10rem;
   border-bottom: 2px solid ${({ theme }) => theme.color.gray};

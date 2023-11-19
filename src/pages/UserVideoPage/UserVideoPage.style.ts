@@ -7,7 +7,7 @@ export const UserVideoPageWrapper = styled(Flex)`
   width: 100%;
   flex-direction: column;
   gap: 3rem;
-  padding: 2rem;
+  padding: 0 2rem;
   justify-content: start;
 `;
 
