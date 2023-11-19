@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import * as S from '@/pages/ShortFormPage/ShortFormPage.style';
 
 import ShotFormContainer from '@/components/ShortForm/ShotFormContainer/ShotFormContainer';
+import Spinner from '@/components/common/Spinner/Spinner';
 
 import { useVideoListQuery } from '@/hooks/queries/useVideoListQuery';
 import { useIntersectionObserver } from '@/hooks/useIntersectionObserver';
@@ -15,10 +16,14 @@ const ShortFormPage = () => {
   const navigate = useNavigate();
   const mapBoundary = JSON.parse(sessionStorage.getItem('mapBoundary')!);
 
-  const { videoListData } = useVideoListQuery(mapBoundary!);
+  const { videoListData, isLoading } = useVideoListQuery(mapBoundary!);
   // const observerRef = useIntersectionObserver(() => fetchNextPage());
 
-  if (videoListData?.videos.length < 1) {
+  if (isLoading) {
+    return <Spinner />;
+  }
+
+  if (!isLoading && videoListData?.videos.length < 1) {
     return (
       <S.EmptyReviewContainer>
         <h1>주변에 리뷰가 없어요 😅</h1>

@@ -3,11 +3,11 @@ import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
 import { VideoListRequest, getVideoList } from '@/apis/shortForm/getVideoList';
 
 export const useVideoListQuery = (request: VideoListRequest) => {
-  const { data } = useQuery({
-    queryKey: ['videoList'],
+  const { data, isLoading } = useQuery({
+    queryKey: ['videoList', request.bottomLat, request.bottomLng, request.topLat, request.topLng],
     queryFn: () => getVideoList(request),
   });
-  return { videoListData: data };
+  return { videoListData: data, isLoading };
 };
 // 무한스크롤 버전
 // export const useVideoListQuery = (request: VideoListRequest) => {
