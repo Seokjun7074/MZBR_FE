@@ -88,6 +88,11 @@ const SearchMap = ({ center }: SearchMapProps) => {
     restaurantListByKeywordRefetch();
   };
 
+  const handleClickShortForm = () => {
+    sessionStorage.setItem('mapBoundary', JSON.stringify(mapBoundary));
+    navigate(PATH.SHORT_FORM);
+  };
+
   return (
     <S.SearchMapWrapper>
       <div id="map" ref={mapRef} style={{ height: '100%', width: '100%' }}>
@@ -109,7 +114,7 @@ const SearchMap = ({ center }: SearchMapProps) => {
       </S.SearchInputContainer>
       <S.SearchCurrentPosition onClick={searchPosition}>현재 위치에서 검색</S.SearchCurrentPosition>
       <S.FloatingButton>
-        <ShortFormButton style={{ cursor: 'pointer' }} onClick={() => navigate(PATH.SHORT_FORM)} />
+        <ShortFormButton style={{ cursor: 'pointer' }} onClick={handleClickShortForm} />
       </S.FloatingButton>
     </S.SearchMapWrapper>
   );

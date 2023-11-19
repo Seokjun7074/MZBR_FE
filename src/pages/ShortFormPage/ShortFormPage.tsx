@@ -1,7 +1,5 @@
 import { useNavigate } from 'react-router-dom';
 
-import { useRecoilValue } from 'recoil';
-
 import * as S from '@/pages/ShortFormPage/ShortFormPage.style';
 
 import ShotFormContainer from '@/components/ShortForm/ShotFormContainer/ShotFormContainer';
@@ -11,12 +9,11 @@ import { useIntersectionObserver } from '@/hooks/useIntersectionObserver';
 
 import { PATH } from '@/constants/path';
 
-import { mapBoundaryState } from '@/store/map';
 import { VideoInfo } from '@/types/shortForm';
 
 const ShortFormPage = () => {
   const navigate = useNavigate();
-  const mapBoundary = useRecoilValue(mapBoundaryState);
+  const mapBoundary = JSON.parse(sessionStorage.getItem('mapBoundary')!);
 
   const { videoListData } = useVideoListQuery(mapBoundary!);
   // const observerRef = useIntersectionObserver(() => fetchNextPage());

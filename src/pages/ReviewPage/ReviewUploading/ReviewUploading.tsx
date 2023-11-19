@@ -56,9 +56,9 @@ const ReviewUploading = () => {
     // 썸네일 S3업로드
     await uploadThumbnail(presignUrl.thumbnailUrl, result.blob);
     // 오디오 있으면 S3업로드
-
+    const thumbnailAdded = { ...reviewRequest, thumbnailName: result.thumbnailName };
     // 최종 업로드 완료 요청
-    const completeStatus = await completeVideoEdit(reviewRequest);
+    const completeStatus = await completeVideoEdit(thumbnailAdded);
     if (completeStatus === 200) {
       resetEditingUUID();
       alert('영상 업로드 완료!');
