@@ -9,11 +9,8 @@ export const usePostCheckNicknameMutation = (
   const postCheckNicknameMutation = useMutation({
     mutationFn: postCheckNickname,
     onSuccess: ({ duplicated }) => {
-      if (duplicated) {
-        setIdDuplicated(true);
-        return;
-      }
-      setIsConfirmed(true);
+      setIdDuplicated(duplicated);
+      if (!duplicated) setIsConfirmed(true);
     },
   });
 

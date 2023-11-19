@@ -14,7 +14,6 @@ const SignupPage = () => {
   const postSignupMutation = usePostSignupMutation();
 
   const checkNicknameDuplication = () => {
-    setIdDuplicated((prev) => !prev);
     if (nickname.length < 3) {
       alert('닉네임은 3자 이상입니다.');
       return;
