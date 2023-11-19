@@ -19,7 +19,6 @@ const ShortFormPage = () => {
   const mapBoundary = useRecoilValue(mapBoundaryState);
 
   const { videoListData } = useVideoListQuery(mapBoundary!);
-  console.log(videoListData);
   // const observerRef = useIntersectionObserver(() => fetchNextPage());
 
   if (videoListData?.videos.length < 1) {

@@ -29,9 +29,14 @@ const VideoPreview = () => {
     const fetchPreviewUrl = async () => {
       const versionId = v4();
       const videoNameList = preparedVideo.map((vido) => vido.videoName);
-      const { url } = await getPreviewVideo(versionId, videoNameList);
-      setVideoPreview(url);
-      setIdFetchedUrl(true);
+      try {
+        const { url } = await getPreviewVideo(versionId, videoNameList);
+        setVideoPreview(url);
+        setIdFetchedUrl(true);
+      } catch {
+        alert('영상 미리보기 생성 중 오류 발생🥲');
+        navigate(PATH.MAP);
+      }
     };
     fetchPreviewUrl();
   }, []);
