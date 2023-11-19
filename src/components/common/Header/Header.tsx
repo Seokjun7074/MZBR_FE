@@ -10,11 +10,12 @@ import MypageButton from '@/assets/navigationBar/mypage_button.svg';
 const Header = () => {
   const { pathname } = useLocation();
   const navigate = useNavigate();
+  const myUserId = localStorage.getItem('userId');
 
   if (pathname === PATH.MAP) {
     return (
       <S.HeaderWrapper $isMap={true}>
-        <MypageButton onClick={() => navigate(PATH.MYPAGE)} />
+        <MypageButton onClick={() => navigate(PATH.USER_VIDEO(myUserId!))} />
       </S.HeaderWrapper>
     );
   }
