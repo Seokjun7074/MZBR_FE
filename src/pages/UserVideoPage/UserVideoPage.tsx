@@ -3,6 +3,9 @@ import { useParams } from 'react-router-dom';
 
 import * as S from '@/pages/UserVideoPage/UserVideoPage.style';
 
+import MyInfo from '@/components/User/MyInfo/MyInfo';
+
+import { useMyInfoQuery } from '@/hooks/queries/useMyInfoQuery';
 import { useUserVideoQuery } from '@/hooks/queries/useUserVideoQuery';
 
 import { UserVideo } from '@/types/user';
@@ -24,6 +27,7 @@ const UserVideoPage = () => {
 
   return (
     <S.UserVideoPageWrapper>
+      <MyInfo />
       <S.ThumbnailContainer>
         {userVideoData &&
           filterThumbnail(userVideoData)?.map((item: UserVideo) => (

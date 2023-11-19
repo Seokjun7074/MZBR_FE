@@ -14,3 +14,11 @@ export interface UserVideo {
 export interface UserVideoList {
   videos: UserVideo[];
 }
+
+export interface MyInfo {
+  nickname: string;
+  postCount: number;
+  profileImage: null | string;
+  subscribeCount: number;
+  userId: number;
+}
