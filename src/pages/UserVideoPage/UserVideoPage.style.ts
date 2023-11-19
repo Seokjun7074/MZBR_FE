@@ -5,4 +5,23 @@ import { Flex } from '@/components/common/Flex/Flex';
 export const UserVideoPageWrapper = styled(Flex)`
   height: 100%;
   width: 100%;
+  flex-direction: column;
+  padding: 2rem;
+  justify-content: start;
+  overflow: auto;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+`;
+
+export const ThumbnailContainer = styled(Flex)`
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+`;
+
+export const ThumbnailImage = styled.img`
+  width: 100%;
+  border-radius: 8px;
+  cursor: pointer;
 `;
