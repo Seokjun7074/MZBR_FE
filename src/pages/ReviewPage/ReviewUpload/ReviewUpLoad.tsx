@@ -56,7 +56,13 @@ const ReviewUpLoad = () => {
       <S.UpLoadBox onClick={handleClickInput}>
         <S.Image src={ArchiveBox} alt="Archive Box Image" />
         <S.ImageCaption>동영상 업로드하기</S.ImageCaption>
-        <S.VideoInput ref={inputRef} type="file" placeholder="비디오" onChange={videoUpload} />
+        <S.VideoInput
+          ref={inputRef}
+          type="file"
+          placeholder="비디오"
+          onChange={videoUpload}
+          accept=".mp4"
+        />
       </S.UpLoadBox>
       <S.EditConfirmConatiner>
         {videoState.file && <span>{videoState.file?.name} 이 영상을 편집할까요?</span>}

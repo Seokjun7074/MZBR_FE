@@ -13,6 +13,7 @@ interface ShortFormContainer {
 
 const ShotFormContainer = ({ videoInfo }: ShortFormContainer) => {
   const [playing, setPlaying] = useState(false);
+  const [isMuted, setIsMuted] = useState(true);
   const S3_URL = 'https://mzbr-temp-video-bucket.s3.ap-northeast-2.amazonaws.com/';
   const videoRef = useRef<ReactPlayer | null>(null);
   const observerRef = useIntersectionObserver(
@@ -20,7 +21,7 @@ const ShotFormContainer = ({ videoInfo }: ShortFormContainer) => {
     () => setPlaying(false),
   );
   const handlePlay = () => {
-    setPlaying((prev) => !prev);
+    setIsMuted((prev) => !prev);
   };
 
   return (
@@ -33,9 +34,8 @@ const ShotFormContainer = ({ videoInfo }: ShortFormContainer) => {
         width="100%"
         height="100%"
         playing={playing}
-        muted={false}
-        controls={true}
-        pip={true}
+        muted={isMuted}
+        controls={false}
         loop={true}
       />
       <S.ShotFormInfoContainer>

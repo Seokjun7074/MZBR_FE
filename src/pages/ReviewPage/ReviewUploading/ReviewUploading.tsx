@@ -13,7 +13,6 @@ import { useFFmpeg } from '@/hooks/useFFmpeg';
 
 import { completeVideoEdit } from '@/apis/videoEdit/completeVideoEdit';
 import { getAudioThumbnail } from '@/apis/videoEdit/getAudioThumbnail';
-import { getPreviewVideo } from '@/apis/videoEdit/getPreviewViewo';
 import { uploadVideo } from '@/apis/videoEdit/uploadVideo';
 
 import { PATH } from '@/constants/path';
@@ -57,18 +56,25 @@ const ReviewUploading = () => {
     // 썸네일 S3업로드
     await uploadThumbnail(presignUrl.thumbnailUrl, result.blob);
     // 오디오 있으면 S3업로드
-
+    const thumbnailAdded = { ...reviewRequest, thumbnailName: result.thumbnailName };
     // 최종 업로드 완료 요청
-    const completeStatus = await completeVideoEdit(reviewRequest);
+    const completeStatus = await completeVideoEdit(thumbnailAdded);
     if (completeStatus === 200) {
-      console.log(completeStatus);
       resetEditingUUID();
       alert('영상 업로드 완료!');
       navigate(PATH.MAP);
     }
   };
+
   useEffect(() => {
-    if (ffmpegLoaded) handleSubmit();
+    if (ffmpegLoaded) {
+      try {
+        handleSubmit();
+      } catch {
+        alert('저장소 업로드 중 오류 발생');
+        window.location.replace(PATH.MAP);
+      }
+    }
   }, [ffmpegLoaded]);
 
   return <ReviewUploadingWrapper>영상을 올리고 있어요!</ReviewUploadingWrapper>;

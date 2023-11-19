@@ -8,12 +8,18 @@ const GlobalStyle = createGlobalStyle`
     }
 
     html {
+         @font-face {
+            font-family: 'Pretendard-Regular';
+            src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+            font-weight: 500;
+            font-style: normal;
+        }
         font-size: 62.5%;
     }
     body {
         overflow-x: hidden;
         font-size: 1.6rem;
-        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Open Sans', 'Helvetica Neue', sans-serif;
+        font-family: 'Pretendard-Regular', 'Open Sans', 'Helvetica Neue', sans-serif;
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
     }
