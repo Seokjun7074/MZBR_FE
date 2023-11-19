@@ -26,3 +26,11 @@ export const ThumbnailImage = styled.img`
   border-radius: 8px;
   cursor: pointer;
 `;
+
+export const PlayerContainer = styled(Flex)`
+  width: 100%;
+  padding: 1rem;
+  background-color: black;
+  overflow: hidden;
+  border-radius: 8px;
+`;
