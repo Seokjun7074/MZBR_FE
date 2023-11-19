@@ -22,3 +22,7 @@ export interface MyInfo {
   subscribeCount: number;
   userId: number;
 }
+
+export interface UserInfoInterface extends MyInfo {
+  isFollowing: boolean;
+}

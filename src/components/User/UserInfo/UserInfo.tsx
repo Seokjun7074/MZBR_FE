@@ -2,14 +2,23 @@ import styled from 'styled-components';
 
 import { Flex } from '@/components/common/Flex/Flex';
 
+import { useSubscribeMutation } from '@/hooks/mutations/useSubscribeMutation';
 import { useUserInfoQuery } from '@/hooks/queries/useUserInfoQuery';
 
 const UserInfo = ({ userId }: { userId: string }) => {
   const { userInfoData } = useUserInfoQuery(userId);
+  const subscribeMutation = useSubscribeMutation();
+
+  const handleFollow = () => {
+    subscribeMutation.mutate(userId);
+  };
 
   return (
     <UserInfoWrapper>
-      <UserNickNameSpan>{userInfoData?.nickname}</UserNickNameSpan>
+      <div>
+        <UserNickNameSpan>{userInfoData?.nickname} </UserNickNameSpan>
+        <FollowButton onClick={handleFollow}>+팔로우</FollowButton>
+      </div>
       <InfoContainer>
         <div>
           <span>게시글</span>
@@ -53,4 +62,11 @@ const InfoContainer = styled(Flex)`
     gap: 0.5rem;
     cursor: pointer;
   }
+`;
+
+const FollowButton = styled.button`
+  width: 6rem;
+  font-size: ${({ theme }) => theme.fontSize.s};
+  color: ${({ theme }) => theme.color.primary};
+  font-weight: 500;
 `;
