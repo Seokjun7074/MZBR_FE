@@ -38,14 +38,14 @@ export const queryClient = new QueryClient({
 });
 
 root.render(
-  //<StrictMode>
-  <QueryClientProvider client={queryClient}>
-    <ThemeProvider theme={theme}>
-      <RecoilRoot>
-        <GlobalStyle />
-        <AppRouter />
-      </RecoilRoot>
-    </ThemeProvider>
-  </QueryClientProvider>,
-  //</StrictMode>
+  <StrictMode>
+    <QueryClientProvider client={queryClient}>
+      <ThemeProvider theme={theme}>
+        <RecoilRoot>
+          <GlobalStyle />
+          <AppRouter />
+        </RecoilRoot>
+      </ThemeProvider>
+    </QueryClientProvider>
+  </StrictMode>,
 );

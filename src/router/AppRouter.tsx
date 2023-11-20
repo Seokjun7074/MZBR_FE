@@ -1,7 +1,6 @@
+import { Suspense } from 'react';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 
-import IntroPage from '@/pages/IntroPage/IntroPage';
-import MapPage from '@/pages/MapPage/MapPage';
 import EditProfile from '@/pages/MyPage/EditProfile';
 import MyPage from '@/pages/MyPage/MyMain';
 import FavoriteRestaurants from '@/pages/MyPage/Restaurant/FavoriteRestaurants';
@@ -12,27 +11,24 @@ import LikeVideo from '@/pages/MyPage/Video/LikeVideo';
 import MyVideo from '@/pages/MyPage/Video/MyVideo';
 import Withdrawal from '@/pages/MyPage/Withdrawal';
 import KakaoRedirectPage from '@/pages/RedirectPage/KakaoRedirectPage';
-import ReviewEditClip from '@/pages/ReviewPage/ReviewEditClip/ReviewEditClip';
-import Hashtag from '@/pages/ReviewPage/ReviewHashTag/ReviewHashtag';
-import ReviewTitle from '@/pages/ReviewPage/ReviewTitle/ReviewTitle';
-import UpLoad from '@/pages/ReviewPage/ReviewUpload/ReviewUpLoad';
-import ReviewUploading from '@/pages/ReviewPage/ReviewUploading/ReviewUploading';
-import VideoPreview from '@/pages/ReviewPage/VideoPreview/VideoPreview';
-import VideoText from '@/pages/ReviewPage/VideoText/VideoText';
-import ShortFormPage from '@/pages/ShortFormPage/ShortFormPage';
-import SignupPage from '@/pages/SignupPage/SignupPage';
-import StoreShrotFormPage from '@/pages/StoreShrotFormPage/StoreShrotFormPage';
-import UserVideoPage from '@/pages/UserVideoPage/UserVideoPage';
+
+import Spinner from '@/components/common/Spinner/Spinner';
 
 import { PATH } from '@/constants/path';
 
 import App from '@/App';
 
+import * as Lazy from './lazy';
+
 const AppRouter = () => {
   const router = createBrowserRouter([
     {
       path: PATH.ROOT,
-      element: <IntroPage />,
+      element: (
+        <Suspense fallback={<Spinner />}>
+          <Lazy.IntroPage />
+        </Suspense>
+      ),
     },
     {
       path: PATH.ROOT,
@@ -41,7 +37,11 @@ const AppRouter = () => {
       children: [
         {
           path: PATH.SIGNUP,
-          element: <SignupPage />,
+          element: (
+            <Suspense fallback={<Spinner />}>
+              <Lazy.SignupPage />
+            </Suspense>
+          ),
         },
         {
           path: PATH.MYPAGE,
@@ -74,15 +74,27 @@ const AppRouter = () => {
         },
         {
           path: PATH.SHORT_FORM,
-          element: <ShortFormPage />,
+          element: (
+            <Suspense fallback={<Spinner />}>
+              <Lazy.ShortFormPage />
+            </Suspense>
+          ),
         },
         {
           path: PATH.SHORT_FORM_STORE(':storeId'),
-          element: <StoreShrotFormPage />,
+          element: (
+            <Suspense fallback={<Spinner />}>
+              <Lazy.StoreShrotFormPage />
+            </Suspense>
+          ),
         },
         {
           path: PATH.MAP,
-          element: <MapPage />,
+          element: (
+            <Suspense fallback={<Spinner />}>
+              <Lazy.MapPage />
+            </Suspense>
+          ),
         },
         {
           path: '/mypage/edit',
@@ -94,31 +106,59 @@ const AppRouter = () => {
         },
         {
           path: PATH.REVIEW(':storeId'),
-          element: <ReviewTitle />,
+          element: (
+            <Suspense fallback={<Spinner />}>
+              <Lazy.ReviewTitle />
+            </Suspense>
+          ),
         },
         {
           path: PATH.REVIEW_HASHTAG(':storeId'),
-          element: <Hashtag />,
+          element: (
+            <Suspense fallback={<Spinner />}>
+              <Lazy.Hashtag />
+            </Suspense>
+          ),
         },
         {
           path: PATH.REVIEW_UPLOAD(':storeId'),
-          element: <UpLoad />,
+          element: (
+            <Suspense fallback={<Spinner />}>
+              <Lazy.UpLoad />
+            </Suspense>
+          ),
         },
         {
           path: PATH.REVIEW_EDIT_CLIP(':storeId'),
-          element: <ReviewEditClip />,
+          element: (
+            <Suspense fallback={<Spinner />}>
+              <Lazy.ReviewEditClip />
+            </Suspense>
+          ),
         },
         {
           path: PATH.VIDEO_PREVIEW(':storeId'),
-          element: <VideoPreview />,
+          element: (
+            <Suspense fallback={<Spinner />}>
+              <Lazy.VideoPreview />
+            </Suspense>
+          ),
         },
         {
           path: PATH.VIDEO_TEXT(':storeId'),
-          element: <VideoText />,
+          element: (
+            <Suspense fallback={<Spinner />}>
+              <Lazy.VideoText />
+            </Suspense>
+          ),
         },
         {
           path: PATH.VIDEO_UPLOADING(':storeId'),
-          element: <ReviewUploading />,
+          element: (
+            <Suspense fallback={<Spinner />}>
+              <Lazy.ReviewUploading />
+            </Suspense>
+          ),
         },
         {
           path: '/user/:user_id',
@@ -126,7 +166,11 @@ const AppRouter = () => {
         },
         {
           path: PATH.USER_VIDEO(':userId'),
-          element: <UserVideoPage />,
+          element: (
+            <Suspense fallback={<Spinner />}>
+              <Lazy.UserVideoPage />
+            </Suspense>
+          ),
         },
       ],
     },
