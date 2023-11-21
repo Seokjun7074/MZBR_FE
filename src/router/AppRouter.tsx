@@ -1,15 +1,6 @@
 import { Suspense } from 'react';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 
-import EditProfile from '@/pages/MyPage/EditProfile';
-import MyPage from '@/pages/MyPage/MyMain';
-import FavoriteRestaurants from '@/pages/MyPage/Restaurant/FavoriteRestaurants';
-import BlockedUsers from '@/pages/MyPage/Social/BlockedUsers';
-import SubcribedUsers from '@/pages/MyPage/Social/SubscribedUsers';
-import UserPage from '@/pages/MyPage/User';
-import LikeVideo from '@/pages/MyPage/Video/LikeVideo';
-import MyVideo from '@/pages/MyPage/Video/MyVideo';
-import Withdrawal from '@/pages/MyPage/Withdrawal';
 import KakaoRedirectPage from '@/pages/RedirectPage/KakaoRedirectPage';
 
 import Spinner from '@/components/common/Spinner/Spinner';
@@ -44,31 +35,6 @@ const AppRouter = () => {
           ),
         },
         {
-          path: PATH.MYPAGE,
-          element: <MyPage />,
-        },
-        {
-          path: '/mypage/favoriterestaurnat',
-          element: <FavoriteRestaurants />,
-        },
-        {
-          path: '/mypage/blockedusers',
-          element: <BlockedUsers />,
-        },
-        {
-          path: '/mypage/subscribedusers',
-          element: <SubcribedUsers />,
-        },
-        {
-          path: '/mypage/likevideo',
-          element: <LikeVideo />,
-        },
-        {
-          path: '/mypage/myvideo',
-          element: <MyVideo />,
-        },
-
-        {
           path: PATH.KAKAO_REDIRECT,
           element: <KakaoRedirectPage />,
         },
@@ -95,14 +61,6 @@ const AppRouter = () => {
               <Lazy.MapPage />
             </Suspense>
           ),
-        },
-        {
-          path: '/mypage/edit',
-          element: <EditProfile />,
-        },
-        {
-          path: '/mypage/withdrawal',
-          element: <Withdrawal />,
         },
         {
           path: PATH.REVIEW(':storeId'),
@@ -159,10 +117,6 @@ const AppRouter = () => {
               <Lazy.ReviewUploading />
             </Suspense>
           ),
-        },
-        {
-          path: '/user/:user_id',
-          element: <UserPage />,
         },
         {
           path: PATH.USER_VIDEO(':userId'),
