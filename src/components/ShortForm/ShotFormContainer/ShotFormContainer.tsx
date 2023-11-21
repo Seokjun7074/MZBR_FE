@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import ReactPlayer from 'react-player';
 
 import * as S from '@/components/ShortForm/ShotFormContainer/ShotFormContainer.style';
@@ -15,7 +15,6 @@ const ShotFormContainer = ({ videoInfo }: ShortFormContainer) => {
   const [playing, setPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(true);
   const S3_URL = 'https://mzbr-temp-video-bucket.s3.ap-northeast-2.amazonaws.com/';
-  const videoRef = useRef<ReactPlayer | null>(null);
   const observerRef = useIntersectionObserver(
     () => setPlaying(true),
     () => setPlaying(false),
@@ -27,7 +26,6 @@ const ShotFormContainer = ({ videoInfo }: ShortFormContainer) => {
   return (
     <S.ShotFormContainerWrapper ref={observerRef}>
       <ReactPlayer
-        ref={videoRef}
         onClick={handlePlay}
         className="react-player"
         url={`${S3_URL}${videoInfo.masterUrl}`}
