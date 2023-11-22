@@ -113,10 +113,13 @@ const ReviewEditClip = () => {
 
   useEffect(() => {
     const video = videoRef.current;
-    video?.addEventListener('loadedmetadata', () => {
-      setEndTime(video.duration);
-      setDuration(video.duration);
-    });
+    const setVideoTimeInfo = () => {
+      setEndTime(video!.duration);
+      setDuration(video!.duration);
+    };
+    video?.addEventListener('loadedmetadata', setVideoTimeInfo);
+
+    return () => video?.removeEventListener('loadedmetadata', setVideoTimeInfo);
   }, [videoState]);
 
   return (

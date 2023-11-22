@@ -36,7 +36,11 @@ const AppRouter = () => {
         },
         {
           path: PATH.KAKAO_REDIRECT,
-          element: <KakaoRedirectPage />,
+          element: (
+            <Suspense fallback={<Spinner />}>
+              <KakaoRedirectPage />
+            </Suspense>
+          ),
         },
         {
           path: PATH.SHORT_FORM,

@@ -31,8 +31,7 @@ export const queryClient = new QueryClient({
     queries: {
       retry: 0,
       refetchOnWindowFocus: false,
-      // suspense: true,
-      // useErrorBoundary: true,
+      suspense: true,
     },
   },
 });
