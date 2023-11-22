@@ -23,6 +23,7 @@ export const ThumbnailContainer = styled(Flex)`
 
 export const ThumbnailImage = styled.img`
   width: 100%;
+  height: auto;
   border-radius: 8px;
   cursor: pointer;
 `;

@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Rnd } from 'react-rnd';
 
 import { useRecoilValue, useSetRecoilState } from 'recoil';
@@ -29,7 +29,7 @@ const VideoPlayer = ({ videoRef, setCurrentTimeCode }: VideoPlayerProps) => {
 
   const rndStyle = {
     aspectRatio: 9 / 16,
-    border: 'solid 1px blue',
+    border: 'solid 1px #F77137',
   };
 
   const handlePlayVideo = () => {
@@ -73,7 +73,6 @@ const VideoPlayer = ({ videoRef, setCurrentTimeCode }: VideoPlayerProps) => {
       const rndRect = rndRef.current.getBoundingClientRect();
 
       const cropRatio = videoRect.width / videoRef.current.videoWidth;
-
       const cropStartX = Math.round((rndRect.x - videoRect.x + window.scrollX) / cropRatio);
       const cropStartY = Math.round((rndRect.y - videoRect.y + window.scrollY) / cropRatio);
 
@@ -86,50 +85,17 @@ const VideoPlayer = ({ videoRef, setCurrentTimeCode }: VideoPlayerProps) => {
         width: cropWidth,
         height: cropHeight,
       };
+      console.log(croppedData);
       setCroppedVideo(croppedData);
     }
   };
+  useEffect(() => {
+    videoRef.current?.addEventListener('loadedmetadata', onDragStop);
+    return () => videoRef.current?.removeEventListener('loadedmetadata', onDragStop);
+  }, [videoState]);
 
   return (
     <>
-      {/* <S.VideoContainer>
-        <S.VideoOverlay>
-          <S.VideoTag
-            src="https://mzbr-temp-video-bucket.s3.ap-northeast-2.amazonaws.com/crop/2ac6fe92-cb3c-4de7-b6bb-1d77ed25e524.mp4"
-            ref={videoRef}
-            crossOrigin="anonymous"
-            onTimeUpdate={handleOverEndTime}
-            onClick={handlePlayVideo}
-          />
-          <Rnd
-            style={rndStyle}
-            bounds={'parent'}
-            default={{
-              x: 0,
-              y: 0,
-              width: 'auto',
-              height: '100%',
-            }}
-            lockAspectRatio={true}
-            onDragStop={onDragStop}
-            onResizeStop={onDragStop}
-          >
-            <div
-              ref={rndRef}
-              style={{ width: '100%', height: '100%', border: '1px dashed gray' }}
-            ></div>
-          </Rnd>
-        </S.VideoOverlay>
-        <S.VideoController>
-          <SkipBack style={{ cursor: 'pointer' }} onClick={handelSkipBack} />
-          {isPlaying ? (
-            <Pause style={{ cursor: 'pointer' }} onClick={handlePlayVideo} />
-          ) : (
-            <Play style={{ cursor: 'pointer' }} onClick={handlePlayVideo} />
-          )}
-          <SkipForward style={{ cursor: 'pointer' }} onClick={handelSkipForward} />
-        </S.VideoController>
-      </S.VideoContainer> */}
       {videoState.url && (
         <S.VideoContainer>
           <S.VideoOverlay>
@@ -153,10 +119,7 @@ const VideoPlayer = ({ videoRef, setCurrentTimeCode }: VideoPlayerProps) => {
               onDragStop={onDragStop}
               onResizeStop={onDragStop}
             >
-              <div
-                ref={rndRef}
-                style={{ width: '100%', height: '100%', border: '1px dashed gray' }}
-              ></div>
+              <div ref={rndRef} style={{ width: '100%', height: '100%' }} />
             </Rnd>
           </S.VideoOverlay>
           <S.VideoController>

@@ -49,7 +49,6 @@ const VideoPreview = () => {
           <S.PreviewVideoContainer>
             <S.PreviewVideo crossOrigin="anonymous" autoPlay controls>
               <source src={videoPreview} />
-              {/* <source src={DUMMY_VIDEO} /> */}
             </S.PreviewVideo>
           </S.PreviewVideoContainer>
           <S.PreviewSection>

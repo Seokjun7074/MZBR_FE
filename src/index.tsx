@@ -31,21 +31,20 @@ export const queryClient = new QueryClient({
     queries: {
       retry: 0,
       refetchOnWindowFocus: false,
-      // suspense: true,
-      // useErrorBoundary: true,
+      suspense: true,
     },
   },
 });
 
 root.render(
-  //<StrictMode>
-  <QueryClientProvider client={queryClient}>
-    <ThemeProvider theme={theme}>
-      <RecoilRoot>
-        <GlobalStyle />
-        <AppRouter />
-      </RecoilRoot>
-    </ThemeProvider>
-  </QueryClientProvider>,
-  //</StrictMode>
+  <StrictMode>
+    <QueryClientProvider client={queryClient}>
+      <ThemeProvider theme={theme}>
+        <RecoilRoot>
+          <GlobalStyle />
+          <AppRouter />
+        </RecoilRoot>
+      </ThemeProvider>
+    </QueryClientProvider>
+  </StrictMode>,
 );

@@ -15,7 +15,9 @@ const StoreShrotFormPage = () => {
   const navigate = useNavigate();
   const { restaurantVideoListData } = useRestaurantVideoListQuery(storeId!);
 
-  if (restaurantVideoListData?.videos.length < 1) {
+  const isNoVideoData = () => restaurantVideoListData?.videos.length < 1;
+
+  if (isNoVideoData()) {
     return (
       <S.EmptyReviewContainer>
         <h1>등록된 리뷰가 없네요 😅</h1>
