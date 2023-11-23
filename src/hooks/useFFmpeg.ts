@@ -46,6 +46,7 @@ export const useFFmpeg = () => {
       );
     } catch (e) {
       console.error('[동영상 자르기 오류]', e);
+      throw new Error('[동영상 자르기 오류]');
     }
     const result = ffmpeg.FS('readFile', outputFileName);
     const blob = new Blob([result.buffer], { type: 'video/mp4' });

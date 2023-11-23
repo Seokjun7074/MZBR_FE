@@ -16,7 +16,7 @@ import { useFFmpeg } from '@/hooks/useFFmpeg';
 
 import { getPresignedUrl } from '@/apis/videoEdit/getPresignedUrl';
 import { postUploadComplete } from '@/apis/videoEdit/postUploadComplete';
-import { uploadVideo } from '@/apis/videoEdit/uploadVideo';
+import { uploadFile } from '@/apis/videoEdit/uploadFile';
 
 import { PATH } from '@/constants/path';
 
@@ -59,8 +59,7 @@ const ReviewEditClip = () => {
       crop: croppedVideo,
     });
     // S3에 영상 업로드
-    await uploadVideo(presignedUrl, cuttedVideo!.blob);
-
+    await uploadFile(presignedUrl, cuttedVideo!.blob);
     // S3업로드 확인 요청
     const videoUrl = await postUploadComplete(cuttedVideo!.outputFileName, videoUuid);
     setPreparedVideo([...preparedVideo, { videoName, videoUrl }]);
