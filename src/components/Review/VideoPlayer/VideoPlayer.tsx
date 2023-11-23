@@ -1,9 +1,12 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { Rnd } from 'react-rnd';
 
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 
 import * as S from '@/components/Review/VideoPlayer/VideoPlayer.style';
+import Spinner from '@/components/common/Spinner/Spinner';
+
+import { useVideoControl } from '@/hooks/videoEdit/useVideoControl';
 
 import Pause from '@/assets/videoPlayer/pause.svg';
 import Play from '@/assets/videoPlayer/play.svg';
@@ -18,53 +21,15 @@ interface VideoPlayerProps {
 }
 
 const VideoPlayer = ({ videoRef, setCurrentTimeCode }: VideoPlayerProps) => {
-  const DUMMY_VIDEO =
-    'https://mzbr-temp-video-bucket.s3.ap-northeast-2.amazonaws.com/crop/2ac6fe92-cb3c-4de7-b6bb-1d77ed25e524.mp4';
   const videoState = useRecoilValue(videoAtom);
-  const startTime = useRecoilValue(startAtom);
-  const endTime = useRecoilValue(endAtom);
-  const [isPlaying, setIsPlaying] = useState(false);
   const setCroppedVideo = useSetRecoilState(croppedVideoAtom);
   const rndRef = useRef<HTMLDivElement | null>(null);
+  const { isPlaying, handlePlayVideo, handelSkipBack, handelSkipForward, handleOverEndTime } =
+    useVideoControl(videoRef, setCurrentTimeCode);
 
   const rndStyle = {
     aspectRatio: 9 / 16,
     border: 'solid 1px #F77137',
-  };
-
-  const handlePlayVideo = () => {
-    if (isPlaying) {
-      videoRef.current?.pause();
-      setIsPlaying(!isPlaying);
-      return;
-    }
-    videoRef.current?.play();
-    setIsPlaying(!isPlaying);
-  };
-
-  const handelSkipBack = () => {
-    if (videoRef.current) videoRef.current.currentTime = startTime;
-  };
-  const handelSkipForward = () => {
-    if (videoRef.current) videoRef.current.currentTime = endTime;
-  };
-
-  const handleOverEndTime = (e: React.SyntheticEvent<HTMLVideoElement, Event>) => {
-    const video = e.target as HTMLVideoElement;
-
-    if (video.currentTime >= endTime) {
-      video.pause();
-      setIsPlaying(false);
-      setCurrentTimeCode(endTime);
-      return;
-    }
-    if (video.currentTime <= startTime) {
-      video.pause();
-      setIsPlaying(false);
-      setCurrentTimeCode(startTime);
-      return;
-    }
-    setCurrentTimeCode(video.currentTime);
   };
 
   const onDragStop = () => {
@@ -94,46 +59,46 @@ const VideoPlayer = ({ videoRef, setCurrentTimeCode }: VideoPlayerProps) => {
     return () => videoRef.current?.removeEventListener('loadedmetadata', onDragStop);
   }, [videoState]);
 
+  if (!videoState.url) {
+    return <Spinner />;
+  }
+
   return (
-    <>
-      {videoState.url && (
-        <S.VideoContainer>
-          <S.VideoOverlay>
-            <S.VideoTag
-              src={videoState.url}
-              ref={videoRef}
-              crossOrigin="use-credentials"
-              onTimeUpdate={handleOverEndTime}
-              onClick={handlePlayVideo}
-            />
-            <Rnd
-              style={rndStyle}
-              bounds={'parent'}
-              default={{
-                x: 0,
-                y: 0,
-                width: 'auto',
-                height: '100%',
-              }}
-              lockAspectRatio={true}
-              onDragStop={onDragStop}
-              onResizeStop={onDragStop}
-            >
-              <div ref={rndRef} style={{ width: '100%', height: '100%' }} />
-            </Rnd>
-          </S.VideoOverlay>
-          <S.VideoController>
-            <SkipBack style={{ cursor: 'pointer' }} onClick={handelSkipBack} />
-            {isPlaying ? (
-              <Pause style={{ cursor: 'pointer' }} onClick={handlePlayVideo} />
-            ) : (
-              <Play style={{ cursor: 'pointer' }} onClick={handlePlayVideo} />
-            )}
-            <SkipForward style={{ cursor: 'pointer' }} onClick={handelSkipForward} />
-          </S.VideoController>
-        </S.VideoContainer>
-      )}
-    </>
+    <S.VideoContainer>
+      <S.VideoOverlay>
+        <S.VideoTag
+          src={videoState.url}
+          ref={videoRef}
+          crossOrigin="use-credentials"
+          onTimeUpdate={handleOverEndTime}
+          onClick={handlePlayVideo}
+        />
+        <Rnd
+          style={rndStyle}
+          bounds={'parent'}
+          default={{
+            x: 0,
+            y: 0,
+            width: 'auto',
+            height: '100%',
+          }}
+          lockAspectRatio={true}
+          onDragStop={onDragStop}
+          onResizeStop={onDragStop}
+        >
+          <div ref={rndRef} style={{ width: '100%', height: '100%' }} />
+        </Rnd>
+      </S.VideoOverlay>
+      <S.VideoController>
+        <SkipBack style={{ cursor: 'pointer' }} onClick={handelSkipBack} />
+        {isPlaying ? (
+          <Pause style={{ cursor: 'pointer' }} onClick={handlePlayVideo} />
+        ) : (
+          <Play style={{ cursor: 'pointer' }} onClick={handlePlayVideo} />
+        )}
+        <SkipForward style={{ cursor: 'pointer' }} onClick={handelSkipForward} />
+      </S.VideoController>
+    </S.VideoContainer>
   );
 };
 
