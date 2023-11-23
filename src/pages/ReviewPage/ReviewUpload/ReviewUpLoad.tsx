@@ -1,49 +1,27 @@
 import ArchiveBox from '@assets/ArchiveBox.png';
-import Vector from '@assets/Group.png';
-import { v4 } from 'uuid';
 
 import { useRef } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
-import { useRecoilState, useSetRecoilState } from 'recoil';
+import { useRecoilState } from 'recoil';
 
-import { startEditVideo } from '@/apis/videoEdit/startEditVideo';
+import { useStartEdit } from '@/hooks/videoEdit/useStartEdit';
 
-import { PATH } from '@/constants/path';
-
-import { reviewRequestState } from '@/store/reviewRequest';
-import { editingUUIDState, videoAtom } from '@/store/video';
+import { videoAtom } from '@/store/video';
 
 import * as S from './ReviewUpLoad.style';
 
 const ReviewUpLoad = () => {
   const { storeId } = useParams<{ storeId: string }>();
-  const navigate = useNavigate();
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [videoState, setVideoState] = useRecoilState(videoAtom);
-  const [editingUUID, setEditingUUID] = useRecoilState(editingUUIDState);
-  const [reviewRequest, setReviewRequest] = useRecoilState(reviewRequestState);
+  const { handleNextButtonClick } = useStartEdit(storeId!);
 
   const videoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     setVideoState({
       file: e.target.files![0],
       url: URL.createObjectURL(e.target.files![0]),
     });
-  };
-
-  const handleNextButtonClick = async () => {
-    let videoUuid = '';
-    if (editingUUID === '') {
-      videoUuid = v4(); // 편집될 영상의 식별자
-      setEditingUUID(videoUuid);
-      setReviewRequest({ ...reviewRequest, videoUuid });
-      const status = await startEditVideo(videoUuid);
-      if (status.status === 201)
-        navigate(PATH.REVIEW_EDIT_CLIP(storeId!), { state: { videoUuid } });
-    } else {
-      videoUuid = editingUUID;
-      navigate(PATH.REVIEW_EDIT_CLIP(storeId!), { state: { videoUuid } });
-    }
   };
 
   const handleClickInput = () => {

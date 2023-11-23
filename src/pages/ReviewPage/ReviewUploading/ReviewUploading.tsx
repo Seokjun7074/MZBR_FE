@@ -13,7 +13,7 @@ import { useFFmpeg } from '@/hooks/useFFmpeg';
 
 import { completeVideoEdit } from '@/apis/videoEdit/completeVideoEdit';
 import { getAudioThumbnail } from '@/apis/videoEdit/getAudioThumbnail';
-import { uploadVideo } from '@/apis/videoEdit/uploadVideo';
+import { uploadFile } from '@/apis/videoEdit/uploadFile';
 
 import { PATH } from '@/constants/path';
 
@@ -44,7 +44,7 @@ const ReviewUploading = () => {
     return { blob, thumbnailName };
   };
   const uploadThumbnail = async (thumbnailUrl: string, file: Blob) => {
-    const response = await uploadVideo(thumbnailUrl, file);
+    const response = await uploadFile(thumbnailUrl, file);
     console.log(response.status);
   };
 
