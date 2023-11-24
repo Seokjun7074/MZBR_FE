@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { useRecoilState } from 'recoil';
 
@@ -26,7 +26,7 @@ export const useGoogleMap = (zoom: number, center: Center) => {
     }
   }, [mapRef.current]);
 
-  const getMapBoundary = () => {
+  const getMapBoundary = useCallback(() => {
     if (!map) return;
     const bounds = map.getBounds();
     if (bounds) {
@@ -40,7 +40,7 @@ export const useGoogleMap = (zoom: number, center: Center) => {
         bottomLng: sw.lng(),
       });
     }
-  };
+  }, [map]);
 
   useEffect(() => {
     map?.setCenter(center);
