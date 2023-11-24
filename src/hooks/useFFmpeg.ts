@@ -53,5 +53,21 @@ export const useFFmpeg = () => {
     return { blob, outputFileName };
   };
 
-  return { ffmpegRef, ffmpegLoaded, cutVideo };
+  const makeThumbnail = async (url: string) => {
+    const ffmpeg = ffmpegRef.current;
+    if (!ffmpeg) return;
+    const thumbnailName = `${v4()}.jpeg`;
+
+    ffmpeg.FS('writeFile', `inputVideo.mp4`, await fetchFile(url));
+    try {
+      await ffmpeg.run('-i', 'inputVideo.mp4', '-ss', '00:00:00', '-vframes', '1', thumbnailName);
+    } catch (e) {
+      console.error('[썸네일 생성 오류]', e);
+    }
+    const result = ffmpeg.FS('readFile', thumbnailName);
+    const blob = new Blob([result.buffer], { type: 'image/jpeg' });
+    return { blob, thumbnailName };
+  };
+
+  return { ffmpegRef, ffmpegLoaded, cutVideo, makeThumbnail };
 };
