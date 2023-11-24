@@ -11,10 +11,10 @@ export const useRestaurantListByKeywordQuery = (
   const { data, isSuccess, refetch } = useQuery({
     queryKey: [
       'restaurantListByKeyword',
-      paramData.bottomLat,
-      paramData.bottomLng,
-      paramData.topLat,
-      paramData.topLng,
+      // paramData.bottomLat,
+      // paramData.bottomLng,
+      // paramData.topLat,
+      // paramData.topLng,
     ],
     queryFn: () => getRestaurantListByKeyword(paramData),
     enabled: false,
