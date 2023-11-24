@@ -23,9 +23,9 @@ interface Boundary {
 export const mapBoundaryState = atom<Boundary>({
   key: 'mapBoundaryState',
   default: {
-    topLat: 0,
-    topLng: 0,
-    bottomLat: 0,
-    bottomLng: 0,
+    bottomLat: 37.4902678764768,
+    bottomLng: 127.0294224173828,
+    topLat: 37.51256825840636,
+    topLng: 127.05002178261718,
   },
 });
