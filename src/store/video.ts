@@ -39,17 +39,6 @@ export const endAtom = atom({
   default: 0,
 });
 
-// 비율에 맞게 자른 영상 좌표 정보
-export const croppedVideoAtom = atom({
-  key: 'croppedVideoAtom',
-  default: {
-    x: 0,
-    y: 0,
-    height: 0,
-    width: 0,
-  },
-});
-
 export const editingUUIDState = atom({
   key: 'editingUUIDState',
   default: '',

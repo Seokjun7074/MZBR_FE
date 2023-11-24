@@ -1,6 +1,3 @@
-import { fetchFile } from '@ffmpeg/ffmpeg';
-import { v4 } from 'uuid';
-
 import { useEffect, useRef, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
@@ -21,7 +18,7 @@ import { uploadFile } from '@/apis/videoEdit/uploadFile';
 import { PATH } from '@/constants/path';
 
 import { reviewRequestState } from '@/store/reviewRequest';
-import { croppedVideoAtom, endAtom, preparedVideoAtom, startAtom, videoAtom } from '@/store/video';
+import { endAtom, preparedVideoAtom, startAtom, videoAtom } from '@/store/video';
 
 const ReviewEditClip = () => {
   const { storeId } = useParams<{ storeId: string }>();
@@ -33,6 +30,7 @@ const ReviewEditClip = () => {
   const [duration, setDuration] = useState(0);
   const [currentTimeCode, setCurrentTimeCode] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
+  const [croppedVideo, setCroppedVideo] = useState({});
 
   const videoState = useRecoilValue(videoAtom);
   const startTime = useRecoilValue(startAtom);
@@ -40,11 +38,9 @@ const ReviewEditClip = () => {
   const [preparedVideo, setPreparedVideo] = useRecoilState(preparedVideoAtom);
   const [reviewRequest, setReviewRequest] = useRecoilState(reviewRequestState);
 
-  const croppedVideo = useRecoilValue(croppedVideoAtom);
   const resetStartAtom = useResetRecoilState(startAtom);
   const resetEndAtom = useResetRecoilState(endAtom);
   const resetVideoAtom = useResetRecoilState(videoAtom);
-  const resetCroppedVideoAtom = useResetRecoilState(croppedVideoAtom);
 
   const handelCutVideo = async () => {
     setIsLoading((prev) => !prev);
@@ -80,7 +76,6 @@ const ReviewEditClip = () => {
     resetStartAtom();
     resetEndAtom();
     resetVideoAtom();
-    resetCroppedVideoAtom();
   };
 
   useEffect(() => {
@@ -101,7 +96,11 @@ const ReviewEditClip = () => {
   return (
     <S.ReviewEditClipWrapper>
       <S.EditHeader>영상의 구간을 선택해주세요!</S.EditHeader>
-      <VideoPlayer videoRef={videoRef} setCurrentTimeCode={setCurrentTimeCode} />
+      <VideoPlayer
+        videoRef={videoRef}
+        setCurrentTimeCode={setCurrentTimeCode}
+        setCroppedVideo={setCroppedVideo}
+      />
       <div style={{ width: '80%', padding: '0 2rem' }}>
         <Slider
           duration={duration}

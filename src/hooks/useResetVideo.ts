@@ -2,7 +2,6 @@ import { useResetRecoilState } from 'recoil';
 
 import { hashtagState } from '@/store/hashtag';
 import {
-  croppedVideoAtom,
   editingUUIDState,
   endAtom,
   preparedVideoAtom,
@@ -15,7 +14,6 @@ export const useResetVideo = () => {
   const resetStartAtom = useResetRecoilState(startAtom);
   const resetEndAtom = useResetRecoilState(endAtom);
   const resetVideoAtom = useResetRecoilState(videoAtom);
-  const resetCroppedVideoAtom = useResetRecoilState(croppedVideoAtom);
   const resetPreviewAtom = useResetRecoilState(previewAtom);
   const resetPreparedVideoAtom = useResetRecoilState(preparedVideoAtom);
   const resetEditingUUIDState = useResetRecoilState(editingUUIDState);
@@ -25,7 +23,6 @@ export const useResetVideo = () => {
     resetStartAtom();
     resetEndAtom();
     resetVideoAtom();
-    resetCroppedVideoAtom();
     resetPreviewAtom();
     resetPreparedVideoAtom();
     resetEditingUUIDState();
