@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 import { Rnd } from 'react-rnd';
 import { useNavigate, useParams } from 'react-router-dom';
 
@@ -7,6 +7,7 @@ import { useRecoilState } from 'recoil';
 import * as S from '@/pages/ReviewPage/VideoText/VideoText.style';
 
 import { useInput } from '@/hooks/useInput';
+import { useDragText } from '@/hooks/videoEdit/useDragText';
 
 import { PATH } from '@/constants/path';
 
@@ -22,28 +23,7 @@ const VideoText = () => {
   const rndRef = useRef<HTMLDivElement | null>(null);
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const { value, handleInput } = useInput('');
-  const [textPosition, setTextPosition] = useState({
-    x: 0,
-    y: 0,
-  });
-
-  const onDragStop = () => {
-    if (videoRef.current && rndRef.current) {
-      const videoRect = videoRef.current.getBoundingClientRect();
-      const rndRect = rndRef.current.getBoundingClientRect();
-      const cropRatio = videoRect.width / videoRef.current.videoWidth;
-      const cropStartX = Math.round((rndRect.x - videoRect.x + window.scrollX) / cropRatio);
-      const cropStartY = Math.round((rndRect.y - videoRect.y + window.scrollY) / cropRatio);
-
-      const reaX = 720 * (cropStartX / videoRef.current.videoWidth);
-      const reaY = 1280 * (cropStartY / videoRef.current.videoHeight);
-      const croppedData = {
-        x: reaX,
-        y: reaY,
-      };
-      setTextPosition({ ...croppedData });
-    }
-  };
+  const { textPosition, onDragStop } = useDragText(videoRef, rndRef);
 
   const addSubtitle = () => {
     const newSubtitle = [
