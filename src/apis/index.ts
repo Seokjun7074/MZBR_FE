@@ -1,4 +1,6 @@
-import axios, { InternalAxiosRequestConfig } from 'axios';
+import axios from 'axios';
+
+import { addAccessToken, handelRefreshToken } from '@/apis/interceptor';
 
 export const axiosInstance = axios.create({
   baseURL: process.env.SERVER_URL,
@@ -8,14 +10,8 @@ export const axiosInstance = axios.create({
   },
 });
 
-axiosInstance.interceptors.request.use(
-  (config: InternalAxiosRequestConfig) => {
-    config.headers.Authorization = `Bearer ${localStorage.getItem('Authorization')}`;
-    config.headers['member-id'] = `${localStorage.getItem('userId')}`;
+axiosInstance.interceptors.request.use(addAccessToken, (err) => {
+  return Promise.reject(err);
+});
 
-    return config;
-  },
-  (err) => {
-    return Promise.reject(err);
-  },
-);
+axiosInstance.interceptors.response.use((response) => response, handelRefreshToken);

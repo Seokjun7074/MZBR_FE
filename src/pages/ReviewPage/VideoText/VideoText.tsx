@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useRef } from 'react';
 import { Rnd } from 'react-rnd';
 import { useNavigate, useParams } from 'react-router-dom';
 
@@ -7,6 +7,7 @@ import { useRecoilState } from 'recoil';
 import * as S from '@/pages/ReviewPage/VideoText/VideoText.style';
 
 import { useInput } from '@/hooks/useInput';
+import { useDragText } from '@/hooks/videoEdit/useDragText';
 
 import { PATH } from '@/constants/path';
 
@@ -14,8 +15,6 @@ import { reviewRequestState } from '@/store/reviewRequest';
 import { previewAtom } from '@/store/video';
 
 const VideoText = () => {
-  const DUMMY_VIDEO =
-    'https://mzbr-temp-video-bucket.s3.ap-northeast-2.amazonaws.com/crop/2ac6fe92-cb3c-4de7-b6bb-1d77ed25e524.mp4';
   const { storeId } = useParams<{ storeId: string }>();
   const navigate = useNavigate();
   const [reviewRequest, setReviewRequest] = useRecoilState(reviewRequestState);
@@ -24,27 +23,7 @@ const VideoText = () => {
   const rndRef = useRef<HTMLDivElement | null>(null);
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const { value, handleInput } = useInput('');
-  const [textPosition, setTextPosition] = useState({
-    x: 0,
-    y: 0,
-  });
-
-  const onDragStop = () => {
-    if (videoRef.current && rndRef.current) {
-      const videoRect = videoRef.current.getBoundingClientRect();
-      const rndRect = rndRef.current.getBoundingClientRect();
-      const cropRatio = videoRect.width / videoRef.current.videoWidth;
-      const cropStartX = Math.round((rndRect.x - videoRect.x + window.scrollX) / cropRatio);
-      const cropStartY = Math.round((rndRect.y - videoRect.y + window.scrollY) / cropRatio);
-      const reaX = 720 * (cropStartX / videoRef.current.videoWidth);
-      const reaY = 1280 * (cropStartY / videoRef.current.videoHeight);
-      const croppedData = {
-        x: reaX,
-        y: reaY,
-      };
-      setTextPosition({ ...croppedData });
-    }
-  };
+  const { textPosition, onDragStop } = useDragText(videoRef, rndRef);
 
   const addSubtitle = () => {
     const newSubtitle = [
@@ -73,7 +52,6 @@ const VideoText = () => {
     <S.VideoTextWrapper>
       <S.VideoContainer>
         <S.VideoTextOverlay>
-          {/* <S.VideoTag ref={videoRef} src={DUMMY_VIDEO} crossOrigin="anonymous" autoPlay controls /> */}
           {videoPreview && (
             <S.VideoTag ref={videoRef} src={videoPreview} controls crossOrigin="anonymous" />
           )}

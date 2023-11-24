@@ -43,6 +43,7 @@ const UserVideoPage = () => {
           {userVideoData &&
             filterThumbnail(userVideoData)?.map((item: UserVideo) => (
               <S.ThumbnailImage
+                alt={item.storeName}
                 key={item.id}
                 crossOrigin="anonymous"
                 src={`${S3_URL}${item.thumbnailUrl}`}
