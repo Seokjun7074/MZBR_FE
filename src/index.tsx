@@ -32,6 +32,8 @@ export const queryClient = new QueryClient({
       retry: 0,
       refetchOnWindowFocus: false,
       suspense: true,
+      gcTime: 0,
+      staleTime: 0,
     },
   },
 });

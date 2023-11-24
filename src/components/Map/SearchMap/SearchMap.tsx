@@ -35,7 +35,7 @@ const SearchMap = ({ center }: SearchMapProps) => {
   const myPosition = useRecoilValue(myPositionState);
 
   const { map, mapRef } = useGoogleMap(15, center);
-
+  console.log(mapBoundary);
   const boundary = {
     topLat: mapBoundary.topLat,
     topLng: mapBoundary.topLng,

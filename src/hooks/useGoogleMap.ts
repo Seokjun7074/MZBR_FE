@@ -48,7 +48,7 @@ export const useGoogleMap = (zoom: number, center: Center) => {
   }, [center]);
 
   useEffect(() => {
-    map?.addListener('bounds_changed', getMapBoundary);
+    map?.addListener('tilesloaded', getMapBoundary);
   }, [map]);
 
   return { map, mapRef };
