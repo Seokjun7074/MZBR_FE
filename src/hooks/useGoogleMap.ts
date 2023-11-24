@@ -24,7 +24,7 @@ export const useGoogleMap = (zoom: number, center: Center) => {
       });
       setMap(mapInfo);
     }
-  }, []);
+  }, [mapRef.current]);
 
   const getMapBoundary = () => {
     if (!map) return;
