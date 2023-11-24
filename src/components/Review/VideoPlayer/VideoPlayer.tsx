@@ -1,11 +1,12 @@
 import { useEffect, useRef } from 'react';
 import { Rnd } from 'react-rnd';
 
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilValue } from 'recoil';
 
 import * as S from '@/components/Review/VideoPlayer/VideoPlayer.style';
 import Spinner from '@/components/common/Spinner/Spinner';
 
+import { useDragCropVideo } from '@/hooks/videoEdit/useDragCropVideo';
 import { useVideoControl } from '@/hooks/videoEdit/useVideoControl';
 
 import Pause from '@/assets/videoPlayer/pause.svg';
@@ -13,47 +14,25 @@ import Play from '@/assets/videoPlayer/play.svg';
 import SkipBack from '@/assets/videoPlayer/skipBack.svg';
 import SkipForward from '@/assets/videoPlayer/skipForward.svg';
 
-import { croppedVideoAtom, endAtom, startAtom, videoAtom } from '@/store/video';
+import { videoAtom } from '@/store/video';
 
 interface VideoPlayerProps {
   videoRef: React.MutableRefObject<HTMLVideoElement | null>;
   setCurrentTimeCode: React.Dispatch<React.SetStateAction<number>>;
+  setCroppedVideo: React.Dispatch<React.SetStateAction<{}>>;
 }
 
-const VideoPlayer = ({ videoRef, setCurrentTimeCode }: VideoPlayerProps) => {
+const VideoPlayer = ({ videoRef, setCurrentTimeCode, setCroppedVideo }: VideoPlayerProps) => {
   const videoState = useRecoilValue(videoAtom);
-  const setCroppedVideo = useSetRecoilState(croppedVideoAtom);
   const rndRef = useRef<HTMLDivElement | null>(null);
   const { isPlaying, handlePlayVideo, handelSkipBack, handelSkipForward, handleOverEndTime } =
     useVideoControl(videoRef, setCurrentTimeCode);
-
+  const { onDragStop } = useDragCropVideo(videoRef, rndRef, setCroppedVideo);
   const rndStyle = {
     aspectRatio: 9 / 16,
     border: 'solid 1px #F77137',
   };
 
-  const onDragStop = () => {
-    if (videoRef.current && rndRef.current) {
-      const videoRect = videoRef.current.getBoundingClientRect();
-      const rndRect = rndRef.current.getBoundingClientRect();
-
-      const cropRatio = videoRect.width / videoRef.current.videoWidth;
-      const cropStartX = Math.round((rndRect.x - videoRect.x + window.scrollX) / cropRatio);
-      const cropStartY = Math.round((rndRect.y - videoRect.y + window.scrollY) / cropRatio);
-
-      const cropWidth = Math.round(rndRect.width / cropRatio);
-      const cropHeight = Math.round(rndRect.height / cropRatio);
-
-      const croppedData = {
-        x: cropStartX,
-        y: cropStartY,
-        width: cropWidth,
-        height: cropHeight,
-      };
-      console.log(croppedData);
-      setCroppedVideo(croppedData);
-    }
-  };
   useEffect(() => {
     videoRef.current?.addEventListener('loadedmetadata', onDragStop);
     return () => videoRef.current?.removeEventListener('loadedmetadata', onDragStop);
